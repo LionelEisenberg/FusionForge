@@ -22,8 +22,8 @@ signal request_element_destroy(element: Element) # To Reactor/RunScene
 @export var base_stability_damage: float = 1.0
 
 # Factors modifying yields based on physics state
-@export var speed_energy_factor: float = 0.005 # Energy scales slightly with speed
-@export var mass_stability_factor: float = 0.005 # Stability damage scales slightly with mass
+@export var momentum_energy_factor: float = 0.005 # Energy yield from collision scales slightly with momentum
+@export var momentum_stability_factor: float = 0.005 # Stability damage from collision scales slightly with momentum
 
 # Path to the folder containing FusionRecipe .tres files
 @export var recipe_folder_path: String = "res://resources/recipes/"
@@ -74,11 +74,11 @@ func _on_element_hit_wall(element: Element) -> void:
 		return
 
 	# Calculate energy yield (base + bonus for momentum)
-	var energy = base_wall_collision_energy + (element.get_momentum() * speed_energy_factor)
+	var energy = base_wall_collision_energy + (element.get_momentum() * momentum_energy_factor)
 	energy_yielded.emit(energy)
 
 	# Calculate stability damage (base + bonus for momentum)
-	var damage = base_stability_damage + (element.get_momentum() * mass_stability_factor)
+	var damage = base_stability_damage + (element.get_momentum() * momentum_stability_factor)
 	stability_decreased.emit(damage)
 
 	# Notify RunManager
@@ -128,18 +128,19 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 
 	# TODO: Incorporate active click bonus check here?
 
-
 ## Handles the outcome of a non-fusion element-element collision.
 func _handle_element_collision(e1: Element, e2: Element) -> void:
-	# Calculate energy yield (base + bonus for relative speed?)
-	var relative_velocity = (e1.linear_velocity - e2.linear_velocity).length()
-	var energy = base_collision_energy + (relative_velocity * speed_energy_factor)
+	var relative_velocity: float = (e1.linear_velocity - e2.linear_velocity).length()
+	var effective_momentum: float = (e1.mass + e2.mass) * 0.5 * relative_velocity
+
+	var energy = base_collision_energy + (effective_momentum * momentum_energy_factor)
 	energy_yielded.emit(energy)
 
 	# Notify RunManager
 	element_collision_processed.emit()
 
 	# TODO: Incorporate active click bonus check here?
+
 
 func _load_fusion_recipes() -> void:
 	fusion_recipes.clear()
@@ -155,12 +156,10 @@ func _load_fusion_recipes() -> void:
 				var loaded_resource = ResourceLoader.load(file_path)
 				if loaded_resource is FusionRecipe:
 					fusion_recipes.append(loaded_resource)
-					print("CollisionManager: Loaded recipe: ", file_path)
 				else:
 					printerr("CollisionManager: File is not a FusionRecipe: ", file_path)
 
 			file_name = dir.get_next()
 		dir.list_dir_end()
-		print("CollisionManager: Loaded %d fusion recipes." % fusion_recipes.size())
 	else:
 		printerr("CollisionManager: Could not open recipe directory: ", recipe_folder_path)
