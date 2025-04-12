@@ -1,9 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://bntbyn7ulcarj"]
+[gd_scene load_steps=7 format=3 uid="uid://bntbyn7ulcarj"]
 
 [ext_resource type="StyleBox" uid="uid://cy2mbg6natjml" path="res://assets/styleboxes/GameUI.tres" id="1_bma8u"]
 [ext_resource type="LabelSettings" uid="uid://b285iamcnlkh" path="res://assets/labelsettings/run_results_popup_stat_titles.tres" id="2_fct72"]
 [ext_resource type="Script" uid="uid://cew87wcfa88yw" path="res://scripts/ui/game_ui.gd" id="2_ru5ln"]
 [ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="3_ru5ln"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fct72"]
+bg_color = Color(1, 0.901961, 0.176471, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru5ln"]
+bg_color = Color(0.560784, 0.807843, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="GameUI" type="PanelContainer"]
 anchors_preset = 15
@@ -80,7 +94,7 @@ horizontal_alignment = 2
 
 [node name="HSeparator" type="HSeparator" parent="MainVBox"]
 layout_mode = 2
-theme_override_constants/separation = 49
+theme_override_constants/separation = 48
 
 [node name="RunResourcesContainer" type="VBoxContainer" parent="MainVBox"]
 layout_mode = 2
@@ -92,53 +106,33 @@ layout_mode = 2
 text = "Current Run Resources"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/RunResourcesContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-
-[node name="EnergyHBox" type="HBoxContainer" parent="MainVBox/RunResourcesContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-
-[node name="Energy" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
-layout_mode = 2
-text = "Energy: "
-
-[node name="EnergyProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
+[node name="EnergyProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/fill = SubResource("StyleBoxFlat_fct72")
 max_value = 1000.0
+value = 500.0
+rounded = true
 
-[node name="EnergyValueText" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "50/1000 eV"
-
-[node name="DurabilityHBox" type="HBoxContainer" parent="MainVBox/RunResourcesContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-
-[node name="Durability" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
-layout_mode = 2
-text = "Durability: "
-
-[node name="DurabilityProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
+[node name="DurabilityProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-max_value = 1000.0
-
-[node name="DurabilityValueText" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "70/100"
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/fill = SubResource("StyleBoxFlat_ru5ln")
+value = 50.0
 
 [node name="HSeparator2" type="HSeparator" parent="MainVBox"]
 layout_mode = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 48
 
 [node name="PermanentResourcesSection" type="VBoxContainer" parent="MainVBox"]
 layout_mode = 2
