@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://besgip2nmnnmd"]
 
-[ext_resource type="Texture2D" uid="uid://d00oc87msxqkh" path="res://assets/ui_images/circle-48.png" id="1_8k7s8"]
 [ext_resource type="Script" uid="uid://h6vr3ywv015g" path="res://scripts/ui/combo_display.gd" id="1_kvkep"]
+[ext_resource type="Texture2D" uid="uid://c37o3a0vyjiy" path="res://assets/ui_images/combo-progress.png" id="2_kvkep"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kvkep"]
 font_size = 32
@@ -30,10 +30,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 value = 41.0
 fill_mode = 4
-texture_under = ExtResource("1_8k7s8")
-texture_progress = ExtResource("1_8k7s8")
+texture_under = ExtResource("2_kvkep")
+texture_progress = ExtResource("2_kvkep")
 tint_under = Color(0.65098, 0.65098, 0.65098, 0.317647)
-tint_progress = Color(0.896789, 0, 0.0885007, 1)
 
 [node name="ComboLabel" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true

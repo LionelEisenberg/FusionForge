@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d00oc87msxqkh"
-path="res://.godot/imported/circle-48.png-78eaa91a6603f971d822601dd9b63a3a.ctex"
+uid="uid://c37o3a0vyjiy"
+path="res://.godot/imported/combo-progress.png-926c3a2ee1c1fc2ded6ee3462139dcbd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui_images/circle-48.png"
-dest_files=["res://.godot/imported/circle-48.png-78eaa91a6603f971d822601dd9b63a3a.ctex"]
+source_file="res://assets/ui_images/combo-progress.png"
+dest_files=["res://.godot/imported/combo-progress.png-926c3a2ee1c1fc2ded6ee3462139dcbd.ctex"]
 
 [params]
 
