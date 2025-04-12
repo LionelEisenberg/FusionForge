@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://8v3y8jri41os"]
+
+[ext_resource type="Script" uid="uid://cck0r4rhdyro2" path="res://scripts/elements/element_spawner.gd" id="1_i2jjk"]
+
+[node name="ElementSpawner" type="Node2D"]
+script = ExtResource("1_i2jjk")
+element_scenes = null
+spawn_padding = null
+initial_speed = null
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 5.0

@@ -1,0 +1,45 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="FusionForge"
+run/main_scene="uid://loaefnvwwg85"
+config/features=PackedStringArray("4.4", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+PersistenceManager="*res://singletons/PersistenceManager/persistence_manager.gd"
+GameManager="*res://singletons/GameManager/game_manager.gd"
+RunManager="*res://singletons/RunManager.gd/run_manager.gd"
+CollisionManager="*res://singletons/CollisionManager/collision_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "purple",
+"res://resources/": "yellow",
+"res://scenes/": "red",
+"res://scripts/": "green",
+"res://singletons/": "pink"
+}
+
+[physics]
+
+2d/physics_engine="GodotPhysics2D"
+2d/default_linear_damp=0.0
+2d/default_angular_damp=0.0

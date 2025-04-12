@@ -1,0 +1,173 @@
+[gd_scene load_steps=7 format=3 uid="uid://5fgb2mab30al"]
+
+[ext_resource type="StyleBox" uid="uid://dx5tl3k1kjuye" path="res://assets/styleboxes/RunResultsPopup.tres" id="1_3yhqu"]
+[ext_resource type="Script" uid="uid://cuhesybjuutjp" path="res://scripts/ui/run_results_popup/run_results_popup.gd" id="2_4iyg6"]
+[ext_resource type="LabelSettings" uid="uid://b285iamcnlkh" path="res://assets/labelsettings/run_results_popup_stat_titles.tres" id="3_mk26y"]
+[ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="4_a6yqw"]
+[ext_resource type="StyleBox" uid="uid://bpee63ok1m5r3" path="res://assets/styleboxes/RunResultsPopupMoneyContainer.tres" id="5_e851r"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_4eprm"]
+thickness = 0
+
+[node name="RunResultsPopup" type="Panel"]
+custom_minimum_size = Vector2(400, 500)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_3yhqu")
+script = ExtResource("2_4iyg6")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="MainVBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/MainVBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Run Results"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MainVBoxContainer"]
+layout_mode = 2
+
+[node name="StatsMarginContainer" type="MarginContainer" parent="MarginContainer/MainVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="StatsGrid" type="GridContainer" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="RunTimeLabel" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Run Time: "
+label_settings = ExtResource("3_mk26y")
+
+[node name="RunTimeValue" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0m 0s"
+label_settings = ExtResource("4_a6yqw")
+horizontal_alignment = 2
+
+[node name="WallCollisionsLabel" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Wall Collisions:"
+label_settings = ExtResource("3_mk26y")
+
+[node name="WallCollisionsValue" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0"
+label_settings = ExtResource("4_a6yqw")
+horizontal_alignment = 2
+
+[node name="ElementCollisionsLabel" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Element Collisions:"
+label_settings = ExtResource("3_mk26y")
+
+[node name="ElementCollisionsValue" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0"
+label_settings = ExtResource("4_a6yqw")
+horizontal_alignment = 2
+
+[node name="MaxFusionComboLabel" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Max Fusion Combo:"
+label_settings = ExtResource("3_mk26y")
+
+[node name="MaxFusionComboValue" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0"
+label_settings = ExtResource("4_a6yqw")
+horizontal_alignment = 2
+
+[node name="HeaviestElementMassLabel" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Heaviest Element Mass (amu):"
+label_settings = ExtResource("3_mk26y")
+
+[node name="HeaviestElementMassValue" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "1.008"
+label_settings = ExtResource("4_a6yqw")
+horizontal_alignment = 2
+
+[node name="MoneyMarginContainer" type="MarginContainer" parent="MarginContainer/MainVBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="MoneyContainer" type="PanelContainer" parent="MarginContainer/MainVBoxContainer/MoneyMarginContainer"]
+custom_minimum_size = Vector2(100, 65)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("5_e851r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MainVBoxContainer/MoneyMarginContainer/MoneyContainer"]
+layout_mode = 2
+
+[node name="MoneyEarnedLabel" type="Label" parent="MarginContainer/MainVBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.682353, 0.682353, 0.682353, 1)
+theme_override_font_sizes/font_size = 14
+text = "Money Earned This Run"
+horizontal_alignment = 1
+
+[node name="MoneyEarnedValue" type="Label" parent="MarginContainer/MainVBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 38
+text = "$ 0"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="Button" parent="MarginContainer/MainVBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxLine_4eprm")
+text = "Continue"

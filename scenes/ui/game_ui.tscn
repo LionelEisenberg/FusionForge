@@ -1,0 +1,175 @@
+[gd_scene load_steps=5 format=3 uid="uid://bntbyn7ulcarj"]
+
+[ext_resource type="StyleBox" uid="uid://cy2mbg6natjml" path="res://assets/styleboxes/GameUI.tres" id="1_bma8u"]
+[ext_resource type="LabelSettings" uid="uid://b285iamcnlkh" path="res://assets/labelsettings/run_results_popup_stat_titles.tres" id="2_fct72"]
+[ext_resource type="Script" uid="uid://cew87wcfa88yw" path="res://scripts/ui/game_ui.gd" id="2_ru5ln"]
+[ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="3_ru5ln"]
+
+[node name="GameUI" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("1_bma8u")
+script = ExtResource("2_ru5ln")
+
+[node name="MainVBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="RunStatsContainer" type="VBoxContainer" parent="MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RunStatsTitle" type="Label" parent="MainVBox/RunStatsContainer"]
+layout_mode = 2
+text = "Current Run Statistics"
+horizontal_alignment = 1
+
+[node name="RunStatsGrid" type="GridContainer" parent="MainVBox/RunStatsContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+columns = 2
+
+[node name="RunTimeLabel" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Run Time: "
+label_settings = ExtResource("2_fct72")
+
+[node name="RunTimeValue" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0m 0s"
+label_settings = ExtResource("3_ru5ln")
+horizontal_alignment = 2
+
+[node name="MaxFusionComboLabel" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Max Fusion Combo:"
+label_settings = ExtResource("2_fct72")
+
+[node name="MaxFusionComboValue" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0"
+label_settings = ExtResource("3_ru5ln")
+horizontal_alignment = 2
+
+[node name="TotalCollisionsLabel" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Total Collisions:"
+label_settings = ExtResource("2_fct72")
+
+[node name="TotalCollisionsValue" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0"
+label_settings = ExtResource("3_ru5ln")
+horizontal_alignment = 2
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 49
+
+[node name="RunResourcesContainer" type="VBoxContainer" parent="MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 35
+
+[node name="RunResourcesTitle" type="Label" parent="MainVBox/RunResourcesContainer"]
+layout_mode = 2
+text = "Current Run Resources"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/RunResourcesContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="EnergyHBox" type="HBoxContainer" parent="MainVBox/RunResourcesContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="Energy" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
+layout_mode = 2
+text = "Energy: "
+
+[node name="EnergyProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1000.0
+
+[node name="EnergyValueText" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "50/1000 eV"
+
+[node name="DurabilityHBox" type="HBoxContainer" parent="MainVBox/RunResourcesContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="Durability" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
+layout_mode = 2
+text = "Durability: "
+
+[node name="DurabilityProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1000.0
+
+[node name="DurabilityValueText" type="Label" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "70/100"
+
+[node name="HSeparator2" type="HSeparator" parent="MainVBox"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="PermanentResourcesSection" type="VBoxContainer" parent="MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PermanentResourcesTitle" type="Label" parent="MainVBox/PermanentResourcesSection"]
+layout_mode = 2
+text = "Permanent Game Resources"
+horizontal_alignment = 1
+
+[node name="PermanentResourcesGrid" type="GridContainer" parent="MainVBox/PermanentResourcesSection"]
+layout_mode = 2
+size_flags_vertical = 6
+columns = 2
+
+[node name="MoneyLabel" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+layout_mode = 2
+text = "Money ($):"
+
+[node name="MoneyValue" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="CoresLabel" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+layout_mode = 2
+text = "Fusion Cores (FC):"
+
+[node name="FusionCoreValue" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2

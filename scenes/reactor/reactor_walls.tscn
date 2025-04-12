@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwthpwp05p4xb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cj8j7"]
+friction = 0.0
+bounce = 1.0
+
+[node name="ReactorWalls" type="StaticBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_cj8j7")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 0, 720, 960, 720, 960, 0, 25, 0, 25, 25, 935, 25, 935, 695, 25, 695, 25, 25, 25, 0)
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 720, 960, 720, 960, 0)
+closed = true
+width = 50.0

@@ -1,0 +1,40 @@
+# Godot 4+ specific ignores
+# Ignore the folder containing generated import files, cache, and editor settings.
+.godot/
+
+# Ignore UID files
+**/*.gd.uid
+
+# Godot-specific ignores
+# Ignore export credentials file - contains sensitive information!
+export_credentials.cfg
+
+# Ignore binary translation files (commit the source CSV/PO files instead)
+*.translation
+
+# Mono-specific ignores (if using C#/.NET)
+.mono/
+data_*/
+mono_crash.*.json
+
+# Exported binaries and packages (add others as needed)
+*.exe
+*.apk
+*.aab
+*.pck
+*.zip
+*.dmg
+*.app/
+build/
+dist/
+
+# Common OS/IDE files
+.DS_Store
+*.swp
+*~
+.vscode/
+.idea/
+*.sln
+*.suo
+*.user
+*.userprefs

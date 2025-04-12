@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmy6bntcwjxkt"]
+
+[ext_resource type="PackedScene" uid="uid://dwthpwp05p4xb" path="res://scenes/reactor/reactor_walls.tscn" id="1_3ue1t"]
+[ext_resource type="PackedScene" uid="uid://8v3y8jri41os" path="res://scenes/elements/element_spawner.tscn" id="2_7qsl8"]
+
+[node name="ReactorChamber" type="Node2D"]
+
+[node name="ReactorWalls" parent="." groups=["walls"] instance=ExtResource("1_3ue1t")]
+
+[node name="ElementSpawner" parent="." node_paths=PackedStringArray("element_container") instance=ExtResource("2_7qsl8")]
+element_scenes = null
+element_container = NodePath("..")
+spawn_padding = null
+initial_speed = null

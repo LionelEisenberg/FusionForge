@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FusionRecipe" load_steps=2 format=3 uid="uid://cv20swq14kl5l"]
+
+[ext_resource type="Script" uid="uid://khhhvghjtumq" path="res://scripts/core/fusion_recipe.gd" id="1_hfxk2"]
+
+[resource]
+script = ExtResource("1_hfxk2")
+reactant_1_type = "Hydrogen"
+reactant_2_type = "Hydrogen"
+result_type = "Helium"
+result_mass = 4.002
+energy_yield = 100.0
+min_kinetic_energy = 2500.0
+required_temp = 0.0
+metadata/_custom_type_script = "uid://khhhvghjtumq"
