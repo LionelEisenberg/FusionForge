@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://besgip2nmnnmd"]
+
+[ext_resource type="Texture2D" uid="uid://d00oc87msxqkh" path="res://assets/ui_images/circle-48.png" id="1_8k7s8"]
+[ext_resource type="Script" uid="uid://h6vr3ywv015g" path="res://scripts/ui/combo_display.gd" id="1_kvkep"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kvkep"]
+font_size = 32
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.568627)
+
+[node name="ComboDisplay" type="MarginContainer"]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -36.0
+offset_right = 36.0
+offset_bottom = 67.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 35
+script = ExtResource("1_kvkep")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ComboTimerBar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+value = 41.0
+fill_mode = 4
+texture_under = ExtResource("1_8k7s8")
+texture_progress = ExtResource("1_8k7s8")
+tint_under = Color(0.65098, 0.65098, 0.65098, 0.317647)
+tint_progress = Color(0.896789, 0, 0.0885007, 1)
+
+[node name="ComboLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "x 2.0"
+label_settings = SubResource("LabelSettings_kvkep")

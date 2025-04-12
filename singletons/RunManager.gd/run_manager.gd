@@ -31,6 +31,11 @@ var _is_run_active: bool = false
 # Internal timer for combo decay
 var _combo_timer: Timer
 
+#-----------------------------------------------------------------------------
+# Godot Lifecycle Functions
+#-----------------------------------------------------------------------------
+
+
 func _ready() -> void:
 	_combo_timer = Timer.new()
 	_combo_timer.name = "ComboDecayTimer"
@@ -56,6 +61,10 @@ func _process(delta: float) -> void:
 	current_stats.run_time += delta
 	run_time_sec_updated.emit(current_stats.run_time)
 
+#-----------------------------------------------------------------------------
+# Stat Functions
+#-----------------------------------------------------------------------------
+
 func start_run_stats() -> void:
 	_is_run_active = true
 	reset_stats()
@@ -75,6 +84,23 @@ func reset_stats() -> void:
 		run_stats_updated.emit(current_stats)
 		fusion_combo_updated.emit(_current_fusion_combo_multiplier)
 		run_time_sec_updated.emit(current_stats.run_time)
+
+#-----------------------------------------------------------------------------
+# Timer Functions
+#-----------------------------------------------------------------------------
+
+func get_combo_timer_time_left() -> float:
+	return _combo_timer.time_left
+
+func get_combo_timer_wait_time() -> float:
+	return _combo_timer.wait_time
+
+func is_combo_timer_active() -> float:
+	return not _combo_timer.is_stopped()
+
+func _on_combo_timer_timeout() -> void:
+	_current_fusion_combo_multiplier = 1.0
+	fusion_combo_updated.emit(_current_fusion_combo_multiplier)
 
 func _on_fusion_processed(_e1 : Element, _e2 : Element, _result_element_data : Dictionary) -> void:
 	_register_fusion_for_combo()
@@ -98,9 +124,6 @@ func _register_fusion_for_combo() -> void:
 	#if fused_element_mass > current_stats.heav:
 		#heaviest_element_fused_mass = fused_element_mass
 		#run_stats_updated.emit(get_run_stats()) # Direct emit
-
-func _on_combo_timer_timeout() -> void:
-	_current_fusion_combo_multiplier = 1
 
 ## Increments the wall collision counter. Called by CollisionManager.
 func _on_increment_wall_collision() -> void:

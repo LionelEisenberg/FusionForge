@@ -22,7 +22,9 @@ signal run_conclusion_finished
 
 var reactor_chamber_instance: Node2D = null
 var run_results_popup_instance: Control = null
-var _element_spawner_ref: Node = null # Cached reference
+var _element_spawner_ref: Node = null
+
+@onready var combo_display: MarginContainer = %ComboDisplay
 
 func _ready() -> void:	
 	if GameManager:
@@ -83,6 +85,8 @@ func conclude_run() -> void:
 	else:
 		printerr("RunScene: Reactor chamber instance invalid during conclude_run!")
 
+	if combo_display:
+		combo_display.visible = false
 
 	var run_stats : RunStats = RunManager.get_run_stats()
 	var money_earned = GameManager.calculate_and_award_money(run_stats)

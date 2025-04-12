@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://mdcotdqhkfpm"]
+[gd_scene load_steps=5 format=3 uid="uid://mdcotdqhkfpm"]
 
 [ext_resource type="PackedScene" uid="uid://bmy6bntcwjxkt" path="res://scenes/reactor/reactor_chamber.tscn" id="1_ct2b5"]
 [ext_resource type="Script" uid="uid://bsucfx7l11xpu" path="res://scripts/run/run.gd" id="1_l7o68"]
 [ext_resource type="PackedScene" uid="uid://5fgb2mab30al" path="res://scenes/ui/run_results_popup/run_results_popup.tscn" id="3_wdonh"]
+[ext_resource type="PackedScene" uid="uid://besgip2nmnnmd" path="res://scenes/ui/combo_display.tscn" id="4_o4jfg"]
 
 [node name="Run" type="Node2D"]
 script = ExtResource("1_l7o68")
 reactor_chamber_scene = ExtResource("1_ct2b5")
 run_results_popup_scene = ExtResource("3_wdonh")
+
+[node name="OverlayControl" type="Control" parent="."]
+custom_minimum_size = Vector2(960, 720)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ComboDisplay" parent="OverlayControl" instance=ExtResource("4_o4jfg")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = -62.0
+offset_right = 62.0
+offset_bottom = 83.0
