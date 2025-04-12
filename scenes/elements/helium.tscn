@@ -8,6 +8,7 @@ element_type = "Helium"
 element_symbol = "He"
 element_mass_amu = 4.002
 element_base_color = Color(1, 0.737255, 1, 1)
+element_size = 64.0
 
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("2_ns1me")
