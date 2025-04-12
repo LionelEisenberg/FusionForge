@@ -9,7 +9,12 @@ extends Node2D
 @export var subviewport_path: NodePath = NodePath("")
 @export var subviewport_container_path: NodePath = NodePath("")
 
+#-----------------------------------------------------------------------------
+# Override exports
+#-----------------------------------------------------------------------------
+
 @export var override_save_file: bool = false
+@export var invincible_mode: bool = false
 
 #-----------------------------------------------------------------------------
 # Variables
@@ -33,6 +38,10 @@ var current_state: GameState = GameState.INITIALIZING
 # Godot Lifecycle Functions
 #-----------------------------------------------------------------------------
 func _ready() -> void:
+	# Override Logic for Invincible Mode:
+	if GameManager:
+		GameManager.invincible_mode = invincible_mode
+	
 	# Load persistent data first (ensure PersistenceManager loads before MainGame in Autoload)
 	if PersistenceManager:
 		if override_save_file:

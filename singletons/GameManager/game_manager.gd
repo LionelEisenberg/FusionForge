@@ -31,13 +31,15 @@ var acceleration_factor: float = 1.0
 var acceleration_magnitude: float = 25.0
 var force_to_energy_conversion_factor: float = 0.5
 
+# --- Parameters linked with Override / Testing ---
+var invincible_mode = false
+
 #-----------------------------------------------------------------------------
 # Initialization
 #-----------------------------------------------------------------------------
 
 func _ready() -> void:
 	
-
 	if PersistenceManager and PersistenceManager.save_game_data:
 		live_save_data = PersistenceManager.save_game_data
 
@@ -45,7 +47,7 @@ func _ready() -> void:
 		fusion_cores_updated.emit(live_save_data.fusion_cores)
 	else:
 		printerr("GameManager: CRITICAL - Could not get save_game_data from PersistenceManager on ready!")
-	
+
 	if CollisionManager:
 		CollisionManager.energy_yielded.connect(add_energy)
 		CollisionManager.stability_decreased.connect(decrease_stability)
@@ -143,7 +145,8 @@ func spend_energy(amount: float) -> void:
 	# Check for depletion AFTER spending
 	if current_energy <= 0.0:
 		current_energy = 0.0 # Clamp to zero
-		energy_depleted.emit()
+		if not invincible_mode:
+			energy_depleted.emit()
 		print("GameManager: Energy depleted!") # Keep critical event print
 
 # --- Stability ---
@@ -166,7 +169,8 @@ func decrease_stability(amount: float) -> void:
 	if current_stability <= 0.0:
 		current_stability = 0.0 # Clamp to zero
 		stability_updated.emit(current_stability, max_stability)
-		reactor_destroyed.emit()
+		if not invincible_mode:
+			reactor_destroyed.emit()
 		print("GameManager: Reactor destroyed!") # Keep critical event print
 
 #-----------------------------------------------------------------------------

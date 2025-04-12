@@ -118,6 +118,7 @@ label_settings = ExtResource("4_a6yqw")
 horizontal_alignment = 2
 
 [node name="HeaviestElementMassLabel" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Heaviest Element Mass (amu):"
@@ -125,6 +126,7 @@ label_settings = ExtResource("3_mk26y")
 
 [node name="HeaviestElementMassValue" type="Label" parent="MarginContainer/MainVBoxContainer/StatsMarginContainer/StatsGrid"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 8
