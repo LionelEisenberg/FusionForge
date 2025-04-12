@@ -7,7 +7,12 @@ const SAVE_PATH : String = "user://save.tres"
 func _ready() -> void:
 	load_data()
 
-func save_data() -> void : 
+func delete_data() -> void:
+	save_game_data = SaveGameData.new()
+	save_data()
+	print("PersistenceManager: Deleted save file found. Initialized with default SaveGameData.")
+
+func save_data() -> void :
 	ResourceSaver.save(save_game_data, SAVE_PATH)
 
 func load_data() -> void :

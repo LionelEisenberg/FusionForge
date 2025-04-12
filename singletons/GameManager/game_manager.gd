@@ -46,7 +46,7 @@ func _ready() -> void:
 		printerr("GameManager: CRITICAL - Could not get save_game_data from PersistenceManager on ready!")
 	
 	if CollisionManager:
-		CollisionManager.energy_yielded.connect(add_money)
+		CollisionManager.energy_yielded.connect(add_energy)
 		CollisionManager.stability_decreased.connect(decrease_stability)
 		CollisionManager.fusion_core_awarded.connect(award_fusion_core)
 	else:

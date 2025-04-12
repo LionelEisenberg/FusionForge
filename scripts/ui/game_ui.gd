@@ -7,12 +7,12 @@ extends PanelContainer # Or MarginContainer if that was the final root
 # Run Stats Section
 @onready var run_time_value: Label = %RunTimeValue
 @onready var total_collisions_value: Label = %TotalCollisionsValue
-@onready var max_combo_value: Label = %MaxComboValue
+@onready var max_combo_value: Label = %MaxFusionComboValue
 # Run Resources Section
-@onready var energy_meter: ProgressBar = %EnergyMeter
-@onready var energy_value_text: Label = %EnergyValueText # Optional node
-@onready var durability_meter: ProgressBar = %DurabilityMeter
-@onready var durability_value_text: Label = %DurabilityValueText # Optional node
+@onready var energy_meter: ProgressBar = %EnergyProgressBar
+@onready var energy_value_text: Label = %EnergyValueText
+@onready var durability_meter: ProgressBar = %DurabilityProgressBar
+@onready var durability_value_text: Label = %DurabilityValueText 
 # Permanent Resources Section
 @onready var money_value: Label = %MoneyValue
 @onready var fusion_core_value: Label = %FusionCoreValue
@@ -64,9 +64,9 @@ func _on_stability_updated(current: float, max_val: float) -> void:
 		durability_meter.max_value = max_val
 		durability_meter.value = current
 	if durability_value_text: # Check if optional node exists
-		durability_value_text.text = "%d / %d" % [int(current), int(max_val)]
+		durability_value_text.text = "%.02f / %.02f" % [current, max_val]
 
-func _on_run_stats_updated(run_stats: Dictionary) -> void:
+func _on_run_stats_updated(run_stats: Dictionary) -> void:	
 	if total_collisions_value:
 		var total_collisions = run_stats.get("collision_count_wall", 0) + run_stats.get("collision_count_element", 0)
 		total_collisions_value.text = str(total_collisions)

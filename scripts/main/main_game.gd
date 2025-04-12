@@ -9,6 +9,8 @@ extends Node2D
 @export var subviewport_path: NodePath = NodePath("")
 @export var subviewport_container_path: NodePath = NodePath("")
 
+@export var override_save_file: bool = false
+
 #-----------------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------------
@@ -33,7 +35,8 @@ var current_state: GameState = GameState.INITIALIZING
 func _ready() -> void:
 	# Load persistent data first (ensure PersistenceManager loads before MainGame in Autoload)
 	if PersistenceManager:
-		PersistenceManager.load_data()
+		if override_save_file:
+			PersistenceManager.delete_data()
 	else:
 		printerr("MainGame: PersistenceManager not found!")
 

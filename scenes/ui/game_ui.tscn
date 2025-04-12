@@ -105,6 +105,7 @@ layout_mode = 2
 text = "Energy: "
 
 [node name="EnergyProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer/VBoxContainer/EnergyHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -124,6 +125,7 @@ layout_mode = 2
 text = "Durability: "
 
 [node name="DurabilityProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer/VBoxContainer/DurabilityHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
