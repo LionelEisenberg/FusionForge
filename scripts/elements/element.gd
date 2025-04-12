@@ -21,7 +21,15 @@ signal hit_wall(element: Element)
 @export var element_symbol: String = "H"
 @export var element_mass_amu: float = 1.008 : set = set_element_mass_amu
 @export var element_base_color: Color = Color.CYAN
+@export var element_size: float = 32.0
 @export var override_velocity: Vector2 = Vector2(0, 0)
+
+#-----------------------------------------------------------------------------
+# Node References (Using Scene Unique Names)
+#-----------------------------------------------------------------------------
+
+@onready var _sprite : Sprite2D = %Sprite2D
+@onready var _collision_shape : CollisionShape2D = %CollisionShape2D
 
 #-----------------------------------------------------------------------------
 # Constants
@@ -138,5 +146,15 @@ func _on_body_entered(body: Node) -> void:
 # Internal Helper Functions
 #-----------------------------------------------------------------------------
 
+func _apply_element_size() -> void:
+	if _sprite and _sprite.texture:
+		var texture_size: Vector2 = _sprite.texture.get_size()
+		if texture_size.x > 0 and texture_size.y > 0: # Avoid division by zero
+			_sprite.scale = Vector2(element_size, element_size) / texture_size
+	
+	if _collision_shape and _collision_shape.shape:
+		var shape : CircleShape2D = _collision_shape.shape
+		shape.radius = element_size / 2.0
+
 func _update_visuals() -> void:
-	pass
+	_apply_element_size()
