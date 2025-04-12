@@ -19,12 +19,11 @@ func _ready() -> void:
 		printerr("RunResultsPopup: ContinueButton node not found!")
 
 
-func show_results(run_stats: Dictionary, money_earned: int) -> void:
-	run_time_value.text = _format_time(run_stats.get("run_time", 0.0) as float)
-	wall_collisions_value.text = str(run_stats.get("collision_count_wall", 0) as int)
-	elements_collisions_value.text = str(run_stats.get("collision_count_element", 0) as int)
-	max_fusion_combo_value.text = "x %.1f" % (run_stats.get("max_fusion_combo", 1.0) as float)
-	heaviest_element_mass_value.text = "%.3f" % (run_stats.get("heaviest_element_mass", 0.0) as float)
+func show_results(run_stats: RunStats, money_earned: int) -> void:
+	run_time_value.text = _format_time(run_stats.run_time)
+	wall_collisions_value.text = str(run_stats.collision_counts.x)
+	elements_collisions_value.text = str(run_stats.collision_counts.y)
+	max_fusion_combo_value.text = "x %.1f" % ((run_stats.max_fusion_combo) as float)
 
 	money_earned_value.text = "$ %d" % money_earned
 	

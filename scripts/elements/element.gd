@@ -71,29 +71,6 @@ func _ready() -> void:
 	
 	modulate = element_base_color
 
-func _physics_process(_delta: float) -> void:
-	var current_acceleration_factor: float = GameManager.base_acceleration_factor
-	var base_acceleration_magnitude: float = 25.0 # Base value, maybe also from config/manager
-
-	var acceleration_force_magnitude: float = base_acceleration_magnitude * current_acceleration_factor
-
-	# --- Calculate Direction based on Current Velocity ---
-	var current_direction: Vector2 = Vector2.ZERO
-	
-	# Check if velocity is significant enough to have a direction
-	if linear_velocity.length_squared() > ZERO_VELOCITY_THRESHOLD_SQ:
-		current_direction = linear_velocity.normalized()
-	# else: If velocity is near zero, apply no acceleration force this frame.
-	#      Alternatively, could apply force towards center or outwards here if desired.
-
-	# --- Apply Force ---
-	if current_direction != Vector2.ZERO:
-		# Apply force in the current direction of movement
-		var force: Vector2 = current_direction * acceleration_force_magnitude
-		apply_central_force(force)
-		# Note: We apply force, not directly add to velocity, to work with the physics engine.
-		# The magnitude represents the force strength. F=ma is handled by the engine.
-
 
 #-----------------------------------------------------------------------------
 # Initialization

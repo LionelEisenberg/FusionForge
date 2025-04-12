@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmy6bntcwjxkt"]
+[gd_scene load_steps=4 format=3 uid="uid://bmy6bntcwjxkt"]
 
 [ext_resource type="PackedScene" uid="uid://dwthpwp05p4xb" path="res://scenes/reactor/reactor_walls.tscn" id="1_3ue1t"]
+[ext_resource type="Script" uid="uid://ccywmj5k7ux8g" path="res://scenes/reactor/reactor_chamber.gd" id="1_kmiqu"]
 [ext_resource type="PackedScene" uid="uid://8v3y8jri41os" path="res://scenes/elements/element_spawner.tscn" id="2_7qsl8"]
 
 [node name="ReactorChamber" type="Node2D"]
+script = ExtResource("1_kmiqu")
 
 [node name="BackgroundRect" type="ColorRect" parent="."]
 custom_minimum_size = Vector2(960, 720)

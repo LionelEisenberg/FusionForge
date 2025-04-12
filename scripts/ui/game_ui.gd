@@ -66,13 +66,12 @@ func _on_stability_updated(current: float, max_val: float) -> void:
 	if durability_value_text: # Check if optional node exists
 		durability_value_text.text = "%.02f / %.02f" % [current, max_val]
 
-func _on_run_stats_updated(run_stats: Dictionary) -> void:	
+func _on_run_stats_updated(run_stats: RunStats) -> void:	
 	if total_collisions_value:
-		var total_collisions = run_stats.get("collision_count_wall", 0) + run_stats.get("collision_count_element", 0)
-		total_collisions_value.text = str(total_collisions)
+		total_collisions_value.text = str(run_stats.get_total_collisions())
 
 	if max_combo_value:
-		max_combo_value.text = "x %.1f" % (run_stats.get("max_fusion_combo", 1.0) as float)
+		max_combo_value.text = "x %.1f" % run_stats.max_fusion_combo
 
 func _on_run_time_sec_updated(run_time : float) -> void:
 	if run_time_value:

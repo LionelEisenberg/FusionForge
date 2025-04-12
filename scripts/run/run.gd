@@ -84,7 +84,7 @@ func conclude_run() -> void:
 		printerr("RunScene: Reactor chamber instance invalid during conclude_run!")
 
 
-	var run_stats = RunManager.get_run_stats()
+	var run_stats : RunStats = RunManager.get_run_stats()
 	var money_earned = GameManager.calculate_and_award_money(run_stats)
 
 	run_results_popup_instance = run_results_popup_scene.instantiate()

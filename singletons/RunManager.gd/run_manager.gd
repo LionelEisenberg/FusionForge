@@ -4,31 +4,30 @@ extends Node
 # Signals
 #-----------------------------------------------------------------------------
 
-signal run_stats_updated(run_stats: Dictionary)
+signal run_stats_updated(run_stats: RunStats)
 signal run_time_sec_updated(run_time_sec: float)
 signal fusion_combo_updated(multiplier: float)
 
 #-----------------------------------------------------------------------------
 # Exports
 #-----------------------------------------------------------------------------
-## Time in seconds before the fusion combo multiplier resets if no fusion occurs.
 @export var combo_decay_time: float = 3.0
-## Maximum combo multiplier allowed.
 @export var max_combo_cap: float = 10.0
 
 #-----------------------------------------------------------------------------
 # State Variables
 #-----------------------------------------------------------------------------
 
-# --- Run State (Reset every run) ---
-var collision_counts: Vector2i = Vector2i.ZERO # x: Wall hits, y: Element hits
-var current_fusion_combo_multiplier: float = 1.0
-var max_fusion_combo_multiplier_this_run: float = 1.0
-var heaviest_element_fused_mass: float = 0.0
-var run_time_sec: float = 0.0
+## Holds the stats object for the currently active run. Initialized in reset_stats.
+var current_stats: RunStats = null
 
-var _is_run_active : bool = false
+#-----------------------------------------------------------------------------
+# Internal Variables
+#-----------------------------------------------------------------------------
 
+## Internal variable for the currently decaying combo multiplier.
+var _current_fusion_combo_multiplier: float = 1.0
+var _is_run_active: bool = false
 # Internal timer for combo decay
 var _combo_timer: Timer
 
@@ -50,11 +49,12 @@ func _ready() -> void:
 	
 	reset_stats()
 
+
 func _process(delta: float) -> void:
-	if not _is_run_active:
+	if not _is_run_active or current_stats == null:
 		return
-	run_time_sec += delta
-	run_time_sec_updated.emit(run_time_sec)
+	current_stats.run_time += delta
+	run_time_sec_updated.emit(current_stats.run_time)
 
 func start_run_stats() -> void:
 	_is_run_active = true
@@ -63,60 +63,51 @@ func start_run_stats() -> void:
 func finalize_run_stats() -> void:
 	_is_run_active = false
 
+func get_run_stats() -> RunStats:
+	return current_stats
+
 func reset_stats() -> void:
-	collision_counts = Vector2i.ZERO
-	current_fusion_combo_multiplier = 1.0
-	max_fusion_combo_multiplier_this_run = 1.0
-	heaviest_element_fused_mass = 0.0
-	run_time_sec = 0.0
-	_combo_timer.stop() # Ensure timer is stopped
+	current_stats = RunStats.new()
+	_current_fusion_combo_multiplier = 1.0
+	_combo_timer.stop()
 
-	run_stats_updated.emit(get_run_stats()) # Direct emit
-	fusion_combo_updated.emit(current_fusion_combo_multiplier)
+	if current_stats:
+		run_stats_updated.emit(current_stats)
+		fusion_combo_updated.emit(_current_fusion_combo_multiplier)
+		run_time_sec_updated.emit(current_stats.run_time)
 
-func _on_fusion_processed(_e1 : Element, _e2 : Element, result_element_data : Dictionary) -> void:
+func _on_fusion_processed(_e1 : Element, _e2 : Element, _result_element_data : Dictionary) -> void:
 	_register_fusion_for_combo()
-	_update_heaviest_element(result_element_data.mass)
+	#_update_heaviest_element(result_element_data.mass)
 
 ## Registers a fusion event, updating combo logic. Called by CollisionManager.
 # TODO: Potentially accept fused element data here to determine increment amount later.
 func _register_fusion_for_combo() -> void:
-	current_fusion_combo_multiplier = min(current_fusion_combo_multiplier + 1.0, max_combo_cap)
-	max_fusion_combo_multiplier_this_run = max(max_fusion_combo_multiplier_this_run, current_fusion_combo_multiplier)
+	_current_fusion_combo_multiplier = min(_current_fusion_combo_multiplier + 1.0, max_combo_cap)
+	current_stats.max_fusion_combo = max(current_stats.max_fusion_combo, _current_fusion_combo_multiplier)
 
 	# Restart the decay timer
 	_combo_timer.start()
 
 	# Emit signals
-	fusion_combo_updated.emit(current_fusion_combo_multiplier)
-	run_stats_updated.emit(get_run_stats()) # Direct emit
+	fusion_combo_updated.emit(_current_fusion_combo_multiplier)
+	run_stats_updated.emit(current_stats)
 
 ## Updates the heaviest element fused this run. Called by CollisionManager.
-func _update_heaviest_element(fused_element_mass: float) -> void:
-	if fused_element_mass > heaviest_element_fused_mass:
-		heaviest_element_fused_mass = fused_element_mass
-		run_stats_updated.emit(get_run_stats()) # Direct emit
+#func _update_heaviest_element(fused_element_mass: float) -> void:
+	#if fused_element_mass > current_stats.heav:
+		#heaviest_element_fused_mass = fused_element_mass
+		#run_stats_updated.emit(get_run_stats()) # Direct emit
 
 func _on_combo_timer_timeout() -> void:
-	current_fusion_combo_multiplier = 1
+	_current_fusion_combo_multiplier = 1
 
 ## Increments the wall collision counter. Called by CollisionManager.
 func _on_increment_wall_collision() -> void:
-	collision_counts.x += 1
-	run_stats_updated.emit(get_run_stats()) # Direct emit
+	current_stats.collision_counts.x += 1
+	run_stats_updated.emit(current_stats) # Direct emit
 
 ## Increments the element-element collision counter. Called by CollisionManager.
 func _on_increment_element_collision() -> void:
-	collision_counts.y += 1
-	run_stats_updated.emit(get_run_stats()) # Direct emit
-
-## Returns a dictionary containing the current run statistics.
-func get_run_stats() -> Dictionary:
-	return {
-		"collision_count_wall": collision_counts.x,
-		"collision_count_element": collision_counts.y,
-		"max_fusion_combo": max_fusion_combo_multiplier_this_run,
-		"run_time": run_time_sec,
-		"heaviest_element_mass": heaviest_element_fused_mass,
-	}
-	
+	current_stats.collision_counts.y += 1
+	run_stats_updated.emit(current_stats) # Direct emit

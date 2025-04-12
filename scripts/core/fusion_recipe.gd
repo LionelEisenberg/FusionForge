@@ -1,7 +1,4 @@
 # scripts/core/FusionRecipe.gd
-# Resource defining a single fusion reaction.
-# Create .tres files using this script to define specific recipes
-# (e.g., H+H -> He, H+He -> Li, etc.) via the FileSystem dock.
 class_name FusionRecipe
 extends Resource
 

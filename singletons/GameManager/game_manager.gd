@@ -24,11 +24,12 @@ var current_stability: float = 0.0
 
 # --- Global Parameters / Upgradeable Properties ---
 # These should be initialized based on loaded save data (via UpgradeManager applying effects)
-var max_energy: float = 1000.0 # Default starting value
-var max_stability: float = 100.0 # Default starting value
-var max_element_capacity: int = 50 # Default starting value
-var base_acceleration_factor: float = 1.0 # Default starting value
-var energy_cost_per_second: float = 5.0 # Default starting value
+var max_energy: float = 1000.0
+var max_stability: float = 100.0
+var max_element_capacity: int = 50
+var acceleration_factor: float = 1.0
+var acceleration_magnitude: float = 25.0
+var force_to_energy_conversion_factor: float = 0.5
 
 #-----------------------------------------------------------------------------
 # Initialization
@@ -63,8 +64,9 @@ func set_upgradeable_parameters(params: Dictionary) -> void:
 	max_energy = params.get("max_energy", max_energy)
 	max_stability = params.get("max_stability", max_stability)
 	max_element_capacity = params.get("max_element_capacity", max_element_capacity)
-	base_acceleration_factor = params.get("base_acceleration_factor", base_acceleration_factor)
-	energy_cost_per_second = params.get("energy_cost_per_second", energy_cost_per_second)
+	acceleration_factor = params.get("acceleration_factor", acceleration_factor)
+	acceleration_magnitude = params.get("acceleration_magnitude", acceleration_magnitude)
+	force_to_energy_conversion_factor = params.get("force_to_energy_conversion_factor", force_to_energy_conversion_factor)
 	reset_for_new_run()
 
 
@@ -172,14 +174,13 @@ func decrease_stability(amount: float) -> void:
 #-----------------------------------------------------------------------------
 
 ## Called by RunScene/MainGame when run ends. Calculates and awards money.
-func calculate_and_award_money(run_stats: Dictionary) -> int:
+func calculate_and_award_money(run_stats: RunStats) -> int:
 	# TODO: Implement actual calculation based on GDD rules
-	var collisions = run_stats.get("collision_count", 0) as int
-	var heaviest_multiplier = run_stats.get("heaviest_element_multiplier", 1.0) as float # Placeholder
-	var active_bonus = run_stats.get("active_click_bonus", 0.0) as float # Placeholder
+	var collisions = run_stats.get_total_collisions()
+	var max_fusion_combo = run_stats.max_fusion_combo
 
 	# Example calculation (Replace with actual formula from GDD)
-	var money_earned: int = int( (collisions * heaviest_multiplier) + active_bonus )
+	var money_earned: int = int(collisions * max_fusion_combo)
 
 	print("GameManager: Run ended. Stats: ", run_stats, " Money Earned: ", money_earned) # Removed status print
 
