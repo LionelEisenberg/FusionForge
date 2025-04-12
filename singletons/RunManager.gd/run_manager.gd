@@ -74,7 +74,7 @@ func reset_stats() -> void:
 	run_stats_updated.emit(get_run_stats()) # Direct emit
 	fusion_combo_updated.emit(current_fusion_combo_multiplier)
 
-func _on_fusion_processed(_e1 : Element, _e2 : Element, result_element_data : Element) -> void:
+func _on_fusion_processed(_e1 : Element, _e2 : Element, result_element_data : Dictionary) -> void:
 	_register_fusion_for_combo()
 	_update_heaviest_element(result_element_data.mass)
 

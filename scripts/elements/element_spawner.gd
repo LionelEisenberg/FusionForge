@@ -120,9 +120,6 @@ func _on_spawn_timer_timeout() -> void:
 
 	_spawn_element()
 
-	# print("ElementSpawner: Spawned ", element_type_to_spawn) # Debug print
-
-
 ## Calculates the valid spawn area based on the reactor boundary.
 func _calculate_spawn_rect() -> void:
 	if reactor_walls == null:
@@ -164,9 +161,7 @@ func _get_random_spawn_position() -> Vector2:
 	var random_y: float = _rng.randf_range(_spawn_rect.position.y, _spawn_rect.end.y)
 	return Vector2(random_x, random_y)
 
-func _spawn_element(element_type_to_spawn : String = "", position : Vector2 = _get_random_spawn_position(), velocity : Vector2 = Vector2.from_angle(_rng.randf_range(0, TAU)) * initial_speed) -> void:
-	print("ElementSpawner:" + element_type_to_spawn)
-	
+func _spawn_element(element_type_to_spawn : String = "", spawn_position : Vector2 = _get_random_spawn_position(), spawn_velocity : Vector2 = Vector2.from_angle(_rng.randf_range(0, TAU)) * initial_speed) -> void:	
 	# --- Select Element Type ---
 	# TODO: Implement weighted random selection based on unlocked elements/probabilities
 	#       Get this data from UpgradeManager/RunManager/GameManager.
@@ -178,7 +173,6 @@ func _spawn_element(element_type_to_spawn : String = "", position : Vector2 = _g
 		element_type_to_spawn = element_scenes.keys()[0] # Just spawn the first one for now
 
 	var packed_element_scene = element_scenes.get(element_type_to_spawn) as PackedScene
-	print(packed_element_scene)
 	if packed_element_scene == null:
 		printerr("ElementSpawner: PackedScene not found for type: ", element_type_to_spawn)
 		return
@@ -190,9 +184,9 @@ func _spawn_element(element_type_to_spawn : String = "", position : Vector2 = _g
 		return
 
 	# --- Calculate Position & Velocity ---
-	var spawn_position: Vector2 = position
-	var spawn_velocity: Vector2 = velocity
+	#var spawn_position: Vector2 = spawn_position
+	#var spawn_velocity: Vector2 = spawn_velocity
 
 	# --- Initialize & Add ---
-	element_container.add_child(new_element) # Add before initialize? Or after? Usually add first.
+	element_container.call_deferred("add_child", new_element) # Add before initialize? Or after? Usually add first.
 	new_element.initialize(spawn_position, spawn_velocity)

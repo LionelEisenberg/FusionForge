@@ -16,8 +16,8 @@ extends Resource
 @export var result_mass: float = 0.0
 ## Base energy released by this specific fusion reaction (in abstract units).
 @export var energy_yield: float = 100.0
-## Minimum combined kinetic energy the two reactants need to fuse (KE = 0.5 * m * v^2).
-@export var min_kinetic_energy: float = 50.0
+## Minimum combined momentum energy the two reactants need to fuse.
+@export var min_momentum: float = 50.0
 ## Optional: Minimum reactor temperature required (value fetched from GameManager).
 @export var required_temp: float = 0.0
 

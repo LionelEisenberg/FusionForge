@@ -72,10 +72,10 @@ func conclude_run() -> void:
 			if child is Element: # Check if the child uses the Element class_name
 				child.linear_velocity = Vector2.ZERO
 				child.angular_velocity = 0.0
-				child.freeze = true
+				child.call_deferred("set_freeze_enabled", true)
 				var collision_shape = child.get_node_or_null("CollisionShape2D") # Assumes this name
 				if collision_shape is CollisionShape2D:
-					collision_shape.disabled = true
+					collision_shape.call_deferred("set_disabled", true)
 				else:
 					printerr("RunScene: Could not find CollisionShape2D child in Element ", child.name, " to disable.")
 				child.set_physics_process(false)
@@ -100,7 +100,7 @@ func destroy_element(element : Element) -> void:
 	for child in reactor_chamber_instance.get_children():
 		if child is Element and child == element:
 			child.queue_free()
-			reactor_chamber_instance.remove_child(child)
+			reactor_chamber_instance.call_deferred("remove_child", child)
 
 #-----------------------------------------------------------------------------
 # Signal Handlers

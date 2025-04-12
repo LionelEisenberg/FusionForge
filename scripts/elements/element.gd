@@ -19,7 +19,7 @@ signal hit_wall(element: Element)
 
 @export var element_type: String = "Hydrogen"
 @export var element_symbol: String = "H"
-@export var element_mass_amu: float = 1.008 : set = set_element_mass_amu
+@export var element_mass_amu: float = 1.0 : set = set_element_mass_amu
 @export var element_base_color: Color = Color.CYAN
 @export var element_size: float = 32.0
 @export var override_velocity: Vector2 = Vector2(0, 0)
@@ -37,7 +37,7 @@ signal hit_wall(element: Element)
 
 # Arbitrary conversion factor to relate AMU to Godot's physics mass.
 # Adjust this value based on desired physics feel.
-const MASS_UNIT_CONVERSION: float = 10.0
+const MASS_UNIT_CONVERSION: float = 1.0
 const ZERO_VELOCITY_THRESHOLD_SQ: float = 0.01
 
 #-----------------------------------------------------------------------------
@@ -72,8 +72,8 @@ func _ready() -> void:
 	modulate = element_base_color
 
 func _physics_process(_delta: float) -> void:
-	var current_acceleration_factor: float = 1.0 # Get this from GameManager/RunManager/UpgradeManager
-	var base_acceleration_magnitude: float = 500.0 # Base value, maybe also from config/manager
+	var current_acceleration_factor: float = GameManager.base_acceleration_factor
+	var base_acceleration_magnitude: float = 25.0 # Base value, maybe also from config/manager
 
 	var acceleration_force_magnitude: float = base_acceleration_magnitude * current_acceleration_factor
 
@@ -110,6 +110,12 @@ func initialize(start_position: Vector2, initial_velocity: Vector2) -> void:
 	if is_node_ready():
 		_update_visuals()
 
+#-----------------------------------------------------------------------------
+# Public functions
+#-----------------------------------------------------------------------------
+
+func get_momentum() -> float:
+	return mass * linear_velocity.length()
 
 #-----------------------------------------------------------------------------
 # Property Setters (for updating physics properties when exports change)
@@ -128,7 +134,6 @@ func _on_body_entered(body: Node) -> void:
 	# --- Wall Collision ---
 	if body.is_in_group("walls"):
 		hit_wall.emit(self)
-		print(element_type, " hit wall")
 
 	# --- Element Collision ---
 	elif body.is_in_group("elements"):
@@ -138,7 +143,6 @@ func _on_body_entered(body: Node) -> void:
 			if element_b:
 				# Emit signal for managers (RunManager/FusionHandler) to check interaction
 				pair_collided.emit(self, element_b)
-				print(element_type, " collided with ", element_b.element_type, " - signaling")
 			else:
 				printerr("Collision body in 'elements' group was not an Element script?")
 

@@ -22,8 +22,8 @@ signal request_element_destroy(element: Element) # To Reactor/RunScene
 @export var base_stability_damage: float = 1.0
 
 # Factors modifying yields based on physics state
-@export var speed_energy_factor: float = 0.01 # Energy scales slightly with speed
-@export var mass_stability_factor: float = 0.2 # Stability damage scales slightly with mass
+@export var speed_energy_factor: float = 0.005 # Energy scales slightly with speed
+@export var mass_stability_factor: float = 0.005 # Stability damage scales slightly with mass
 
 # Path to the folder containing FusionRecipe .tres files
 @export var recipe_folder_path: String = "res://resources/recipes/"
@@ -73,13 +73,12 @@ func _on_element_hit_wall(element: Element) -> void:
 	if not is_instance_valid(element):
 		return
 
-	# Calculate energy yield (base + bonus for speed)
-	var speed = element.linear_velocity.length()
-	var energy = base_wall_collision_energy + (speed * speed_energy_factor)
+	# Calculate energy yield (base + bonus for momentum)
+	var energy = base_wall_collision_energy + (element.get_momentum() * speed_energy_factor)
 	energy_yielded.emit(energy)
 
-	# Calculate stability damage (base + bonus for mass)
-	var damage = base_stability_damage + (element.element_mass_amu * mass_stability_factor)
+	# Calculate stability damage (base + bonus for momentum)
+	var damage = base_stability_damage + (element.get_momentum() * mass_stability_factor)
 	stability_decreased.emit(damage)
 
 	# Notify RunManager
@@ -94,16 +93,11 @@ func _on_element_hit_wall(element: Element) -> void:
 
 ## Checks if conditions for fusion are met for two elements. Returns recipe if true, null otherwise.
 func _check_fusion_conditions(e1: Element, e2: Element) -> FusionRecipe:
-	# Calculate combined kinetic energy (0.5 * m * v^2)
-	var ke1 = 0.5 * e1.mass * e1.linear_velocity.length_squared()
-	var ke2 = 0.5 * e2.mass * e2.linear_velocity.length_squared()
-	var combined_ke = ke1 + ke2
-	
-	print(e1.mass, e1.linear_velocity.length_squared(), e2.mass, e2.linear_velocity.length_squared())
+	var combined_momentum = e1.get_momentum() + e2.get_momentum()
 
 	for recipe in fusion_recipes:
 		if recipe.reactants_match(e1.element_type, e2.element_type):
-			if combined_ke >= recipe.min_kinetic_energy:
+			if combined_momentum >= recipe.min_momentum:
 				return recipe
 
 	return null
