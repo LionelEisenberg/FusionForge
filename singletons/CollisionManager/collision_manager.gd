@@ -22,7 +22,7 @@ signal spawn_energy_collectible(position: Vector2, value: float) # To Collectibl
 @export var base_stability_damage: float = 1.0
 
 # Factors modifying yields based on physics state
-@export var momentum_energy_factor: float = 0.05 # Energy yield from collision scales slightly with momentum
+@export var momentum_energy_factor: float = 0.0 # Energy yield from collision scales slightly with momentum
 @export var momentum_stability_factor: float = 0.005 # Stability damage from collision scales slightly with momentum
 
 # Path to the folder containing FusionRecipe .tres files
