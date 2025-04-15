@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmy6bntcwjxkt"]
+[gd_scene load_steps=7 format=3 uid="uid://bmy6bntcwjxkt"]
 
 [ext_resource type="PackedScene" uid="uid://dwthpwp05p4xb" path="res://scenes/reactor/reactor_walls.tscn" id="1_3ue1t"]
 [ext_resource type="Script" uid="uid://ccywmj5k7ux8g" path="res://scripts/reactor/reactor_chamber.gd" id="1_kmiqu"]
 [ext_resource type="PackedScene" uid="uid://8v3y8jri41os" path="res://scenes/elements/element_spawner.tscn" id="2_7qsl8"]
+[ext_resource type="PackedScene" uid="uid://c6dwpos2vcwdt" path="res://scenes/collectibles/collectible_spawner.tscn" id="4_wrtrq"]
+[ext_resource type="PackedScene" uid="uid://dbea3e025nkh" path="res://scenes/collectibles/energy_collectible.tscn" id="5_hvn3s"]
+[ext_resource type="PackedScene" uid="uid://cx7stwkyc7oxa" path="res://scenes/collectibles/fusion_core_collectible.tscn" id="6_bpm77"]
 
 [node name="ReactorChamber" type="Node2D"]
 script = ExtResource("1_kmiqu")
@@ -11,6 +14,7 @@ script = ExtResource("1_kmiqu")
 custom_minimum_size = Vector2(960, 720)
 offset_right = 960.0
 offset_bottom = 720.0
+mouse_filter = 2
 color = Color(0.194114, 0.304535, 0.370574, 1)
 
 [node name="ReactorWalls" parent="." groups=["walls"] instance=ExtResource("1_3ue1t")]
@@ -19,3 +23,8 @@ color = Color(0.194114, 0.304535, 0.370574, 1)
 element_container = NodePath("..")
 reactor_walls = NodePath("../ReactorWalls")
 spawn_padding = 100.0
+
+[node name="CollectibleSpawner" parent="." node_paths=PackedStringArray("collectible_container") instance=ExtResource("4_wrtrq")]
+energy_collectible_scene = ExtResource("5_hvn3s")
+fusion_core_collectible_scene = ExtResource("6_bpm77")
+collectible_container = NodePath("..")

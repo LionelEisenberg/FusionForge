@@ -1,7 +1,3 @@
-# Base script for all elements in the reactor.
-# Attached to BaseElement.tscn (Root: RigidBody2D).
-# Handles physics, collision detection reporting, initialization,
-# and holds common properties. Inherited by specific element scenes.
 class_name Element
 extends RigidBody2D
 

@@ -134,6 +134,7 @@ func get_max_energy() -> float:
 	return max_energy
 
 func add_energy(amount: float) -> void:
+	print(amount)
 	if amount <= 0: return
 	current_energy = clampf(current_energy + amount, 0.0, max_energy)
 	energy_updated.emit(current_energy, max_energy)

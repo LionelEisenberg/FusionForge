@@ -11,7 +11,7 @@ signal element_collision_processed() # To RunManager
 signal fusion_processed(element_a: Element, element_b: Element, result_element_data: Dictionary) # To RunManager
 signal request_element_spawn(element_type: String, position: Vector2, velocity: Vector2) # To ElementSpawner/Reactor
 signal request_element_destroy(element: Element) # To Reactor/RunScene
-#signal spawn_energy_collectible(position: Vector2, value: float) # TODO: Future enhancement
+signal spawn_energy_collectible(position: Vector2, value: float) # To CollectibleSpawner
 
 #-----------------------------------------------------------------------------
 # Exports
@@ -22,7 +22,7 @@ signal request_element_destroy(element: Element) # To Reactor/RunScene
 @export var base_stability_damage: float = 1.0
 
 # Factors modifying yields based on physics state
-@export var momentum_energy_factor: float = 0.005 # Energy yield from collision scales slightly with momentum
+@export var momentum_energy_factor: float = 0.05 # Energy yield from collision scales slightly with momentum
 @export var momentum_stability_factor: float = 0.005 # Stability damage from collision scales slightly with momentum
 
 # Path to the folder containing FusionRecipe .tres files
@@ -75,11 +75,13 @@ func _on_element_hit_wall(element: Element) -> void:
 
 	# Calculate energy yield (base + bonus for momentum)
 	var energy = base_wall_collision_energy + (element.get_momentum() * momentum_energy_factor)
-	energy_yielded.emit(energy)
+	spawn_energy_collectible.emit(element.global_position, energy)
 
 	# Calculate stability damage (base + bonus for momentum)
 	var damage = base_stability_damage + (element.get_momentum() * momentum_stability_factor)
 	stability_decreased.emit(damage)
+	
+	element.linear_velocity /= 2
 
 	# Notify RunManager
 	wall_collision_processed.emit()

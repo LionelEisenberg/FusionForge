@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://fofegbbj8eku"]
+
+[ext_resource type="Script" uid="uid://spocypttpnmr" path="res://scripts/collectibles/collectible.gd" id="1_irp14"]
+[ext_resource type="Texture2D" uid="uid://dqiiwuojqgmrx" path="res://assets/sprites/collectibles/EnergyCollectible.png" id="1_lb3xb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wahkq"]
+resource_local_to_scene = true
+radius = 16.0
+
+[node name="Collectible" type="Area2D"]
+script = ExtResource("1_irp14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_wahkq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("1_lb3xb")

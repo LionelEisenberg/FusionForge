@@ -31,6 +31,7 @@ run_scene = ExtResource("2_2jj13")
 upgrade_menu_scene = SubResource("PackedScene_2jj13")
 subviewport_path = NodePath("HBoxContainer/RunSceneViewportContainer/SubViewport")
 subviewport_container_path = NodePath("HBoxContainer/RunSceneViewportContainer")
+invincible_mode = true
 
 [node name="SaveTimer" type="Timer" parent="."]
 autostart = true
@@ -44,6 +45,7 @@ offset_right = 1280.0
 offset_bottom = 720.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="RunSceneViewportContainer" type="SubViewportContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -51,6 +53,7 @@ size_flags_stretch_ratio = 1.06
 
 [node name="SubViewport" type="SubViewport" parent="HBoxContainer/RunSceneViewportContainer"]
 handle_input_locally = false
+physics_object_picking = true
 size = Vector2i(960, 720)
 render_target_update_mode = 4
 

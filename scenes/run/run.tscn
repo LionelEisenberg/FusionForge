@@ -14,8 +14,9 @@ run_results_popup_scene = ExtResource("3_wdonh")
 custom_minimum_size = Vector2(960, 720)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 960.0
+offset_bottom = 720.0
+mouse_filter = 2
 
 [node name="ComboDisplay" parent="OverlayControl" instance=ExtResource("4_o4jfg")]
 unique_name_in_owner = true

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://besgip2nmnnmd"]
 
 [ext_resource type="Script" uid="uid://h6vr3ywv015g" path="res://scripts/ui/combo_display.gd" id="1_kvkep"]
-[ext_resource type="Texture2D" uid="uid://c37o3a0vyjiy" path="res://assets/ui_images/combo-progress.png" id="2_kvkep"]
+[ext_resource type="Texture2D" uid="uid://c37o3a0vyjiy" path="res://assets/ui_images/ComboProgress.png" id="2_kvkep"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kvkep"]
 font_size = 32
@@ -18,6 +18,7 @@ offset_left = -36.0
 offset_right = 36.0
 offset_bottom = 67.0
 grow_horizontal = 2
+mouse_filter = 2
 theme_override_constants/margin_top = 35
 script = ExtResource("1_kvkep")
 
