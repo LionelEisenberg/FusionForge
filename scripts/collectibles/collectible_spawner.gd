@@ -79,7 +79,6 @@ func _on_spawn_fusion_core(spawn_pos: Vector2, count: int) -> void:
 
 ## Instantiates and sets up a single collectible instance.
 func _spawn_single_collectible(scene: PackedScene, base_pos: Vector2, value) -> void:
-	print("spawning energy collectible with value %.02f" % value)
 	var instance = scene.instantiate()
 	if not instance is Collectible:
 		printerr("CollectibleSpawner: Instantiated scene is not a Collectible type!")
@@ -87,7 +86,7 @@ func _spawn_single_collectible(scene: PackedScene, base_pos: Vector2, value) -> 
 		return
 
 	var collectible = instance as Collectible
-	collectible_container.add_child(collectible)
+	collectible_container.call_deferred("add_child", collectible)
 
 	# Calculate spawn position with slight random offset
 	var offset = Vector2(_rng.randf_range(-spawn_position_offset, spawn_position_offset),
@@ -102,4 +101,6 @@ func _spawn_single_collectible(scene: PackedScene, base_pos: Vector2, value) -> 
 
 	# Calculate random initial direction
 	var direction = Vector2.from_angle(_rng.randf_range(0, TAU))
-	collectible.setup(direction) # Call base setup for movement/lifespan
+	if value == 10:
+		collectible.modulate = Color(Color.RED, 1.0)
+	collectible.initialize(direction) # Call base setup for movement/lifespan

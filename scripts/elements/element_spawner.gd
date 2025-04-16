@@ -111,7 +111,11 @@ func _on_spawn_timer_timeout() -> void:
 
 	# --- Check Element Capacity ---
 	# TODO: Get current element count and max capacity from RunManager/GameManager
-	var current_element_count: int = element_container.get_child_count() # Simple count
+	var current_element_count: int = 0
+	
+	for child in element_container.get_children():
+		if child.is_in_group("elements"):
+			current_element_count += 1
 	var max_element_capacity: int = 10 # Placeholder - Get from Manager
 
 	if current_element_count >= max_element_capacity:
@@ -182,10 +186,6 @@ func _spawn_element(element_type_to_spawn : String = "", spawn_position : Vector
 	if new_element == null:
 		printerr("ElementSpawner: Failed to instantiate or cast element scene for type: ", element_type_to_spawn)
 		return
-
-	# --- Calculate Position & Velocity ---
-	#var spawn_position: Vector2 = spawn_position
-	#var spawn_velocity: Vector2 = spawn_velocity
 
 	# --- Initialize & Add ---
 	element_container.call_deferred("add_child", new_element) # Add before initialize? Or after? Usually add first.

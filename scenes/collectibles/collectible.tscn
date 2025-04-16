@@ -5,10 +5,11 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wahkq"]
 resource_local_to_scene = true
-radius = 16.0
+radius = 32.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_irp14"]
-radius = 128.0
+resource_local_to_scene = true
+radius = 80.0
 
 [node name="Collectible" type="Area2D"]
 script = ExtResource("1_irp14")

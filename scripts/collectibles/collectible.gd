@@ -7,8 +7,10 @@ extends Area2D
 @export var lifespan: float = 4.0
 @export var initial_speed: float = 150.0
 @export var initial_deceleration: float = 300.0
-@export var attraction_deceleration: float = 1000.0
-@export var attraction_acceleration = 2500.0
+@export var attraction_deceleration: float = 600.0
+@export var attraction_acceleration = 1200.0
+@export var max_scale_age: float = 2.0 # e.g., effect ramps up over 2 seconds
+@export var age_scaling_factor: float = 1.5 # e.g., 150% increase = 2.5x strength at max age
 
 #-----------------------------------------------------------------------------
 # Variables
@@ -16,6 +18,7 @@ extends Area2D
 # Internal velocity for movement calculation
 var _velocity: Vector2 = Vector2.ZERO
 var _is_attracted: bool = false
+var _time_alive: float = 0.0
 
 #-----------------------------------------------------------------------------
 # Node References
@@ -39,14 +42,19 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	_time_alive += delta
+	
 	# Apply attraction force if mouse is in the outer radius
 	if _is_attracted:
-		var acceleration: Vector2 = Vector2.ZERO
+		var age_t = clampf(_time_alive / max_scale_age, 0.0, 1.0) # Normalized age (0 to 1)
+		var current_scale = 1.0 + (age_t * age_scaling_factor)
+		
+		var acceleration_vec: Vector2 = Vector2.ZERO
 		var mouse_pos = get_viewport().get_mouse_position()
 		var direction_to_mouse = (mouse_pos - global_position).normalized()
-		acceleration = direction_to_mouse * attraction_acceleration
-		_velocity += acceleration * delta
-		_velocity = _velocity.move_toward(Vector2.ZERO, attraction_deceleration * delta)
+		acceleration_vec = direction_to_mouse * (attraction_acceleration * current_scale)
+		_velocity += acceleration_vec * delta
+		_velocity = _velocity.move_toward(Vector2.ZERO, attraction_deceleration * current_scale * delta)
 	else:
 		_velocity = _velocity.move_toward(Vector2.ZERO, initial_deceleration * delta)
 
@@ -60,8 +68,10 @@ func _physics_process(delta: float) -> void:
 #-----------------------------------------------------------------------------
 
 ## Initializes the collectible's starting state.
-func setup(direction: Vector2) -> void:
+func initialize(direction: Vector2) -> void:
 	_velocity = direction.normalized() * initial_speed
+	
+	add_to_group("collectibles")
 
 
 #-----------------------------------------------------------------------------

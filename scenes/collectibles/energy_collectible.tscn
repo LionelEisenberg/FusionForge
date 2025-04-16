@@ -1,16 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://dbea3e025nkh"]
+[gd_scene load_steps=5 format=3 uid="uid://dbea3e025nkh"]
 
 [ext_resource type="PackedScene" uid="uid://fofegbbj8eku" path="res://scenes/collectibles/collectible.tscn" id="1_r05tw"]
 [ext_resource type="Script" uid="uid://208mu00pqha1" path="res://scripts/collectibles/energy_collectible.gd" id="2_88d55"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_88d55"]
 resource_local_to_scene = true
-radius = 16.0
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_car1v"]
+resource_local_to_scene = true
+radius = 80.0
 
 [node name="EnergyCollectible" instance=ExtResource("1_r05tw")]
 top_level = true
 script = ExtResource("2_88d55")
 energy_amount = 10
 
-[node name="CollisionShape2D" parent="." index="0"]
+[node name="PickupShape" parent="." index="0"]
 shape = SubResource("CircleShape2D_88d55")
+
+[node name="AttractionShape" parent="AttractionArea" index="0"]
+shape = SubResource("CircleShape2D_car1v")

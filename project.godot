@@ -38,6 +38,11 @@ folder_colors={
 "res://singletons/": "pink"
 }
 
+[global_group]
+
+elements="Elements in the Reactor Chamber"
+collectibles="Collectibles (such as energy and fusion cores) in the reactor chamber"
+
 [physics]
 
 2d/physics_engine="GodotPhysics2D"

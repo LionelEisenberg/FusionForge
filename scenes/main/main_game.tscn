@@ -31,7 +31,6 @@ run_scene = ExtResource("2_2jj13")
 upgrade_menu_scene = SubResource("PackedScene_2jj13")
 subviewport_path = NodePath("HBoxContainer/RunSceneViewportContainer/SubViewport")
 subviewport_container_path = NodePath("HBoxContainer/RunSceneViewportContainer")
-invincible_mode = true
 
 [node name="SaveTimer" type="Timer" parent="."]
 autostart = true

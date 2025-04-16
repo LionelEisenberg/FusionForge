@@ -3,15 +3,18 @@ extends Node
 #-----------------------------------------------------------------------------
 # Signals Emitted
 #-----------------------------------------------------------------------------
-signal energy_yielded(amount: float) # To GameManager
 signal stability_decreased(amount: float) # To GameManager
 signal fusion_core_awarded() # To GameManager
+
 signal wall_collision_processed() # To RunManager
 signal element_collision_processed() # To RunManager
 signal fusion_processed(element_a: Element, element_b: Element, result_element_data: Dictionary) # To RunManager
+
 signal request_element_spawn(element_type: String, position: Vector2, velocity: Vector2) # To ElementSpawner/Reactor
 signal request_element_destroy(element: Element) # To Reactor/RunScene
+
 signal spawn_energy_collectible(position: Vector2, value: float) # To CollectibleSpawner
+#signal spawn_fusion_core_collectible(position: Vector2, value: float) # To CollectibleSpawner
 
 #-----------------------------------------------------------------------------
 # Exports
@@ -22,8 +25,11 @@ signal spawn_energy_collectible(position: Vector2, value: float) # To Collectibl
 @export var base_stability_damage: float = 1.0
 
 # Factors modifying yields based on physics state
-@export var momentum_energy_factor: float = 0.0 # Energy yield from collision scales slightly with momentum
+@export var momentum_energy_factor: float = 0.05 # Energy yield from collision scales slightly with momentum
 @export var momentum_stability_factor: float = 0.005 # Stability damage from collision scales slightly with momentum
+
+# Factors modifying speed after collision
+@export var wall_collision_slowing_factor: float = 2.0
 
 # Path to the folder containing FusionRecipe .tres files
 @export var recipe_folder_path: String = "res://resources/recipes/"
@@ -46,9 +52,6 @@ func _ready() -> void:
 
 	# --- Load fusion recipes from directory ---
 	_load_fusion_recipes()
-
-	# Note: Connections from Element signals (pair_collided, hit_wall) to the
-	# _on_... handlers below must be made by ElementSpawner when elements are created.
 
 
 #-----------------------------------------------------------------------------
@@ -81,7 +84,8 @@ func _on_element_hit_wall(element: Element) -> void:
 	var damage = base_stability_damage + (element.get_momentum() * momentum_stability_factor)
 	stability_decreased.emit(damage)
 	
-	element.linear_velocity /= 2
+	# Dampen element velocity when hitting walls
+	element.linear_velocity = element.linear_velocity / wall_collision_slowing_factor
 
 	# Notify RunManager
 	wall_collision_processed.emit()
@@ -107,7 +111,7 @@ func _check_fusion_conditions(e1: Element, e2: Element) -> FusionRecipe:
 
 ## Handles the outcome of a successful fusion.
 func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
-	energy_yielded.emit(recipe.energy_yield)
+	spawn_energy_collectible.emit(_find_collision_position(e1, e2), recipe.energy_yield)
 
 	# Check if this fusion product is newly discovered (using SaveGameData)
 	if _live_save_data and not _live_save_data.discovered_fusions.has(recipe.result_type):
@@ -120,8 +124,7 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 	fusion_processed.emit(e1, e2, result_data)
 
 	# --- Trigger Spawning/Destruction ---
-	# TODO: Calculate accurate position (e.g., midpoint) and resulting velocity (conserve momentum?)
-	var collision_pos = (e1.global_position + e2.global_position) / 2.0
+	var collision_pos = _find_collision_position(e1, e2)
 	var result_velocity = Vector2.ONE # Placeholder - simple stop
 
 	request_element_spawn.emit(recipe.result_type, collision_pos, result_velocity)
@@ -134,9 +137,9 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 func _handle_element_collision(e1: Element, e2: Element) -> void:
 	var relative_velocity: float = (e1.linear_velocity - e2.linear_velocity).length()
 	var effective_momentum: float = (e1.mass + e2.mass) * 0.5 * relative_velocity
-
+	
 	var energy = base_collision_energy + (effective_momentum * momentum_energy_factor)
-	energy_yielded.emit(energy)
+	spawn_energy_collectible.emit(_find_collision_position(e1, e2), energy)
 
 	# Notify RunManager
 	element_collision_processed.emit()
@@ -165,3 +168,13 @@ func _load_fusion_recipes() -> void:
 		dir.list_dir_end()
 	else:
 		printerr("CollisionManager: Could not open recipe directory: ", recipe_folder_path)
+
+
+#-----------------------------------------------------------------------------
+# Helper Functions
+#-----------------------------------------------------------------------------
+
+# TODO: Move these to a common library? 
+
+func _find_collision_position(e1 : Element, e2 : Element) -> Vector2:
+	return (e1.global_position + e2.global_position) / 2

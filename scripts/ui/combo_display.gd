@@ -38,7 +38,7 @@ func _ready() -> void:
 	visible = _current_multiplier > 1.0
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if visible:
 		_update_timer_visual()
 

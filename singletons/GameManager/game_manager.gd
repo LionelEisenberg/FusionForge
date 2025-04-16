@@ -49,7 +49,6 @@ func _ready() -> void:
 		printerr("GameManager: CRITICAL - Could not get save_game_data from PersistenceManager on ready!")
 
 	if CollisionManager:
-		CollisionManager.energy_yielded.connect(add_energy)
 		CollisionManager.stability_decreased.connect(decrease_stability)
 		CollisionManager.fusion_core_awarded.connect(award_fusion_core)
 	else:
@@ -148,7 +147,7 @@ func spend_energy(amount: float) -> void:
 		current_energy = 0.0 # Clamp to zero
 		if not invincible_mode:
 			energy_depleted.emit()
-		print("GameManager: Energy depleted!") # Keep critical event print
+			print("GameManager: Energy depleted!") # Keep critical event print
 
 # --- Stability ---
 func get_current_stability() -> float:
@@ -172,7 +171,7 @@ func decrease_stability(amount: float) -> void:
 		stability_updated.emit(current_stability, max_stability)
 		if not invincible_mode:
 			reactor_destroyed.emit()
-		print("GameManager: Reactor destroyed!") # Keep critical event print
+			print("GameManager: Reactor destroyed!") 
 
 #-----------------------------------------------------------------------------
 # End-of-Run Functions
@@ -180,7 +179,6 @@ func decrease_stability(amount: float) -> void:
 
 ## Called by RunScene/MainGame when run ends. Calculates and awards money.
 func calculate_and_award_money(run_stats: RunStats) -> int:
-	# TODO: Implement actual calculation based on GDD rules
 	var collisions = run_stats.get_total_collisions()
 	var max_fusion_combo = run_stats.max_fusion_combo
 

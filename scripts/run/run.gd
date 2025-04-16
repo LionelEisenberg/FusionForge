@@ -81,6 +81,8 @@ func conclude_run() -> void:
 				else:
 					printerr("RunScene: Could not find CollisionShape2D child in Element ", child.name, " to disable.")
 				child.set_physics_process(false)
+			if child is Collectible:
+				child.queue_free()
 
 	else:
 		printerr("RunScene: Reactor chamber instance invalid during conclude_run!")
