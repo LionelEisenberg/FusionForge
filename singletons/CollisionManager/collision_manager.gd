@@ -17,28 +17,38 @@ signal spawn_energy_collectible(position: Vector2, value: float) # To Collectibl
 signal spawn_fusion_core_collectible(position: Vector2, value: float) # To CollectibleSpawner
 
 #-----------------------------------------------------------------------------
-# Exports
+# Constant Variables
 #-----------------------------------------------------------------------------
-# Base values for calculations
-@export var base_collision_energy: float = 5.0
-@export var base_wall_collision_energy: float = 2.0
-@export var base_stability_damage: float = 1.0
+# Base values before upgrades are applied.
+const BASE_COLLISION_ENERGY: float = 5.0
+const BASE_WALL_COLLISION_ENERGY: float = 2.0
+const BASE_STABILITY_DAMAGE: float = 1.0
+const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.05
+const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
+const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.0 # Note: Value > 1 slows more
 
-# Factors modifying yields based on physics state
-@export var momentum_energy_factor: float = 0.05 # Energy yield from collision scales slightly with momentum
-@export var momentum_stability_factor: float = 0.005 # Stability damage from collision scales slightly with momentum
+#-----------------------------------------------------------------------------
+# State Variables (Upgradeable)
+#-----------------------------------------------------------------------------
+# Current values used during gameplay, potentially modified by upgrades.
+var base_collision_energy: float = BASE_COLLISION_ENERGY
+var base_wall_collision_energy: float = BASE_WALL_COLLISION_ENERGY
+var base_stability_damage: float = BASE_STABILITY_DAMAGE
+var momentum_energy_factor: float = BASE_MOMENTUM_ENERGY_FACTOR
+var momentum_stability_factor: float = BASE_MOMENTUM_STABILITY_FACTOR
+var wall_collision_slowing_factor: float = BASE_WALL_COLLISION_SLOWING_FACTOR
 
-# Factors modifying speed after collision
-@export var wall_collision_slowing_factor: float = 1.0
-
-# Path to the folder containing FusionRecipe .tres files
+#-----------------------------------------------------------------------------
+# Other Variables
+#-----------------------------------------------------------------------------
+# Path to the folder containing FusionRecipe .tres files (Not typically upgraded)
 @export var recipe_folder_path: String = "res://resources/recipes/"
 
-#-----------------------------------------------------------------------------
-# Variables
-#-----------------------------------------------------------------------------
-var fusion_recipes: Array[FusionRecipe] = []
+var fusion_recipes: Array[FusionRecipe] = [] # Currently available recipes based on unlocks
+var unlocked_fusion_recipes: Array[String] = [] # List of unlocked recipe FILENAMES from UpgradeManager
 var _live_save_data: SaveGameData = null
+var _all_loaded_recipes: Array[FusionRecipe] = [] # Cache all loaded recipes once
+
 
 #-----------------------------------------------------------------------------
 # Initialization
@@ -49,7 +59,12 @@ func _ready() -> void:
 	else:
 		printerr("CollisionManager: Cannot get SaveGameData from PersistenceManager!")
 		_live_save_data = SaveGameData.new() # Use default if needed
-
+	
+	if UpgradeManager:
+		UpgradeManager.upgrades_applied.connect(_on_upgrades_applied)
+	else:
+		printerr("CollisionManager: WARNING - Could not connect to UpgradeManager! Using default values.")
+		
 	# --- Load fusion recipes from directory ---
 	_load_fusion_recipes()
 
@@ -92,6 +107,33 @@ func _on_element_hit_wall(element: Element) -> void:
 
 	# TODO: Incorporate active click bonus check here?
 
+
+#-----------------------------------------------------------------------------
+# Upgrade Handling
+#-----------------------------------------------------------------------------
+
+## Signal handler connected to UpgradeManager.upgrades_applied.
+func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
+	# Apply additive effects
+	base_collision_energy = BASE_COLLISION_ENERGY + effects_data.base_element_collision_energy_add
+	base_wall_collision_energy = BASE_WALL_COLLISION_ENERGY + effects_data.base_wall_collision_energy_add
+
+	# Apply multiplicative effects
+	momentum_energy_factor = BASE_MOMENTUM_ENERGY_FACTOR * effects_data.momentum_energy_factor_mult
+	base_stability_damage = BASE_STABILITY_DAMAGE * effects_data.base_stability_damage_mult # Lower multiplier = less damage
+	momentum_stability_factor = BASE_MOMENTUM_STABILITY_FACTOR * effects_data.momentum_stability_factor_mult # Lower multiplier = less scaling
+	wall_collision_slowing_factor = BASE_WALL_COLLISION_SLOWING_FACTOR * effects_data.wall_collision_slowing_factor_mult # Lower multiplier = less slowdown
+
+	# Clamp / Validate values
+	base_collision_energy = max(0.0, base_collision_energy)
+	base_wall_collision_energy = max(0.0, base_wall_collision_energy)
+	momentum_energy_factor = max(0.0, momentum_energy_factor)
+	base_stability_damage = max(0.0, base_stability_damage)
+	momentum_stability_factor = max(0.0, momentum_stability_factor)
+	wall_collision_slowing_factor = max(1.0, wall_collision_slowing_factor) # Ensure slowing factor is at least 1 (no speed up)
+
+	unlocked_fusion_recipes = effects_data.unlocked_fusion_recipes
+	_filter_available_recipes()
 
 #-----------------------------------------------------------------------------
 # Internal Helper Functions
@@ -170,11 +212,14 @@ func _load_fusion_recipes() -> void:
 		printerr("CollisionManager: Could not open recipe directory: ", recipe_folder_path)
 
 
-#-----------------------------------------------------------------------------
-# Helper Functions
-#-----------------------------------------------------------------------------
-
-# TODO: Move these to a common library? 
+## Filters the loaded recipes based on the currently unlocked recipe list.
+func _filter_available_recipes() -> void:
+	fusion_recipes.clear() # Clear the list used for checks
+	
+	for recipe in _all_loaded_recipes:
+		var recipe_filename = recipe.resource_path.get_file()
+		if unlocked_fusion_recipes.has(recipe_filename):
+			fusion_recipes.append(recipe)
 
 func _find_collision_position(e1 : Element, e2 : Element) -> Vector2:
 	return (e1.global_position + e2.global_position) / 2

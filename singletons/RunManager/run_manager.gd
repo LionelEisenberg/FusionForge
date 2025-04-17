@@ -9,17 +9,19 @@ signal run_time_sec_updated(run_time_sec: float)
 signal fusion_combo_updated(multiplier: float)
 
 #-----------------------------------------------------------------------------
-# Exports
+# Constant Variables
 #-----------------------------------------------------------------------------
-@export var combo_decay_time: float = 3.0
-@export var max_combo_cap: float = 10.0
+const BASE_COMBO_DECAY_TIME: float = 3.0
+const BASE_MAX_COMBO_CAP: float = 10.0
 
 #-----------------------------------------------------------------------------
 # State Variables
 #-----------------------------------------------------------------------------
-
-## Holds the stats object for the currently active run. Initialized in reset_stats.
 var current_stats: RunStats = null
+
+# --- Upgradeable Properties ---
+var combo_decay_time: float = BASE_COMBO_DECAY_TIME
+var max_combo_cap: float = BASE_MAX_COMBO_CAP
 
 #-----------------------------------------------------------------------------
 # Internal Variables
@@ -49,8 +51,13 @@ func _ready() -> void:
 		CollisionManager.element_collision_processed.connect(_on_increment_element_collision)
 		CollisionManager.fusion_processed.connect(_on_fusion_processed)
 	else:
-		printerr("RunManager: CRITICAL - Could not get save_game_data from PersistenceManager on ready!")
+		printerr("RunManager: CRITICAL - Could not connect signals from CollisionManager!")
 
+	# Connect to UpgradeManager to receive effect updates
+	if UpgradeManager:
+		UpgradeManager.upgrades_applied.connect(_on_upgrades_applied)
+	else:
+		printerr("RunManager: WARNING - Could not connect to UpgradeManager! Applying default effects.")
 	
 	reset_stats()
 
@@ -60,6 +67,22 @@ func _process(delta: float) -> void:
 		return
 	current_stats.run_time += delta
 	run_time_sec_updated.emit(current_stats.run_time)
+
+
+#-----------------------------------------------------------------------------
+# Upgrade Handling
+#-----------------------------------------------------------------------------
+
+## Signal handler connected to UpgradeManager.upgrades_applied.
+func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
+	combo_decay_time = BASE_COMBO_DECAY_TIME + effects_data.combo_decay_time_add
+	max_combo_cap = BASE_MAX_COMBO_CAP + effects_data.max_combo_cap_add
+
+	combo_decay_time = max(0.1, combo_decay_time) # Ensure decay time is positive
+	max_combo_cap = max(1.0, max_combo_cap) # Ensure max combo is at least 1
+
+	if _combo_timer:
+		_combo_timer.wait_time = combo_decay_time
 
 #-----------------------------------------------------------------------------
 # Stat Functions

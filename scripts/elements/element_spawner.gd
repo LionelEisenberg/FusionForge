@@ -3,6 +3,24 @@
 extends Node2D
 
 #-----------------------------------------------------------------------------
+# Constant Variables
+#-----------------------------------------------------------------------------
+# Base values before upgrades are applied.
+const BASE_INITIAL_SPEED: float = 100.0
+# Default timer wait time (5.0s in the scene file) corresponds to 0.2 spawns/sec
+const BASE_SPAWN_WAIT_TIME: float = 5.0
+const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity
+
+#-----------------------------------------------------------------------------
+# State Variables (Upgradeable)
+#-----------------------------------------------------------------------------
+# Current values used during gameplay, potentially modified by upgrades.
+# Initialized by apply_upgrade_effects() called from _ready().
+var initial_speed: float = BASE_INITIAL_SPEED
+var spawn_wait_time: float = BASE_SPAWN_WAIT_TIME
+var max_element_capacity: int = BASE_MAX_ELEMENT_CAPACITY
+
+#-----------------------------------------------------------------------------
 # Exports
 #-----------------------------------------------------------------------------
 
@@ -20,9 +38,6 @@ extends Node2D
 
 ## Padding inside the boundary shape to avoid spawning exactly on the wall.
 @export var spawn_padding: float = 20.0
-
-## Base speed for newly spawned elements. Upgrades might modify this.
-@export var initial_speed: float = 100.0
 
 #-----------------------------------------------------------------------------
 # Node References
@@ -58,11 +73,38 @@ func _ready() -> void:
 	if CollisionManager:
 		CollisionManager.request_element_spawn.connect(_spawn_element)
 
+	if UpgradeManager:
+		var initial_effects = UpgradeManager.get_upgrade_effects()
+		if initial_effects:
+			apply_upgrade_effects(initial_effects)
+		else:
+			printerr("ElementSpawner: Failed to get initial effects from UpgradeManager cache.")
+	else:
+		printerr("ElementSpawner: UpgradeManager not found during _ready().")
+		
 	# Calculate the spawn area based on the boundary shape
 	_calculate_spawn_rect()
 
 	# Connect the timer's timeout signal
 	_spawn_timer.timeout.connect(_on_spawn_timer_timeout)
+
+#-----------------------------------------------------------------------------
+# Upgrade Handling
+#-----------------------------------------------------------------------------
+
+## Called by _ready() to apply effects data to this node's parameters.
+func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
+	initial_speed = BASE_INITIAL_SPEED + effects_data.initial_speed_add
+	spawn_wait_time = BASE_SPAWN_WAIT_TIME + effects_data.spawn_timer_wait_time_add # Negative adds decrease time
+	max_element_capacity = BASE_MAX_ELEMENT_CAPACITY + effects_data.max_elements_add
+
+	# Clamp / Validate values
+	initial_speed = max(0.0, initial_speed)
+	spawn_wait_time = max(0.05, spawn_wait_time) # Ensure wait time is positive and reasonably small
+	max_element_capacity = max(1, max_element_capacity) # Ensure at least 1 element can spawn
+	
+	if _spawn_timer:
+		_spawn_timer.wait_time = spawn_wait_time
 
 #-----------------------------------------------------------------------------
 # Public Control Functions (Called by RunScene/ReactorChamber)
@@ -74,9 +116,8 @@ func start_spawning() -> void:
 
 	print("ElementSpawner: Starting spawning...")
 	_is_spawning = true
-	# TODO: Get current spawn rate from UpgradeManager/RunManager
-	var current_spawn_rate_per_sec: float = 0.2 # Placeholder
-	update_spawn_rate(current_spawn_rate_per_sec) # Set initial timer wait time
+
+	update_spawn_rate(spawn_wait_time)
 	_spawn_timer.start()
 
 ## Stops the spawning process.
@@ -92,7 +133,7 @@ func update_spawn_rate(new_rate_per_sec: float) -> void:
 	if _spawn_timer == null: return
 
 	if new_rate_per_sec > 0:
-		_spawn_timer.wait_time = 1.0 / new_rate_per_sec
+		_spawn_timer.wait_time = new_rate_per_sec
 	else:
 		# If rate is zero or negative, stop the timer
 		_spawn_timer.wait_time = 9999 # Effectively stops it until rate increases
@@ -110,13 +151,11 @@ func _on_spawn_timer_timeout() -> void:
 		return
 
 	# --- Check Element Capacity ---
-	# TODO: Get current element count and max capacity from RunManager/GameManager
 	var current_element_count: int = 0
 	
 	for child in element_container.get_children():
 		if child.is_in_group("elements"):
 			current_element_count += 1
-	var max_element_capacity: int = 10 # Placeholder - Get from Manager
 
 	if current_element_count >= max_element_capacity:
 		print("ElementSpawner: Max capacity reached, skipping spawn.")

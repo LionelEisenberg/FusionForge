@@ -12,6 +12,14 @@ signal reactor_destroyed # Emitted when stability <= 0
 signal run_results_calculated(money_earned: int) # Emitted after calculating end-of-run money
 
 #-----------------------------------------------------------------------------
+# Constant Variables
+#-----------------------------------------------------------------------------
+# These represent the base values *before* any upgrades are applied.
+const BASE_MAX_ENERGY: float = 1000.0
+const BASE_MAX_STABILITY: float = 100.0
+const BASE_MONEY_PER_COLLISION: float = 1.0
+
+#-----------------------------------------------------------------------------
 # State Variables
 #-----------------------------------------------------------------------------
 
@@ -22,14 +30,11 @@ var live_save_data: SaveGameData = null # Reference set in _ready
 var current_energy: float = 0.0
 var current_stability: float = 0.0
 
-# --- Global Parameters / Upgradeable Properties ---
-# These should be initialized based on loaded save data (via UpgradeManager applying effects)
-var max_energy: float = 1000.0
-var max_stability: float = 100.0
-var max_element_capacity: int = 50
-var acceleration_factor: float = 1.0
-var acceleration_magnitude: float = 25.0
-var force_to_energy_conversion_factor: float = 0.5
+# --- Upgradeable Properties ---
+# They are initialized with the base constants and updated by _on_upgrades_applied.
+var max_energy: float = BASE_MAX_ENERGY
+var max_stability: float = BASE_MAX_STABILITY
+var money_per_collision: float = BASE_MONEY_PER_COLLISION
 
 # --- Parameters linked with Override / Testing ---
 var invincible_mode = false
@@ -54,22 +59,10 @@ func _ready() -> void:
 	else:
 		printerr("GameManager: CRITICAL - Could not connect signals from CollisionManager!")
 
-	# TODO: UpdateValues from the UpgradeManager
-
-	current_energy = max_energy
-	current_stability = max_stability
-
-
-## Called by UpgradeManager after applying loaded/default upgrades
-func set_upgradeable_parameters(params: Dictionary) -> void:
-	max_energy = params.get("max_energy", max_energy)
-	max_stability = params.get("max_stability", max_stability)
-	max_element_capacity = params.get("max_element_capacity", max_element_capacity)
-	acceleration_factor = params.get("acceleration_factor", acceleration_factor)
-	acceleration_magnitude = params.get("acceleration_magnitude", acceleration_magnitude)
-	force_to_energy_conversion_factor = params.get("force_to_energy_conversion_factor", force_to_energy_conversion_factor)
-	reset_for_new_run()
-
+	if UpgradeManager:
+		UpgradeManager.upgrades_applied.connect(_on_upgrades_applied)
+	else:
+		printerr("GameManager: CRITICAL - Could not connect signals from UpgradeManager!")
 
 ## Called by RunScene/MainGame at the start of a new run
 func reset_for_new_run() -> void:
@@ -79,6 +72,10 @@ func reset_for_new_run() -> void:
 	energy_updated.emit(current_energy, max_energy)
 	stability_updated.emit(current_stability, max_stability)
 
+func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
+	max_energy = BASE_MAX_ENERGY + effects_data.max_energy_add
+	max_stability = BASE_MAX_STABILITY + effects_data.max_stability_add
+	money_per_collision = BASE_MONEY_PER_COLLISION + effects_data.base_money_per_collision_add
 
 #-----------------------------------------------------------------------------
 # Resource Management Functions
@@ -183,7 +180,7 @@ func calculate_and_award_money(run_stats: RunStats) -> int:
 	var max_fusion_combo = run_stats.max_fusion_combo
 
 	# Example calculation (Replace with actual formula from GDD)
-	var money_earned: int = int(collisions * max_fusion_combo)
+	var money_earned: int = int(collisions * money_per_collision * max_fusion_combo)
 
 	print("GameManager: Run ended. Stats: ", run_stats, " Money Earned: ", money_earned) # Removed status print
 

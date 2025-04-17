@@ -20,6 +20,7 @@ const UPGRADE_RESOURCE_DIR := "res://resources/upgrades/" # Example path, adjust
 #-----------------------------------------------------------------------------
 var _all_upgrades: Dictionary = {}
 var _live_save_data: SaveGameData = null
+var _cached_upgrade_effects: UpgradeEffects = UpgradeEffects.new()
 
 #-----------------------------------------------------------------------------
 # Godot Lifecycle Functions
@@ -123,6 +124,10 @@ func get_upgrade_data(upgrade_id: String) -> UpgradeData:
 func get_all_upgrade_data() -> Array[UpgradeData]:
 	return _all_upgrades.values()
 
+## Returns the cached upgrade effects
+func get_upgrade_effects() -> UpgradeEffects:
+	return _cached_upgrade_effects
+
 #-----------------------------------------------------------------------------
 # Effect Calculation and Emission Function
 #-----------------------------------------------------------------------------
@@ -172,6 +177,7 @@ func calculate_and_emit_effects() -> void:
 				effects_data.unlocked_fusion_recipes.append(data.fusion_recipe_to_unlock)
 
 	upgrades_applied.emit(effects_data)
+	_cached_upgrade_effects = effects_data
 
 
 #-----------------------------------------------------------------------------

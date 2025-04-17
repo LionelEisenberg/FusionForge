@@ -2,9 +2,23 @@ class_name Collectible
 extends Area2D
 
 #-----------------------------------------------------------------------------
-# Exports
+# Constant Variables
 #-----------------------------------------------------------------------------
-@export var lifespan: float = 4.0
+# Base values before upgrades are applied.
+const BASE_LIFESPAN: float = 4.0
+const BASE_ATTRACTION_RADIUS: float = 80.0
+
+#-----------------------------------------------------------------------------
+# State Variables (Upgradeable)
+#-----------------------------------------------------------------------------
+# Current values used during gameplay, potentially modified by upgrades.
+# Initialized by apply_upgrade_effects() called from initialize().
+var lifespan: float = BASE_LIFESPAN
+var attraction_radius: float = BASE_ATTRACTION_RADIUS
+
+#-----------------------------------------------------------------------------
+# Exports (Non-Upgradeable Physics/Visual Parameters)
+#-----------------------------------------------------------------------------
 @export var initial_speed: float = 150.0
 @export var initial_deceleration: float = 300.0
 @export var attraction_deceleration: float = 600.0
@@ -19,12 +33,14 @@ extends Area2D
 var _velocity: Vector2 = Vector2.ZERO
 var _is_attracted: bool = false
 var _time_attracted: float = 0.0
+var _lifespan_timer: Timer = null
 
 #-----------------------------------------------------------------------------
 # Node References
 #-----------------------------------------------------------------------------
 @onready var sprite: Sprite2D = %Sprite
 @onready var attraction_area: Area2D = %AttractionArea
+@onready var attraction_shape: CollisionShape2D = %AttractionArea/AttractionShape
 
 #-----------------------------------------------------------------------------
 # Godot Lifecycle Functions
@@ -37,10 +53,6 @@ func _ready() -> void:
 
 	mouse_entered.connect(_on_mouse_entered_pickup_area)
 	attraction_area.mouse_entered.connect(_on_mouse_entered_attraction_area)
-
-	if lifespan >= 0.0:
-		get_tree().create_timer(lifespan).timeout.connect(_on_lifespan_timeout)
-
 
 func _physics_process(delta: float) -> void:	
 	# Apply attraction force if mouse is in the outer radius
@@ -69,12 +81,53 @@ func _physics_process(delta: float) -> void:
 # Public Setup Method (Called by Spawner)
 #-----------------------------------------------------------------------------
 
-## Initializes the collectible's starting state.
 func initialize(direction: Vector2) -> void:
+	# Apply initial velocity
 	_velocity = direction.normalized() * initial_speed
-	
+
+	# Apply initial upgrade effects by pulling from UpgradeManager
+	if UpgradeManager:
+		var initial_effects = UpgradeManager.get_upgrade_effects()
+		if initial_effects:
+			apply_upgrade_effects(initial_effects)
+		else:
+			printerr("Collectible (%s): Failed to get initial effects from UpgradeManager cache." % self.name)
+	else:
+		printerr("Collectible (%s): UpgradeManager not found. Applying default effects." % self.name)
+
+	if is_instance_valid(_lifespan_timer):
+		_lifespan_timer.stop()
+		_lifespan_timer.queue_free()
+		_lifespan_timer = null
+
+	if lifespan >= 0.0: # Use the (potentially upgraded) lifespan variable
+		_lifespan_timer = Timer.new()
+		_lifespan_timer.wait_time = lifespan
+		_lifespan_timer.one_shot = true
+		add_child(_lifespan_timer) # Add timer as child
+		_lifespan_timer.timeout.connect(_on_lifespan_timeout)
+		_lifespan_timer.start()
+
 	add_to_group("collectibles")
 
+#-----------------------------------------------------------------------------
+# Upgrade Handling
+#-----------------------------------------------------------------------------
+
+## Applies effects data to this node's parameters. Called during initialization.
+func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
+	lifespan = BASE_LIFESPAN * effects_data.collectible_lifespan_mult
+
+	attraction_radius = BASE_ATTRACTION_RADIUS + effects_data.collection_radius_add
+
+	lifespan = max(0.1, lifespan) # Ensure lifespan is positive
+	attraction_radius = max(0.0, attraction_radius) # Ensure radius isn't negative
+
+	# Update the actual collision shape radius if the node is ready
+	if is_node_ready() and attraction_shape and attraction_shape.shape:
+		attraction_shape.shape.radius = attraction_radius
+	elif attraction_shape and attraction_shape.shape:
+		attraction_shape.shape.radius = attraction_radius
 
 #-----------------------------------------------------------------------------
 # Signal Handlers & Pickup Logic
