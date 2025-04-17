@@ -106,7 +106,7 @@ func get_upgrade_cost(upgrade_id: String) -> float:
 	if current_level >= data.max_purchase_level: return -1.0 # Max level reached
 
 	var next_level_index = current_level
-	var cost = data.cost * pow(data.cost_scaling_factor, next_level_index)
+	var cost = data.money_cost * pow(data.money_cost_scaling_factor, next_level_index)
 	return cost
 
 ## Gets the currently purchased level for a given upgrade ID.
