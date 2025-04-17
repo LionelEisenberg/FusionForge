@@ -57,12 +57,14 @@ func _on_energy_updated(current: float, max_val: float) -> void:
 		energy_meter.max_value = max_val
 		energy_meter.value = current
 		energy_meter.tooltip_text = "Energy: %d / %d eV" % [int(current), int(max_val)]
+		(energy_meter.get_child(0) as Label).text = "Energy: %d / %d eV" % [int(current), int(max_val)]
 
 func _on_stability_updated(current: float, max_val: float) -> void:
 	if durability_meter:
 		durability_meter.max_value = max_val
 		durability_meter.value = current
 		durability_meter.tooltip_text = "Durability: %d / %d" % [int(current), int(max_val)]
+		(durability_meter.get_child(0) as Label).text = "Durability: %d / %d" % [int(current), int(max_val)]
 
 
 func _on_run_stats_updated(run_stats: RunStats) -> void:	

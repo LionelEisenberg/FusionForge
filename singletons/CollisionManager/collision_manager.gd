@@ -14,7 +14,7 @@ signal request_element_spawn(element_type: String, position: Vector2, velocity: 
 signal request_element_destroy(element: Element) # To Reactor/RunScene
 
 signal spawn_energy_collectible(position: Vector2, value: float) # To CollectibleSpawner
-#signal spawn_fusion_core_collectible(position: Vector2, value: float) # To CollectibleSpawner
+signal spawn_fusion_core_collectible(position: Vector2, value: float) # To CollectibleSpawner
 
 #-----------------------------------------------------------------------------
 # Exports
@@ -29,7 +29,7 @@ signal spawn_energy_collectible(position: Vector2, value: float) # To Collectibl
 @export var momentum_stability_factor: float = 0.005 # Stability damage from collision scales slightly with momentum
 
 # Factors modifying speed after collision
-@export var wall_collision_slowing_factor: float = 2.0
+@export var wall_collision_slowing_factor: float = 1.0
 
 # Path to the folder containing FusionRecipe .tres files
 @export var recipe_folder_path: String = "res://resources/recipes/"
@@ -116,7 +116,7 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 	# Check if this fusion product is newly discovered (using SaveGameData)
 	if _live_save_data and not _live_save_data.discovered_fusions.has(recipe.result_type):
 		_live_save_data.discovered_fusions[recipe.result_type] = true
-		fusion_core_awarded.emit()
+		spawn_fusion_core_collectible.emit(_find_collision_position(e1, e2), 1)
 		PersistenceManager.save_data()
 
 	# Notify RunManager about the fusion event

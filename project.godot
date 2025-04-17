@@ -19,8 +19,9 @@ config/icon="res://icon.svg"
 
 PersistenceManager="*res://singletons/PersistenceManager/persistence_manager.gd"
 GameManager="*res://singletons/GameManager/game_manager.gd"
-RunManager="*res://singletons/RunManager.gd/run_manager.gd"
+RunManager="*res://singletons/RunManager/run_manager.gd"
 CollisionManager="*res://singletons/CollisionManager/collision_manager.gd"
+UpgradeManager="*res://singletons/UpgradeManager/upgrade_manager.gd"
 
 [display]
 

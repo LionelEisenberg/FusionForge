@@ -7,6 +7,8 @@ extends Resource
 
 @export var discovered_fusions: Dictionary = {} 
 
+@export var purchased_upgrades: Dictionary = {}
+
 func _to_string() -> String:
-	return "SaveGameData(Money: %d, Cores: %d, Discoveries: %s)" % \
-			[money, fusion_cores, str(discovered_fusions.keys())]
+	return "SaveGameData(Money: %d, Cores: %d, Discoveries: %s, Purchased Upgrades: %s)" % \
+			[money, fusion_cores, str(discovered_fusions.keys()), str(purchased_upgrades)]

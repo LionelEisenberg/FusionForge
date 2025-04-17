@@ -18,7 +18,7 @@ extends Area2D
 # Internal velocity for movement calculation
 var _velocity: Vector2 = Vector2.ZERO
 var _is_attracted: bool = false
-var _time_alive: float = 0.0
+var _time_attracted: float = 0.0
 
 #-----------------------------------------------------------------------------
 # Node References
@@ -38,15 +38,17 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered_pickup_area)
 	attraction_area.mouse_entered.connect(_on_mouse_entered_attraction_area)
 
-	get_tree().create_timer(lifespan).timeout.connect(_on_lifespan_timeout)
+	if lifespan >= 0.0:
+		get_tree().create_timer(lifespan).timeout.connect(_on_lifespan_timeout)
 
 
-func _physics_process(delta: float) -> void:
-	_time_alive += delta
-	
+func _physics_process(delta: float) -> void:	
 	# Apply attraction force if mouse is in the outer radius
 	if _is_attracted:
-		var age_t = clampf(_time_alive / max_scale_age, 0.0, 1.0) # Normalized age (0 to 1)
+		_time_attracted += delta
+		if _time_attracted >= max_scale_age:
+			_on_mouse_entered_pickup_area()
+		var age_t = clampf(_time_attracted / max_scale_age, 0.0, 1.0) # Normalized age (0 to 1)
 		var current_scale = 1.0 + (age_t * age_scaling_factor)
 		
 		var acceleration_vec: Vector2 = Vector2.ZERO

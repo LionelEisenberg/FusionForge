@@ -82,6 +82,7 @@ func conclude_run() -> void:
 					printerr("RunScene: Could not find CollisionShape2D child in Element ", child.name, " to disable.")
 				child.set_physics_process(false)
 			if child is Collectible:
+				child.apply_pickup_effect()
 				child.queue_free()
 
 	else:

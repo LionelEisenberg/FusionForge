@@ -35,7 +35,7 @@ func _ready() -> void:
 
 	if CollisionManager:
 		CollisionManager.spawn_energy_collectible.connect(_on_spawn_energy_value)
-		#CollisionManager.spawn_fusion_core.connect(_on_spawn_fusion_core)
+		CollisionManager.spawn_fusion_core_collectible.connect(_on_spawn_fusion_core)
 	else:
 		printerr("CollectibleSpawner: CollisionManager not found!")
 
