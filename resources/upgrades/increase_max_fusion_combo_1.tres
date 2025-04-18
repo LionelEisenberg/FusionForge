@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://dotwjtqik8ifs"]
+
+[ext_resource type="Script" uid="uid://cugp1kgd7m2th" path="res://scripts/core/upgrade_data.gd" id="1_p2mwv"]
+
+[resource]
+script = ExtResource("1_p2mwv")
+id = "increase_max_fusion_combo_1"
+display_name = "Increase Max Fusion Combo (I)"
+description = "Increases the maximum the fusion combo can reach."
+max_purchase_level = 1
+prerequisites = Array[String](["increase_fusion_combo_duration_1"])
+money_cost = 0.0
+money_cost_scaling_factor = 1.0
+fusion_core_cost = 0.0
+fusion_core_cost_scaling_factor = 1.0
+base_wall_collision_energy_add = 0.0
+base_element_collision_energy_add = 0.0
+momentum_energy_factor_mult = 1.0
+base_stability_damage_mult = 1.0
+momentum_stability_factor_mult = 1.0
+wall_collision_slowing_factor_mult = 1.0
+spawn_timer_wait_time_add = 0.0
+max_elements_add = 0
+initial_speed_add = 0.0
+base_accel_magnitude_add = 0.0
+force_to_energy_conversion_factor_mult = 1.0
+fusion_recipe_to_unlock = ""
+collection_radius_add = 0.0
+collectible_lifespan_mult = 1.0
+max_stability_add = 0.0
+max_energy_add = 0.0
+base_money_per_collision_add = 0.0
+combo_decay_time_add = 0.0
+max_combo_cap_add = 1.0
+metadata/_custom_type_script = "uid://cugp1kgd7m2th"
