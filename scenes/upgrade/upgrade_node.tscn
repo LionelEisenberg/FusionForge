@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8ljise60gc1x"]
+
+[ext_resource type="Texture2D" uid="uid://bh052jvejm4s5" path="res://icon.svg" id="1_ycfkb"]
+[ext_resource type="Script" uid="uid://bgscnwv8v2wkj" path="res://scripts/upgrade/upgrade_node.gd" id="2_ycfkb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36dbd"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[node name="UpgradeNode" type="TextureButton"]
+custom_minimum_size = Vector2(64, 64)
+tooltip_text = "HI THIS IS THE UPGRADE NODE"
+texture_normal = ExtResource("1_ycfkb")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("2_ycfkb")
+
+[node name="Overlay" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_36dbd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="LevelLabel" type="Label" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 3
+theme_override_font_sizes/font_size = 11
+text = "0 / 5"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bh052jvejm4s5"
-path="res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
+uid="uid://cjn4tka81nuuf"
+path="res://.godot/imported/increase_spawn_rate_1.svg-d4b6c5722dd60dca8186ce629d1c21a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.svg"
-dest_files=["res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"]
+source_file="res://assets/icons/upgrades/increase_spawn_rate_1.svg"
+dest_files=["res://.godot/imported/increase_spawn_rate_1.svg-d4b6c5722dd60dca8186ce629d1c21a3.ctex"]
 
 [params]
 

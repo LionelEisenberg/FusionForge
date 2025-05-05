@@ -6,9 +6,9 @@
 script = ExtResource("1_i2k36")
 id = "improve_acceleration_efficiency_1"
 display_name = "Increase Acceleration Efficiency (I)"
-description = "Increases acceleration efficiency so that it costs less energy to speed elements up."
+description = "Improves acceleration efficiency so that it costs less energy to speed elements up."
 max_purchase_level = 1
-prerequisites = Array[String]([])
+prerequisites = Array[String](["increase_max_elements_1"])
 money_cost = 0.0
 money_cost_scaling_factor = 1.0
 fusion_core_cost = 0.0

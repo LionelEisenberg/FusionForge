@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://dm8ujlmypb1tb"]
+
+[ext_resource type="Script" uid="uid://bt1eki3qpm1hr" path="res://scripts/upgrade/upgrade_view.gd" id="1_3t83i"]
+[ext_resource type="PackedScene" uid="uid://b8ljise60gc1x" path="res://scenes/upgrade/upgrade_node.tscn" id="2_3t83i"]
+[ext_resource type="Resource" uid="uid://bwsojt67q8fw6" path="res://resources/upgrade_layout/upgrade_tree_layour.tres" id="3_vyv2k"]
+[ext_resource type="Script" uid="uid://dddd25g1jco2l" path="res://scripts/upgrade/upgrade_node_container.gd" id="4_3t83i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3t83i"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ug2f"]
+bg_color = Color(0.194349, 0.194349, 0.194349, 1)
+
+[node name="UpgradeView" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_3t83i")
+script = ExtResource("1_3t83i")
+
+[node name="UpgradeNodeContainer" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_8ug2f")
+script = ExtResource("4_3t83i")
+upgrade_node_scene = ExtResource("2_3t83i")
+layout_resource = ExtResource("3_vyv2k")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+offset_right = 237.0
+offset_bottom = 269.0
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.5
+offset_right = 47.5
+offset_bottom = 131.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 100
+
+[node name="Button" type="Button" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+text = "START RUN"

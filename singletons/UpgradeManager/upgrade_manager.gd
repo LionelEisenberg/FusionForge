@@ -18,7 +18,7 @@ const UPGRADE_RESOURCE_DIR := "res://resources/upgrades/" # Example path, adjust
 #-----------------------------------------------------------------------------
 # State Variables
 #-----------------------------------------------------------------------------
-var _all_upgrades: Dictionary = {}
+var _all_upgrades: Dictionary[String, UpgradeData] = {}
 var _live_save_data: SaveGameData = null
 var _cached_upgrade_effects: UpgradeEffects = UpgradeEffects.new()
 

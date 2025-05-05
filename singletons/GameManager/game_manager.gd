@@ -38,6 +38,7 @@ var money_per_collision: float = BASE_MONEY_PER_COLLISION
 
 # --- Parameters linked with Override / Testing ---
 var invincible_mode = false
+var infinite_resources: bool = true # Allows purchasing upgrades without cost
 
 #-----------------------------------------------------------------------------
 # Initialization
@@ -92,14 +93,16 @@ func add_money(amount: int) -> void:
 	money_updated.emit(live_save_data.money)
 
 func can_spend_money(amount: int) -> bool:
+	if infinite_resources: return true
 	return live_save_data.money >= amount
 
 func spend_money(amount: int) -> bool:
-	if amount <= 0: return false
+	if amount < 0: return false
 	if can_spend_money(amount): # Use helper function
 		live_save_data.money -= amount
 		money_updated.emit(live_save_data.money)
 		return true
+	print('hi')
 	return false
 
 # --- Fusion Cores ---
@@ -130,7 +133,6 @@ func get_max_energy() -> float:
 	return max_energy
 
 func add_energy(amount: float) -> void:
-	print(amount)
 	if amount <= 0: return
 	current_energy = clampf(current_energy + amount, 0.0, max_energy)
 	energy_updated.emit(current_energy, max_energy)

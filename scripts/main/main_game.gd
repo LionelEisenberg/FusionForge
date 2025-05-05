@@ -8,6 +8,7 @@ extends Node2D
 
 @export var subviewport_path: NodePath = NodePath("")
 @export var subviewport_container_path: NodePath = NodePath("")
+@export var top_level_run_scene_container_path: NodePath = NodePath("")
 
 #-----------------------------------------------------------------------------
 # Override exports
@@ -24,6 +25,7 @@ var upgrade_menu_instance: Control = null
 
 var subviewport_node: SubViewport = null
 var subviewport_container_node: SubViewportContainer = null
+var top_level_run_scene_container_node: HBoxContainer = null
 
 # Game State Machine
 enum GameState {
@@ -58,27 +60,33 @@ func _ready() -> void:
 			printerr("MainGame: Failed to get SubViewport node from path: ", subviewport_path)
 
 	if subviewport_container_path.is_empty():
-		printerr("MainGame: SubViewport Container Path not assigned in Inspector!")
+		printerr("MainGame: SubViewportContainer Path not assigned in Inspector!")
 	else:
 		subviewport_container_node = get_node_or_null(subviewport_container_path) as SubViewportContainer
 		if subviewport_container_node == null:
 			printerr("MainGame: Failed to get SubViewportContainer node from path: ", subviewport_container_path)
 
-	# --- Defer Upgrade Menu Instantiation ---
-	# TODO: Instantiate UpgradeMenu scene when it's ready to be implemented.
-	# if upgrade_menu_scene:
-		# upgrade_menu_instance = upgrade_menu_scene.instantiate()
-		# add_child(upgrade_menu_instance) # Add as direct child, or to a specific UI layer
-		# # Connect its signal to start a run
-		# if upgrade_menu_instance.has_signal("start_run_requested"):
-			# upgrade_menu_instance.start_run_requested.connect(start_new_run)
-		# else:
-			# printerr("MainGame: Upgrade Menu scene missing 'start_run_requested' signal!")
-	# else:
-		# printerr("MainGame: Upgrade Menu Scene not assigned in Inspector!")
+	if top_level_run_scene_container_path.is_empty():
+		printerr("MainGame: TopLevelRunSceneContainer Path not assigned in Inspector!")
+	else:
+		top_level_run_scene_container_node = get_node_or_null(top_level_run_scene_container_path) as HBoxContainer
+		if top_level_run_scene_container_node == null:
+			printerr("MainGame: Failed to get TopLevelRunSceneContainer node from path: ", top_level_run_scene_container_path)
+
+	# --- Upgrade Menu Instantiation ---
+	if upgrade_menu_scene:
+		upgrade_menu_instance = upgrade_menu_scene.instantiate()
+		add_child(upgrade_menu_instance) # Add as direct child, or to a specific UI layer
+		# Connect its signal to start a run
+		if upgrade_menu_instance.has_signal("start_run_requested"):
+			upgrade_menu_instance.start_run_requested.connect(start_new_run)
+		else:
+			printerr("MainGame: Upgrade Menu scene missing 'start_run_requested' signal!")
+	else:
+		printerr("MainGame: Upgrade Menu Scene not assigned in Inspector!")
 
 	# Start in the upgrading state
-	set_game_state(GameState.STARTING_RUN)
+	set_game_state(GameState.UPGRADING)
 
 
 func _notification(what):
@@ -111,15 +119,13 @@ func set_game_state(new_state: GameState) -> void:
 				run_scene_instance = null
 
 			# Show upgrade menu, hide run view container
-			# TODO: Show UpgradeMenu when implemented
-			# if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = true
-			if subviewport_container_node: subviewport_container_node.visible = false
+			if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = true
+			if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = false
 
 		GameState.STARTING_RUN:
 			# Hide upgrade menu, show run view container
-			# TODO: Hide UpgradeMenu when implemented
-			# if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = false
-			if subviewport_container_node: subviewport_container_node.visible = true
+			if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = false
+			if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = true
 
 			# Clean up just in case (should already be null from UPGRADING state)
 			if is_instance_valid(run_scene_instance):
@@ -161,7 +167,6 @@ func set_game_state(new_state: GameState) -> void:
 
 ## Triggered by Upgrade Menu signal (when connected)
 func start_new_run() -> void:
-	# TODO: Ensure upgrade_menu_instance is valid before allowing start, or disable button?
 	if current_state == GameState.UPGRADING:
 		set_game_state(GameState.STARTING_RUN)
 
