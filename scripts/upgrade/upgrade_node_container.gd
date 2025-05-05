@@ -49,7 +49,6 @@ func _ready() -> void:
 
 # --- Input Handling for Panning ---
 func _gui_input(event: InputEvent) -> void:
-	print(event)
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:

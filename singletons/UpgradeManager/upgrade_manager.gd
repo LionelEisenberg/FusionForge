@@ -159,7 +159,7 @@ func calculate_and_emit_effects() -> void:
 		effects_data.base_money_per_collision_add += data.base_money_per_collision_add * level
 		effects_data.combo_decay_time_add += data.combo_decay_time_add * level
 		effects_data.max_combo_cap_add += data.max_combo_cap_add * level
-		effects_data.spawn_timer_wait_time_add += data.spawn_timer_wait_time_add * level
+		effects_data.spawn_timer_wait_time_remove += data.spawn_timer_wait_time_remove * level
 
 		# --- Accumulate Multiplicative Effects ---
 		# Apply multiplier for each level purchased (base * mult^level)

@@ -38,7 +38,7 @@ extends Resource
 
 ## --- Reactor Effects ---
 @export_group("Reactor Effects")
-@export var spawn_timer_wait_time_add: float = 0.0 # Affects ElementSpawner._spawn_timer.wait_time (Negative value speeds up)
+@export var spawn_timer_wait_time_remove: float = 0.0 # Affects ElementSpawner._spawn_timer.wait_time (Negative value speeds up)
 @export var max_elements_add: int = 0 # Affects GameManager.max_element_capacity
 @export var initial_speed_add: float = 0.0 # Affects ElementSpawner.initial_speed
 @export var base_accel_magnitude_add: float = 0.0 # Affects GameManager.base_acceleration_magnitude

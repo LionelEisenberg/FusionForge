@@ -17,7 +17,7 @@ extends Resource
 @export var base_money_per_collision_add: float = 0.0
 @export var combo_decay_time_add: float = 0.0
 @export var max_combo_cap_add: float = 0.0 # Changed to float
-@export var spawn_timer_wait_time_add: float = 0.0 # Negative value speeds up spawn
+@export var spawn_timer_wait_time_remove: float = 0.0 # Negative value speeds up spawn
 
 # --- Multiplicative Effects (Start from base value, then multiply by these) ---
 # Default to 1.0, values are multiplied together (e.g., 1.1 * 1.1 for two levels of +10%)
