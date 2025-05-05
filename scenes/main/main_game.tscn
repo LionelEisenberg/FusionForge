@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://loaefnvwwg85"]
+[gd_scene load_steps=7 format=3 uid="uid://loaefnvwwg85"]
 
-[ext_resource type="Script" uid="uid://2paun8q5kw4n" path="res://scripts/main/main_game.gd" id="1_exxld"]
+[ext_resource type="Script" uid="uid://bshcexhy16i3j" path="res://scripts/main/main_game.gd" id="1_exxld"]
 [ext_resource type="PackedScene" uid="uid://mdcotdqhkfpm" path="res://scenes/run/run.tscn" id="2_2jj13"]
 [ext_resource type="PackedScene" uid="uid://bntbyn7ulcarj" path="res://scenes/ui/game_ui.tscn" id="3_5fn2n"]
 [ext_resource type="PackedScene" uid="uid://dm8ujlmypb1tb" path="res://scenes/upgrade/upgrade_view.tscn" id="3_36pl1"]
@@ -13,13 +13,20 @@ func _ready() -> void:
 	timeout.connect(PersistenceManager.save_data)
 "
 
+[sub_resource type="GDScript" id="GDScript_36pl1"]
+script/source = "extends HBoxContainer
+
+func _input(event: InputEvent) -> void:
+	print(event)
+"
+
 [node name="MainGame" type="Node2D"]
 script = ExtResource("1_exxld")
 run_scene = ExtResource("2_2jj13")
 upgrade_menu_scene = ExtResource("3_36pl1")
 subviewport_path = NodePath("TopLevelRunSceneContainer/RunSceneViewportContainer/SubViewport")
-subviewport_container_path = NodePath("TopLevelRunSceneContainer/RunSceneViewportContainer")
 top_level_run_scene_container_path = NodePath("TopLevelRunSceneContainer")
+upgrade_canvas_layer_path = NodePath("UpgradeCanvasLayer")
 override_save_file = true
 
 [node name="SaveTimer" type="Timer" parent="."]
@@ -27,6 +34,7 @@ autostart = true
 script = SubResource("GDScript_2jj13")
 
 [node name="TopLevelRunSceneContainer" type="HBoxContainer" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -35,6 +43,8 @@ offset_bottom = 720.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+mouse_force_pass_scroll_events = false
+script = SubResource("GDScript_36pl1")
 
 [node name="RunSceneViewportContainer" type="SubViewportContainer" parent="TopLevelRunSceneContainer"]
 layout_mode = 2
@@ -44,7 +54,9 @@ size_flags_stretch_ratio = 1.06
 handle_input_locally = false
 physics_object_picking = true
 size = Vector2i(960, 720)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="GameUi" parent="TopLevelRunSceneContainer" instance=ExtResource("3_5fn2n")]
 layout_mode = 2
+
+[node name="UpgradeCanvasLayer" type="CanvasLayer" parent="."]

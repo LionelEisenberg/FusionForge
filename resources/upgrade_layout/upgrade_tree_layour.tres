@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeTreeLayout" load_steps=2 format=3 uid="uid://bwsojt67q8fw6"]
 
-[ext_resource type="Script" uid="uid://dsexwliacokov" path="res://scripts/core/upgrade_tree_layout.gd" id="1_7scmf"]
+[ext_resource type="Script" uid="uid://dsuebmd0vnc4i" path="res://scripts/core/upgrade_tree_layout.gd" id="1_7scmf"]
 
 [resource]
 script = ExtResource("1_7scmf")
@@ -11,14 +11,16 @@ node_positions = Dictionary[String, Vector2]({
 "improve_acceleration_efficiency_1": Vector2(780, 680),
 "increase_acceleration_force_1": Vector2(640, 680),
 "increase_base_collision_energy_1": Vector2(970, 560),
+"increase_base_money_collision_1": Vector2(840, 160),
 "increase_collectible_lifespan_1": Vector2(1100, 460),
 "increase_collection_radius_1": Vector2(1200, 460),
+"increase_fusion_combo_duration_1": Vector2(440, 160),
 "increase_initial_speed_1": Vector2(500, 680),
 "increase_max_elements_1": Vector2(640, 560),
 "increase_max_energy_1": Vector2(840, 460),
+"increase_max_fusion_combo_1": Vector2(240, 160),
 "increase_max_stability_1": Vector2(440, 460),
 "increase_momentum_collision_energy_1": Vector2(970, 360),
 "increase_spawn_rate_1": Vector2(640, 360),
 "unlock_fusion_h_h_he": Vector2(640, 160)
 })
-metadata/_custom_type_script = "uid://dsexwliacokov"

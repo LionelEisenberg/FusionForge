@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://dm8ujlmypb1tb"]
 
-[ext_resource type="Script" uid="uid://bt1eki3qpm1hr" path="res://scripts/upgrade/upgrade_view.gd" id="1_3t83i"]
+[ext_resource type="Script" uid="uid://b47gkp0r6jnxe" path="res://scripts/upgrade/upgrade_view.gd" id="1_3t83i"]
 [ext_resource type="PackedScene" uid="uid://b8ljise60gc1x" path="res://scenes/upgrade/upgrade_node.tscn" id="2_3t83i"]
 [ext_resource type="Resource" uid="uid://bwsojt67q8fw6" path="res://resources/upgrade_layout/upgrade_tree_layour.tres" id="3_vyv2k"]
-[ext_resource type="Script" uid="uid://dddd25g1jco2l" path="res://scripts/upgrade/upgrade_node_container.gd" id="4_3t83i"]
+[ext_resource type="Script" uid="uid://bjxh60rf1e26r" path="res://scripts/upgrade/upgrade_node_container.gd" id="4_3t83i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3t83i"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 1)
@@ -30,7 +30,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_8ug2f")
 script = ExtResource("4_3t83i")
 upgrade_node_scene = ExtResource("2_3t83i")

@@ -7,8 +7,8 @@ extends Node2D
 @export var upgrade_menu_scene: PackedScene
 
 @export var subviewport_path: NodePath = NodePath("")
-@export var subviewport_container_path: NodePath = NodePath("")
 @export var top_level_run_scene_container_path: NodePath = NodePath("")
+@export var upgrade_canvas_layer_path: NodePath = NodePath("")
 
 #-----------------------------------------------------------------------------
 # Override exports
@@ -24,8 +24,9 @@ var run_scene_instance: Node = null
 var upgrade_menu_instance: Control = null
 
 var subviewport_node: SubViewport = null
-var subviewport_container_node: SubViewportContainer = null
 var top_level_run_scene_container_node: HBoxContainer = null
+var upgrade_canvas_layer_node: CanvasLayer = null
+
 
 # Game State Machine
 enum GameState {
@@ -59,24 +60,25 @@ func _ready() -> void:
 		if subviewport_node == null:
 			printerr("MainGame: Failed to get SubViewport node from path: ", subviewport_path)
 
-	if subviewport_container_path.is_empty():
-		printerr("MainGame: SubViewportContainer Path not assigned in Inspector!")
-	else:
-		subviewport_container_node = get_node_or_null(subviewport_container_path) as SubViewportContainer
-		if subviewport_container_node == null:
-			printerr("MainGame: Failed to get SubViewportContainer node from path: ", subviewport_container_path)
-
 	if top_level_run_scene_container_path.is_empty():
 		printerr("MainGame: TopLevelRunSceneContainer Path not assigned in Inspector!")
 	else:
 		top_level_run_scene_container_node = get_node_or_null(top_level_run_scene_container_path) as HBoxContainer
 		if top_level_run_scene_container_node == null:
 			printerr("MainGame: Failed to get TopLevelRunSceneContainer node from path: ", top_level_run_scene_container_path)
+	
+	if upgrade_canvas_layer_path.is_empty():
+		printerr("MainGame: UpgradeCanvasLayer Path not assigned in Inspector!")
+	else:
+		upgrade_canvas_layer_node = get_node_or_null(upgrade_canvas_layer_path) as CanvasLayer
+		if upgrade_canvas_layer_node == null:
+			printerr("MainGame: Failed to get UpgradeCanvasLayerNode node from path: ", upgrade_canvas_layer_path)
+
 
 	# --- Upgrade Menu Instantiation ---
 	if upgrade_menu_scene:
 		upgrade_menu_instance = upgrade_menu_scene.instantiate()
-		add_child(upgrade_menu_instance) # Add as direct child, or to a specific UI layer
+		upgrade_canvas_layer_node.add_child(upgrade_menu_instance) # Add as direct child, or to a specific UI layer
 		# Connect its signal to start a run
 		if upgrade_menu_instance.has_signal("start_run_requested"):
 			upgrade_menu_instance.start_run_requested.connect(start_new_run)
