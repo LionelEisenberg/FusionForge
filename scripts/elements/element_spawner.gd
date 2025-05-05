@@ -119,6 +119,7 @@ func start_spawning() -> void:
 
 	update_spawn_rate(spawn_wait_time)
 	_spawn_timer.start()
+	_on_spawn_timer_timeout() # Spawn an element at the beginning
 
 ## Stops the spawning process.
 func stop_spawning() -> void:
