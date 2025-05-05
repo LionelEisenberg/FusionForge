@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://loaefnvwwg85"]
+[gd_scene load_steps=6 format=3 uid="uid://loaefnvwwg85"]
 
 [ext_resource type="Script" uid="uid://bshcexhy16i3j" path="res://scripts/main/main_game.gd" id="1_exxld"]
 [ext_resource type="PackedScene" uid="uid://mdcotdqhkfpm" path="res://scenes/run/run.tscn" id="2_2jj13"]
@@ -11,13 +11,6 @@ script/source = "extends Timer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	timeout.connect(PersistenceManager.save_data)
-"
-
-[sub_resource type="GDScript" id="GDScript_36pl1"]
-script/source = "extends HBoxContainer
-
-func _input(event: InputEvent) -> void:
-	print(event)
 "
 
 [node name="MainGame" type="Node2D"]
@@ -44,7 +37,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
-script = SubResource("GDScript_36pl1")
 
 [node name="RunSceneViewportContainer" type="SubViewportContainer" parent="TopLevelRunSceneContainer"]
 layout_mode = 2

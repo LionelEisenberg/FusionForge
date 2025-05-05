@@ -179,4 +179,4 @@ func start_new_run() -> void:
 ## Called by RunScene signal when its conclusion sequence (results popup) is done.
 func _on_run_conclusion_finished() -> void:
 	if current_state == GameState.RUNNING:
-		set_game_state(GameState.STARTING_RUN)
+		set_game_state(GameState.UPGRADING)
