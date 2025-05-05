@@ -2,7 +2,7 @@
 
 [ext_resource type="StyleBox" uid="uid://cy2mbg6natjml" path="res://assets/styleboxes/GameUI.tres" id="1_bma8u"]
 [ext_resource type="LabelSettings" uid="uid://b285iamcnlkh" path="res://assets/labelsettings/run_results_popup_stat_titles.tres" id="2_fct72"]
-[ext_resource type="Script" uid="uid://cew87wcfa88yw" path="res://scripts/ui/game_ui.gd" id="2_ru5ln"]
+[ext_resource type="Script" uid="uid://er5hu3j1k6uu" path="res://scripts/ui/game_ui.gd" id="2_ru5ln"]
 [ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="3_ru5ln"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fct72"]

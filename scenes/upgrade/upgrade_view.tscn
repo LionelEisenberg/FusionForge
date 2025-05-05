@@ -1,15 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dm8ujlmypb1tb"]
+[gd_scene load_steps=8 format=3 uid="uid://dm8ujlmypb1tb"]
 
 [ext_resource type="Script" uid="uid://b47gkp0r6jnxe" path="res://scripts/upgrade/upgrade_view.gd" id="1_3t83i"]
+[ext_resource type="Theme" uid="uid://dcf2x1pbw7dob" path="res://assets/themes/main_theme.tres" id="1_817m1"]
 [ext_resource type="PackedScene" uid="uid://b8ljise60gc1x" path="res://scenes/upgrade/upgrade_node.tscn" id="2_3t83i"]
 [ext_resource type="Resource" uid="uid://bwsojt67q8fw6" path="res://resources/upgrade_layout/upgrade_tree_layour.tres" id="3_vyv2k"]
 [ext_resource type="Script" uid="uid://bjxh60rf1e26r" path="res://scripts/upgrade/upgrade_node_container.gd" id="4_3t83i"]
+[ext_resource type="StyleBox" uid="uid://ds8pybhlk30f" path="res://assets/styleboxes/UpgradeResourcePanel.tres" id="6_817m1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3t83i"]
 bg_color = Color(0.196078, 0.196078, 0.196078, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ug2f"]
-bg_color = Color(0.194349, 0.194349, 0.194349, 1)
 
 [node name="UpgradeView" type="Panel"]
 anchors_preset = 15
@@ -20,6 +19,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 1
+theme = ExtResource("1_817m1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_3t83i")
 script = ExtResource("1_3t83i")
 
@@ -30,29 +30,88 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_8ug2f")
+theme = ExtResource("1_817m1")
 script = ExtResource("4_3t83i")
 upgrade_node_scene = ExtResource("2_3t83i")
 layout_resource = ExtResource("3_vyv2k")
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-offset_right = 237.0
-offset_bottom = 269.0
-mouse_filter = 1
-
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -47.5
-offset_right = 47.5
-offset_bottom = 131.0
-grow_horizontal = 2
-theme_override_constants/margin_top = 100
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 300.0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
 
-[node name="Button" type="Button" parent="MarginContainer"]
+[node name="ResourcesPanel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = ExtResource("6_817m1")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ResourcesPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ResourcesSection" type="VBoxContainer" parent="MarginContainer/ResourcesPanel/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ResourcesTitle" type="Label" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection"]
+layout_mode = 2
+text = "Resources"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection"]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="ResourcesGrid" type="GridContainer" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection"]
+layout_mode = 2
+size_flags_vertical = 6
+columns = 2
+
+[node name="MoneyLabel" type="Label" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection/ResourcesGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Money ($):"
+
+[node name="MoneyValue" type="Label" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection/ResourcesGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="CoresLabel" type="Label" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection/ResourcesGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fusion Cores (FC):"
+
+[node name="FusionCoreValue" type="Label" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection/ResourcesGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection"]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 15
+
+[node name="StartRunButton" type="Button" parent="MarginContainer/ResourcesPanel/MarginContainer/ResourcesSection/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

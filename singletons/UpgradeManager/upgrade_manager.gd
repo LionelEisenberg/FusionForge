@@ -86,7 +86,7 @@ func can_purchase(upgrade_id: String) -> bool:
 	if current_level >= data.max_purchase_level: return false
 
 	# Check prerequisites
-	if not _are_prerequisites_met(upgrade_id): return false
+	if not _are_all_prerequisites_met(upgrade_id): return false
 
 	# Check cost TODO: Implement Fusion Core Costs logic
 	var cost: float = get_upgrade_cost(upgrade_id)
@@ -210,7 +210,7 @@ func _load_all_upgrade_resources() -> void:
 
 
 ## Checks if all prerequisite upgrades for a given upgrade ID have been met.
-func _are_prerequisites_met(upgrade_id: String) -> bool:
+func _are_all_prerequisites_met(upgrade_id: String) -> bool:
 	var data: UpgradeData = get_upgrade_data(upgrade_id)
 	if data == null or data.prerequisites.is_empty(): return true # No data or no prereqs
 
@@ -218,3 +218,12 @@ func _are_prerequisites_met(upgrade_id: String) -> bool:
 		if get_purchased_level(prereq_id) < 1: # Check if prereq is purchased at least once
 			return false
 	return true # All prerequisites met
+
+func _at_least_one_prerequisite_met(upgrade_id: String) -> bool:
+	var data: UpgradeData = get_upgrade_data(upgrade_id)
+	if data == null or data.prerequisites.is_empty(): return true # No data or no prereqs
+
+	for prereq_id in data.prerequisites:
+		if get_purchased_level(prereq_id) >= 1: # Check if prereq is purchased at least once
+			return true
+	return false
