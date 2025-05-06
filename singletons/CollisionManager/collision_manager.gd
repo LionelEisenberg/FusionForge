@@ -26,7 +26,7 @@ const BASE_WALL_COLLISION_ENERGY: float = 2.0
 const BASE_STABILITY_DAMAGE: float = 1.0
 const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.05
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
-const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.0 # Note: Value > 1 slows more
+const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
 
 #-----------------------------------------------------------------------------
 # State Variables (Upgradeable)

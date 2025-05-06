@@ -4,7 +4,7 @@ extends Node2D
 # Constant Variables
 #-----------------------------------------------------------------------------
 # Base values for upgradeable parameters *before* upgrades are applied.
-const BASE_ACCELERATION_MAGNITUDE: float = 25.0
+const BASE_ACCELERATION_MAGNITUDE: float = 20.0
 const BASE_FORCE_TO_ENERGY_CONVERSION_FACTOR: float = 0.5
 
 #-----------------------------------------------------------------------------
