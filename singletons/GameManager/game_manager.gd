@@ -183,7 +183,7 @@ func calculate_and_award_money(run_stats: RunStats) -> int:
 	# Example calculation (Replace with actual formula from GDD)
 	var money_earned: int = int(collisions * money_per_collision * max_fusion_combo)
 
-	print("GameManager: Run ended. Stats: ", run_stats, "/n Money Earned: ", money_earned) # Removed status print
+	print("GameManager: Run ended. Stats: ", run_stats, "\n Money Earned: ", money_earned) # Removed status print
 
 	if money_earned > 0:
 		add_money(money_earned)

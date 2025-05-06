@@ -126,6 +126,16 @@ func _on_combo_timer_timeout() -> void:
 	_current_fusion_combo_multiplier = 1.0
 	fusion_combo_updated.emit(_current_fusion_combo_multiplier)
 
+
+#-----------------------------------------------------------------------------
+# Stat Changing Functions
+#-----------------------------------------------------------------------------
+
+## Called by EnergyCollectible when it's picked up.
+func register_energy_collected_from_pickup(amount: float) -> void:
+	if current_stats and _is_run_active: # Only track if a run is active and stats object exists
+		current_stats.total_energy_collected_from_pickups += amount
+
 func _on_fusion_processed(_e1 : Element, _e2 : Element, _result_element_data : Dictionary) -> void:
 	_register_fusion_for_combo()
 	
