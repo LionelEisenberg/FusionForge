@@ -38,7 +38,7 @@ var money_per_collision: float = BASE_MONEY_PER_COLLISION
 
 # --- Parameters linked with Override / Testing ---
 var invincible_mode = false
-var infinite_resources: bool = true # Allows purchasing upgrades without cost
+var infinite_resources: bool = false
 
 #-----------------------------------------------------------------------------
 # Initialization

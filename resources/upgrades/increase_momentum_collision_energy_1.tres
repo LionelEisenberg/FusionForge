@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://b3tja18bu626b"]
 
-[ext_resource type="Script" uid="uid://cugp1kgd7m2th" path="res://scripts/core/upgrade_data.gd" id="1_6hlcu"]
+[ext_resource type="Script" uid="uid://bpu2dheskc4qr" path="res://scripts/core/upgrade_data.gd" id="1_6hlcu"]
 
 [resource]
 script = ExtResource("1_6hlcu")
@@ -9,8 +9,8 @@ display_name = "Increase Momentum Collision Energy (I)"
 description = "Increases the momentum-based energy yield of Wall to Element and Element to Element collisions."
 max_purchase_level = 1
 prerequisites = Array[String](["increase_max_energy_1"])
-money_cost = 0.0
-money_cost_scaling_factor = 1.0
+money_cost = 10.0
+money_cost_scaling_factor = 1.15
 fusion_core_cost = 0.0
 fusion_core_cost_scaling_factor = 1.0
 base_wall_collision_energy_add = 0.0
@@ -19,7 +19,7 @@ momentum_energy_factor_mult = 1.1
 base_stability_damage_mult = 1.0
 momentum_stability_factor_mult = 1.0
 wall_collision_slowing_factor_mult = 1.0
-spawn_timer_wait_time_add = 0.0
+spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0
 base_accel_magnitude_add = 0.0
@@ -32,4 +32,3 @@ max_energy_add = 0.0
 base_money_per_collision_add = 0.0
 combo_decay_time_add = 0.0
 max_combo_cap_add = 0.0
-metadata/_custom_type_script = "uid://cugp1kgd7m2th"

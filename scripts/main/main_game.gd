@@ -16,6 +16,7 @@ extends Node2D
 
 @export var override_save_file: bool = false
 @export var invincible_mode: bool = false
+@export var infinite_resources: bool = false
 
 #-----------------------------------------------------------------------------
 # Variables
@@ -44,6 +45,7 @@ func _ready() -> void:
 	# Override Logic for Invincible Mode:
 	if GameManager:
 		GameManager.invincible_mode = invincible_mode
+		GameManager.infinite_resources = infinite_resources
 	
 	# Load persistent data first (ensure PersistenceManager loads before MainGame in Autoload)
 	if PersistenceManager:

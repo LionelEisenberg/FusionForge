@@ -104,9 +104,9 @@ func initialize(direction: Vector2) -> void:
 		_lifespan_timer = Timer.new()
 		_lifespan_timer.wait_time = lifespan
 		_lifespan_timer.one_shot = true
-		add_child(_lifespan_timer) # Add timer as child
 		_lifespan_timer.timeout.connect(_on_lifespan_timeout)
-		_lifespan_timer.start()
+		_lifespan_timer.autostart = true
+		add_child(_lifespan_timer) # Add timer as child
 
 	add_to_group("collectibles")
 

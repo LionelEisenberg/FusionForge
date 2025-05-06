@@ -13,8 +13,8 @@ extends Resource
 
 @export_category("Cost")
 @export_group("Money Costs")
-@export var money_cost: float = 0.0 # Base cost in Money for the first level of this upgrade.
-@export var money_cost_scaling_factor: float = 1.0 # Multiplier applied to the cost for each subsequent level. 1.0 means cost doesn't increase.
+@export var money_cost: float = 10.0 # Base cost in Money for the first level of this upgrade.
+@export var money_cost_scaling_factor: float = 1.15 # Multiplier applied to the cost for each subsequent level. 1.0 means cost doesn't increase.
 @export_group("Fusion Core Costs")
 @export var fusion_core_cost: float = 0.0 # Base cost in Money for the first level of this upgrade.
 @export var fusion_core_cost_scaling_factor: float = 1.0 # Multiplier applied to the cost for each subsequent level. 1.0 means cost doesn't increase.
