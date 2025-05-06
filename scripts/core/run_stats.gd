@@ -7,6 +7,8 @@ extends Resource
 @export var max_fusion_combo: float = 1.0
 ## Total duration of the run in seconds.
 @export var run_time: float = 0.0
+## Highest Collision Momentum for a given Run
+@export var highest_combined_collision_momentum: float = 0.0 
 
 #-----------------------------------------------------------------------------
 # Helper methods for calculations (used by GameManager or potentially UI)
