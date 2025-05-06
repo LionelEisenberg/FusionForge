@@ -20,8 +20,18 @@ func get_total_collisions() -> int:
 # Debugging
 #-----------------------------------------------------------------------------
 
-## Override the default _to_string method for better debugging output.
 func _to_string() -> String:
-	# Format the key data into a readable string.
-	return "RunStats(Time: %.1fs, Collisions: %s, MaxCombo: x%.1f)" % \
-			[run_time, str(collision_counts), max_fusion_combo]
+	var wall_collisions_str: String = "  Wall Collisions: %d" % collision_counts.x
+	var element_collisions_str: String = "  Element Collisions: %d" % collision_counts.y
+	var run_time_str: String = "  Run Time: %.1fs" % run_time
+	var max_combo_str: String = "  Max Fusion Combo: x%.1f" % max_fusion_combo
+	var highest_momentum_str: String = "  Highest Combined Collision Momentum: %.2f" % highest_combined_collision_momentum
+
+	# Join all parts with newline characters
+	return "RunStats:\n%s\n%s\n%s\n%s\n%s" % [
+		run_time_str,
+		wall_collisions_str,
+		element_collisions_str,
+		max_combo_str,
+		highest_momentum_str
+	]

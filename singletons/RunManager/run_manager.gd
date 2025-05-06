@@ -50,6 +50,7 @@ func _ready() -> void:
 		CollisionManager.wall_collision_processed.connect(_on_increment_wall_collision)
 		CollisionManager.element_collision_processed.connect(_on_increment_element_collision)
 		CollisionManager.fusion_processed.connect(_on_fusion_processed)
+		CollisionManager.element_collision_data_calculated.connect(_on_element_collision_data_calculated)
 	else:
 		printerr("RunManager: CRITICAL - Could not connect signals from CollisionManager!")
 
@@ -127,7 +128,10 @@ func _on_combo_timer_timeout() -> void:
 
 func _on_fusion_processed(_e1 : Element, _e2 : Element, _result_element_data : Dictionary) -> void:
 	_register_fusion_for_combo()
-	#_update_heaviest_element(result_element_data.mass)
+	
+func _on_element_collision_data_calculated(_e_a: Element, _e_b: Element, combined_momentum: float) -> void:
+	if current_stats and combined_momentum > current_stats.highest_combined_collision_momentum:
+		current_stats.highest_combined_collision_momentum = combined_momentum
 
 ## Registers a fusion event, updating combo logic. Called by CollisionManager.
 # TODO: Potentially accept fused element data here to determine increment amount later.
@@ -141,12 +145,6 @@ func _register_fusion_for_combo() -> void:
 	# Emit signals
 	fusion_combo_updated.emit(_current_fusion_combo_multiplier)
 	run_stats_updated.emit(current_stats)
-
-## Updates the heaviest element fused this run. Called by CollisionManager.
-#func _update_heaviest_element(fused_element_mass: float) -> void:
-	#if fused_element_mass > current_stats.heav:
-		#heaviest_element_fused_mass = fused_element_mass
-		#run_stats_updated.emit(get_run_stats()) # Direct emit
 
 ## Increments the wall collision counter. Called by CollisionManager.
 func _on_increment_wall_collision() -> void:

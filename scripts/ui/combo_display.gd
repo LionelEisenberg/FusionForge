@@ -57,7 +57,6 @@ func _update_timer_visual() -> void:
 
 		if wait_time > 0: # Avoid division by zero
 			var progress = clampf(time_left / wait_time, 0.0, 1.0) * 100.0
-			#print("%.02f, %.02f, %.02f" % time_left, wait_time, progress)
 			combo_timer_bar.value = progress
 		else:
 			combo_timer_bar.value = 0.0 

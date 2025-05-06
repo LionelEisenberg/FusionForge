@@ -63,7 +63,7 @@ func start_run() -> void:
 func conclude_run() -> void:
 	print("RunScene: Concluding run...")
 	if RunManager: RunManager.finalize_run_stats()
-	# Stop spawning elements (Assumes method exists if instance is valid)
+
 	if is_instance_valid(_element_spawner_ref):
 		_element_spawner_ref.stop_spawning()
 	

@@ -9,6 +9,7 @@ signal fusion_core_awarded() # To GameManager
 signal wall_collision_processed() # To RunManager
 signal element_collision_processed() # To RunManager
 signal fusion_processed(element_a: Element, element_b: Element, result_element_data: Dictionary) # To RunManager
+signal element_collision_data_calculated(element_a: Element, element_b: Element, combined_momentum: float) # To RunManager
 
 signal request_element_spawn(element_type: String, position: Vector2, velocity: Vector2) # To ElementSpawner/Reactor
 signal request_element_destroy(element: Element) # To Reactor/RunScene
@@ -79,7 +80,10 @@ func _on_element_pair_collided(element_a: Element, element_b: Element) -> void:
 	if not is_instance_valid(element_a) or not is_instance_valid(element_b):
 		return
 
-	var recipe: FusionRecipe = _check_fusion_conditions(element_a, element_b)
+	var combined_momentum = element_a.get_momentum() + element_b.get_momentum()
+	element_collision_data_calculated.emit(element_a, element_b, combined_momentum)
+
+	var recipe: FusionRecipe = _check_fusion_conditions(element_a, element_b, combined_momentum)
 
 	if recipe:
 		_handle_fusion(element_a, element_b, recipe)
@@ -140,9 +144,7 @@ func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
 #-----------------------------------------------------------------------------
 
 ## Checks if conditions for fusion are met for two elements. Returns recipe if true, null otherwise.
-func _check_fusion_conditions(e1: Element, e2: Element) -> FusionRecipe:
-	var combined_momentum = e1.get_momentum() + e2.get_momentum()
-
+func _check_fusion_conditions(e1: Element, e2: Element, combined_momentum: float) -> FusionRecipe:
 	for recipe in fusion_recipes:
 		if recipe.reactants_match(e1.element_type, e2.element_type):
 			if combined_momentum >= recipe.min_momentum:

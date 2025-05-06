@@ -96,7 +96,6 @@ func _ready() -> void:
 func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
 	initial_speed = BASE_INITIAL_SPEED + effects_data.initial_speed_add
 	spawn_wait_time = BASE_SPAWN_WAIT_TIME - effects_data.spawn_timer_wait_time_remove
-	print(spawn_wait_time)
 	max_element_capacity = BASE_MAX_ELEMENT_CAPACITY + effects_data.max_elements_add
 
 	# Clamp / Validate values
