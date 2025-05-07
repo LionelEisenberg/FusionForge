@@ -4,8 +4,9 @@ extends TextureButton
 
 @export var upgrade_id: String = ""
 
-@onready var overlay: Panel = %Overlay
+@onready var overlay: Panel = %PurchasedOverlay
 @onready var level_label: Label = %LevelLabel
+@onready var upgrade_completed_border: Panel = %UpgradeCompletedBorder
 
 var _upgrade_data: UpgradeData = null
 
@@ -39,6 +40,7 @@ func update_display(data: UpgradeData, purchased_level: int, cost_money: float, 
 
 	# --- Update State ---
 	overlay.visible = (purchased_level == 0)
+	upgrade_completed_border.visible = (purchased_level == data.max_purchase_level)
 
 	# --- Update Tooltip ---
 	tooltip_text = _create_tooltip_text(data, purchased_level, cost_money, can_afford)
