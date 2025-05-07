@@ -1,7 +1,7 @@
 class_name SaveGameData
 extends Resource
 
-@export var money : int = 3
+@export var money : int = 25
 
 @export var fusion_cores: int = 0
 
