@@ -39,6 +39,9 @@ func _ready() -> void:
 		UpgradeManager.upgrade_purchased.connect(_on_upgrade_purchased)
 	else:
 		printerr("UpgradeView: UpgradeManager not found!")
+	
+	if GameManager:
+		GameManager.money_updated.connect(_update_all_node_displays)
 
 	# Build the graph display on ready
 	_build_upgrade_graph()

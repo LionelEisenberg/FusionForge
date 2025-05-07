@@ -95,13 +95,14 @@ func _ready() -> void:
 ## Called by _ready() to apply effects data to this node's parameters.
 func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
 	initial_speed = BASE_INITIAL_SPEED + effects_data.initial_speed_add
-	spawn_wait_time = BASE_SPAWN_WAIT_TIME - effects_data.spawn_timer_wait_time_remove
+	spawn_wait_time = BASE_SPAWN_WAIT_TIME + effects_data.spawn_timer_wait_time_remove
 	max_element_capacity = BASE_MAX_ELEMENT_CAPACITY + effects_data.max_elements_add
 
 	# Clamp / Validate values
 	initial_speed = max(0.0, initial_speed)
 	spawn_wait_time = max(0.05, spawn_wait_time) # Ensure wait time is positive and reasonably small
 	max_element_capacity = max(1, max_element_capacity) # Ensure at least 1 element can spawn
+
 	
 	if _spawn_timer:
 		_spawn_timer.wait_time = spawn_wait_time

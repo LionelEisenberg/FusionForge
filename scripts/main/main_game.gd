@@ -76,19 +76,6 @@ func _ready() -> void:
 		if upgrade_canvas_layer_node == null:
 			printerr("MainGame: Failed to get UpgradeCanvasLayerNode node from path: ", upgrade_canvas_layer_path)
 
-
-	# --- Upgrade Menu Instantiation ---
-	if upgrade_menu_scene:
-		upgrade_menu_instance = upgrade_menu_scene.instantiate()
-		upgrade_canvas_layer_node.add_child(upgrade_menu_instance) # Add as direct child, or to a specific UI layer
-		# Connect its signal to start a run
-		if upgrade_menu_instance.has_signal("start_run_requested"):
-			upgrade_menu_instance.start_run_requested.connect(start_new_run)
-		else:
-			printerr("MainGame: Upgrade Menu scene missing 'start_run_requested' signal!")
-	else:
-		printerr("MainGame: Upgrade Menu Scene not assigned in Inspector!")
-
 	# Start in the upgrading state
 	set_game_state(GameState.UPGRADING)
 
@@ -122,7 +109,18 @@ func set_game_state(new_state: GameState) -> void:
 				run_scene_instance.queue_free()
 				run_scene_instance = null
 
-			# Show upgrade menu, hide run view container
+			# --- Upgrade Menu Instantiation ---
+			if upgrade_menu_scene:
+				upgrade_menu_instance = upgrade_menu_scene.instantiate()
+				upgrade_canvas_layer_node.add_child(upgrade_menu_instance) # Add as direct child, or to a specific UI layer
+				# Connect its signal to start a run
+				if upgrade_menu_instance.has_signal("start_run_requested"):
+					upgrade_menu_instance.start_run_requested.connect(start_new_run)
+				else:
+					printerr("MainGame: Upgrade Menu scene missing 'start_run_requested' signal!")
+			else:
+				printerr("MainGame: Upgrade Menu Scene not assigned in Inspector!")
+			
 			if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = true
 			if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = false
 
@@ -134,6 +132,10 @@ func set_game_state(new_state: GameState) -> void:
 			# Clean up just in case (should already be null from UPGRADING state)
 			if is_instance_valid(run_scene_instance):
 				run_scene_instance.queue_free()
+			
+			if is_instance_valid(upgrade_menu_instance): 
+				upgrade_menu_instance.queue_free()
+
 
 			# Validate nodes needed for starting
 			if run_scene == null:
