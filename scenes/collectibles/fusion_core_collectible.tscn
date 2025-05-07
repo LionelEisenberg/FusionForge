@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cx7stwkyc7oxa"]
 
 [ext_resource type="PackedScene" uid="uid://fofegbbj8eku" path="res://scenes/collectibles/collectible.tscn" id="1_raalu"]
-[ext_resource type="Script" uid="uid://dsgjkifgy3utt" path="res://scripts/collectibles/fusion_core_collectible.gd" id="2_rujeu"]
+[ext_resource type="Script" uid="uid://cun4213ktlsrk" path="res://scripts/collectibles/fusion_core_collectible.gd" id="2_rujeu"]
 [ext_resource type="Texture2D" uid="uid://dltsmn4t6gume" path="res://assets/sprites/collectibles/FusionCoreCollectible.png" id="3_4hk0m"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rujeu"]

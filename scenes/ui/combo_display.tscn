@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://besgip2nmnnmd"]
 
-[ext_resource type="Script" uid="uid://h6vr3ywv015g" path="res://scripts/ui/combo_display.gd" id="1_kvkep"]
+[ext_resource type="Script" uid="uid://damyhsvm3muc5" path="res://scripts/ui/combo_display.gd" id="1_kvkep"]
 [ext_resource type="Texture2D" uid="uid://c37o3a0vyjiy" path="res://assets/ui_images/ComboProgress.png" id="2_kvkep"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kvkep"]

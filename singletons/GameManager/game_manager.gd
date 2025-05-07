@@ -58,7 +58,6 @@ func _ready() -> void:
 
 	if CollisionManager:
 		CollisionManager.stability_decreased.connect(decrease_stability)
-		CollisionManager.fusion_core_awarded.connect(award_fusion_core)
 	else:
 		printerr("GameManager: CRITICAL - Could not connect signals from CollisionManager!")
 

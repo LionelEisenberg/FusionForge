@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dbea3e025nkh"]
 
 [ext_resource type="PackedScene" uid="uid://fofegbbj8eku" path="res://scenes/collectibles/collectible.tscn" id="1_r05tw"]
-[ext_resource type="Script" uid="uid://208mu00pqha1" path="res://scripts/collectibles/energy_collectible.gd" id="2_88d55"]
+[ext_resource type="Script" uid="uid://c7skophvc1ki1" path="res://scripts/collectibles/energy_collectible.gd" id="2_88d55"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_88d55"]
 resource_local_to_scene = true
