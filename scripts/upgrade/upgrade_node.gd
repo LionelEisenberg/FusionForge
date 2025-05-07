@@ -34,6 +34,8 @@ func update_display(data: UpgradeData, purchased_level: int, cost_money: float, 
 		icon_path = "res://icon.svg"
 
 	level_label.text = "%d / %d" % [purchased_level, data.max_purchase_level]
+	if data.max_purchase_level == 1:
+		level_label.visible = false
 
 	# --- Update State ---
 	overlay.visible = (purchased_level == 0)
