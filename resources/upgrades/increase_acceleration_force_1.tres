@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UpgradeData" load_steps=2 format=3 uid="uid://dvgbxeuxfum2y"]
 
-[ext_resource type="Script" uid="uid://cugp1kgd7m2th" path="res://scripts/core/upgrade_data.gd" id="1_whatx"]
+[ext_resource type="Script" uid="uid://bpu2dheskc4qr" path="res://scripts/core/upgrade_data.gd" id="1_whatx"]
 
 [resource]
 script = ExtResource("1_whatx")
@@ -8,7 +8,7 @@ id = "increase_acceleration_force_1"
 display_name = "Increase Acceleration Force (I)"
 description = "Increase force at which elements are accelerated."
 max_purchase_level = 1
-prerequisites = Array[String](["increase_max_elements_1"])
+prerequisites = Array[String](["increase_initial_speed_1"])
 money_cost = 0.0
 money_cost_scaling_factor = 1.0
 fusion_core_cost = 0.0
@@ -19,7 +19,7 @@ momentum_energy_factor_mult = 1.0
 base_stability_damage_mult = 1.0
 momentum_stability_factor_mult = 1.0
 wall_collision_slowing_factor_mult = 1.0
-spawn_timer_wait_time_add = 0.0
+spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0
 base_accel_magnitude_add = 1.0
@@ -32,4 +32,3 @@ max_energy_add = 0.0
 base_money_per_collision_add = 0.0
 combo_decay_time_add = 0.0
 max_combo_cap_add = 0.0
-metadata/_custom_type_script = "uid://cugp1kgd7m2th"
