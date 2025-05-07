@@ -9,5 +9,5 @@ reactant_2_type = "Hydrogen"
 result_type = "Helium"
 result_mass = 4.0
 energy_yield = 100.0
-min_momentum = 475.0
+min_momentum = 450.0
 required_temp = 0.0

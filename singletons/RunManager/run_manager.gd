@@ -8,6 +8,8 @@ signal run_stats_updated(run_stats: RunStats)
 signal run_time_sec_updated(run_time_sec: float)
 signal fusion_combo_updated(multiplier: float)
 
+signal element_count_updated(current_count: int, max_count: int)
+signal next_spawn_time_updated(time_left: float)
 #-----------------------------------------------------------------------------
 # Constant Variables
 #-----------------------------------------------------------------------------
@@ -125,6 +127,19 @@ func is_combo_timer_active() -> float:
 func _on_combo_timer_timeout() -> void:
 	_current_fusion_combo_multiplier = 1.0
 	fusion_combo_updated.emit(_current_fusion_combo_multiplier)
+
+
+#-----------------------------------------------------------------------------
+# ---  Update Functions ElementSpawner ---
+#-----------------------------------------------------------------------------
+
+## Called by ElementSpawner whenever the count or max capacity changes.
+func update_element_stats(current_count: int, max_count: int) -> void:
+	element_count_updated.emit(current_count, max_count)
+
+## Called by ElementSpawner every frame (or periodically) to update the timer display.
+func update_next_spawn_time(time_left: float) -> void:
+	next_spawn_time_updated.emit(time_left)
 
 
 #-----------------------------------------------------------------------------

@@ -88,6 +88,10 @@ func _ready() -> void:
 	# Connect the timer's timeout signal
 	_spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 
+func _process(delta: float) -> void:
+	if _is_spawning and RunManager and is_instance_valid(_spawn_timer):
+		RunManager.update_next_spawn_time(_spawn_timer.time_left)
+
 #-----------------------------------------------------------------------------
 # Upgrade Handling
 #-----------------------------------------------------------------------------
@@ -163,6 +167,7 @@ func _on_spawn_timer_timeout() -> void:
 		print("ElementSpawner: Max capacity reached, skipping spawn.")
 		return
 
+	RunManager.update_element_stats(current_element_count + 1, max_element_capacity)
 	_spawn_element()
 
 ## Calculates the valid spawn area based on the reactor boundary.

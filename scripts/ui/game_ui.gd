@@ -5,6 +5,8 @@ extends PanelContainer # Or MarginContainer if that was the final root
 # Node References (Using Scene Unique Names)
 #-----------------------------------------------------------------------------
 # Run Stats Section
+@onready var elements_amount_value: Label = %ElementsValue
+@onready var next_spawn_value: Label = %NextSpawnValue
 @onready var run_time_value: Label = %RunTimeValue
 @onready var total_collisions_value: Label = %TotalCollisionsValue
 @onready var max_combo_value: Label = %MaxFusionComboValue
@@ -27,12 +29,15 @@ func _ready() -> void:
 		GameManager.fusion_cores_updated.connect(_on_fusion_cores_updated)
 		GameManager.energy_updated.connect(_on_energy_updated)
 		GameManager.stability_updated.connect(_on_stability_updated)
+		
 	else:
 		printerr("GameUI: GameManager not found!")
 
 	if RunManager:
 		RunManager.run_stats_updated.connect(_on_run_stats_updated)
 		RunManager.run_time_sec_updated.connect(_on_run_time_sec_updated)
+		RunManager.element_count_updated.connect(_on_element_count_updated)
+		RunManager.next_spawn_time_updated.connect(_on_next_spawn_time_updated)
 	else:
 		printerr("GameUI: RunManager not found!")
 
@@ -80,6 +85,15 @@ func _on_run_stats_updated(run_stats: RunStats) -> void:
 func _on_run_time_sec_updated(run_time : float) -> void:
 	if run_time_value:
 		run_time_value.text = _format_time(run_time as float)
+
+func _on_element_count_updated(current_count: int, max_count: int) -> void:
+	if elements_amount_value:
+		elements_amount_value.text = "%d / %d" % [current_count, max_count]
+
+func _on_next_spawn_time_updated(time_left: float) -> void:
+	# Only display countdown if the run is active
+	if next_spawn_value:
+		next_spawn_value.text = "%.1fs" % max(0.0, time_left)
 
 #-----------------------------------------------------------------------------
 # Helper Functions
