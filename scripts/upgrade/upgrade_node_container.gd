@@ -181,8 +181,6 @@ func _draw() -> void:
 		var data: UpgradeData = UpgradeManager.get_upgrade_data(upgrade_id)
 		if data == null or data.prerequisites.is_empty(): continue # Skip nodes without prereqs
 
-		var current_level = UpgradeManager.get_purchased_level(upgrade_id)
-
 		# Define connection points (e.g., center, top-middle, bottom-middle)
 		# Using center for simplicity here
 		var end_pos = node_instance.position + node_instance.size / 2.0
