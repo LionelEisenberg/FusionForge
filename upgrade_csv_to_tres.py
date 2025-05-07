@@ -4,10 +4,10 @@ import re
 
 # --- CONFIGURATION ---
 # Path to your "Upgrade Definitions" CSV file
-CSV_FILE_PATH = 'Balancing Sheet.csv'  # Or full path like '/path/to/your/Balancing Sheet - Sheet1.csv'
+CSV_FILE_PATH = 'Balancing Sheet - Upgrade Definitions.csv'  # Or full path like '/path/to/your/Balancing Sheet - Sheet1.csv'
 
 # Path to your Godot project's upgrades directory
-GODOT_UPGRADES_PATH = './FusionForge/resources/upgrades/' # Assumes script is run from parent of FusionForge, or adjust as needed
+GODOT_UPGRADES_PATH = './resources/upgrades/' # Assumes script is run from parent of FusionForge, or adjust as needed
 
 # --- HELPER FUNCTIONS ---
 
@@ -138,6 +138,13 @@ def main():
     processed_files_this_run = set()
 
     with open(CSV_FILE_PATH, mode='r', encoding='utf-8-sig') as csvfile:
+        try:
+            next(csvfile)  # Consume and discard the first line
+            print("Skipped the first line of the CSV.")
+        except StopIteration:
+            print("Error: CSV file is empty (could not skip first line).")
+            return
+
         reader = csv.DictReader(csvfile)
         if not reader.fieldnames:
             print("Error: CSV file appears to be empty or has no header.")
