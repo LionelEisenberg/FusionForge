@@ -4,7 +4,7 @@ extends Node
 # Signals Emitted
 #-----------------------------------------------------------------------------
 signal stability_decreased(amount: float) # To GameManager
-#signal fusion_core_awarded() # To GameManager
+signal fusion_core_awarded() # To GameManager
 
 signal wall_collision_processed() # To RunManager
 signal element_collision_processed() # To RunManager
