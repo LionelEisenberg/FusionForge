@@ -18,6 +18,7 @@ signal run_results_calculated(money_earned: int) # Emitted after calculating end
 const BASE_MAX_ENERGY: float = 1000.0
 const BASE_MAX_STABILITY: float = 100.0
 const BASE_MONEY_PER_COLLISION: float = 1.0
+const BASE_ELEMENT_COLLISION_FACTOR: float = 2.0
 
 #-----------------------------------------------------------------------------
 # State Variables
@@ -35,6 +36,7 @@ var current_stability: float = 0.0
 var max_energy: float = BASE_MAX_ENERGY
 var max_stability: float = BASE_MAX_STABILITY
 var money_per_collision: float = BASE_MONEY_PER_COLLISION
+var money_per_element_collision_factor: float = BASE_ELEMENT_COLLISION_FACTOR
 
 # --- Parameters linked with Override / Testing ---
 var invincible_mode = false
@@ -177,11 +179,11 @@ func decrease_stability(amount: float) -> void:
 
 ## Called by RunScene/MainGame when run ends. Calculates and awards money.
 func calculate_and_award_money(run_stats: RunStats) -> int:
-	var collisions = run_stats.get_total_collisions()
+	var collisions = run_stats.collision_counts
 	var max_fusion_combo = run_stats.max_fusion_combo
 
 	# Example calculation (Replace with actual formula from GDD)
-	var money_earned: int = int(collisions * money_per_collision * max_fusion_combo)
+	var money_earned: int = int((collisions.x + collisions.y * money_per_element_collision_factor) * money_per_collision * max_fusion_combo)
 
 	print("GameManager: Run ended. Stats: ", run_stats, "\n Money Earned: ", money_earned) # Removed status print
 
