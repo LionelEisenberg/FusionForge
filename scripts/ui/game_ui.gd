@@ -53,26 +53,29 @@ func _on_fusion_cores_updated(new_cores: int) -> void:
 		fusion_core_value.text = str(new_cores)
 
 func _on_energy_updated(current: float, max_val: float) -> void:
-	if energy_meter:
+	if RunManager._is_run_active and energy_meter:
 		energy_meter.max_value = max_val
 		energy_meter.value = current
 		energy_meter.tooltip_text = "Energy: %d / %d eV" % [int(current), int(max_val)]
 		(energy_meter.get_child(0) as Label).text = "Energy: %d / %d eV" % [int(current), int(max_val)]
 
 func _on_stability_updated(current: float, max_val: float) -> void:
-	if durability_meter:
+	if RunManager._is_run_active and durability_meter:
 		durability_meter.max_value = max_val
 		durability_meter.value = current
 		durability_meter.tooltip_text = "Durability: %d / %d" % [int(current), int(max_val)]
 		(durability_meter.get_child(0) as Label).text = "Durability: %d / %d" % [int(current), int(max_val)]
 
 
-func _on_run_stats_updated(run_stats: RunStats) -> void:	
+func _on_run_stats_updated(run_stats: RunStats) -> void:
 	if total_collisions_value:
 		total_collisions_value.text = str(run_stats.get_total_collisions())
 
 	if max_combo_value:
 		max_combo_value.text = "x %.1f" % run_stats.max_fusion_combo
+	
+	_on_energy_updated(GameManager.get_current_energy(), GameManager.get_max_energy())
+	_on_stability_updated(GameManager.get_current_stability(), GameManager.get_max_stability())
 
 func _on_run_time_sec_updated(run_time : float) -> void:
 	if run_time_value:
