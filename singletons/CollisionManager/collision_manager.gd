@@ -60,14 +60,14 @@ func _ready() -> void:
 	else:
 		printerr("CollisionManager: Cannot get SaveGameData from PersistenceManager!")
 		_live_save_data = SaveGameData.new() # Use default if needed
+
+	# --- Load fusion recipes from directory ---
+	_load_fusion_recipes()
 	
 	if UpgradeManager:
 		UpgradeManager.upgrades_applied.connect(_on_upgrades_applied)
 	else:
 		printerr("CollisionManager: WARNING - Could not connect to UpgradeManager! Using default values.")
-		
-	# --- Load fusion recipes from directory ---
-	_load_fusion_recipes()
 
 
 #-----------------------------------------------------------------------------
@@ -145,6 +145,7 @@ func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
 
 ## Checks if conditions for fusion are met for two elements. Returns recipe if true, null otherwise.
 func _check_fusion_conditions(e1: Element, e2: Element, combined_momentum: float) -> FusionRecipe:
+	_filter_available_recipes()
 	for recipe in fusion_recipes:
 		if recipe.reactants_match(e1.element_type, e2.element_type):
 			if combined_momentum >= recipe.min_momentum:
@@ -192,7 +193,7 @@ func _handle_element_collision(e1: Element, e2: Element) -> void:
 
 
 func _load_fusion_recipes() -> void:
-	fusion_recipes.clear()
+	_all_loaded_recipes.clear()
 	var dir = DirAccess.open(recipe_folder_path)
 	if dir:
 		dir.list_dir_begin()
@@ -204,7 +205,7 @@ func _load_fusion_recipes() -> void:
 				var file_path = recipe_folder_path.path_join(file_name)
 				var loaded_resource = ResourceLoader.load(file_path)
 				if loaded_resource is FusionRecipe:
-					fusion_recipes.append(loaded_resource)
+					_all_loaded_recipes.append(loaded_resource)
 				else:
 					printerr("CollisionManager: File is not a FusionRecipe: ", file_path)
 
@@ -219,7 +220,7 @@ func _filter_available_recipes() -> void:
 	fusion_recipes.clear() # Clear the list used for checks
 	
 	for recipe in _all_loaded_recipes:
-		var recipe_filename = recipe.resource_path.get_file()
+		var recipe_filename = recipe.resource_path.get_file().get_basename()
 		if unlocked_fusion_recipes.has(recipe_filename):
 			fusion_recipes.append(recipe)
 
