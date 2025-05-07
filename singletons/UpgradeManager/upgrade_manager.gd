@@ -58,12 +58,11 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 	if not can_purchase(upgrade_id):
 		return false
 
-	var data: UpgradeData = _all_upgrades[upgrade_id]
 	var current_level: int = get_purchased_level(upgrade_id)
-	var cost: float = get_upgrade_cost(upgrade_id)
+	var cost: int = get_upgrade_cost(upgrade_id) 
 
 	if not GameManager.spend_money(cost):
-		printerr("Purchase failed: Could not spend money (%.2f) for upgrade '%s'" % [cost, upgrade_id])
+		printerr("Purchase failed: Could not spend money (%.2f) for upgrade '%s'" % [int(cost), upgrade_id])
 		return false
 
 	var new_level = current_level + 1
@@ -89,7 +88,7 @@ func can_purchase(upgrade_id: String) -> bool:
 	if not _are_all_prerequisites_met(upgrade_id): return false
 
 	# Check cost TODO: Implement Fusion Core Costs logic
-	var cost: float = get_upgrade_cost(upgrade_id)
+	var cost: int = get_upgrade_cost(upgrade_id)
 	if cost < 0: return false # Invalid cost (already max level)
 
 	if not GameManager.can_spend_money(cost): return false
@@ -98,16 +97,16 @@ func can_purchase(upgrade_id: String) -> bool:
 
 ## Calculates the cost for purchasing the *next* available level of the upgrade.
 # TODO: Implement Fusion Core Costs logic
-func get_upgrade_cost(upgrade_id: String) -> float:
-	if not _all_upgrades.has(upgrade_id): return -1.0
+func get_upgrade_cost(upgrade_id: String) -> int:
+	if not _all_upgrades.has(upgrade_id): return -1
 
 	var data: UpgradeData = _all_upgrades[upgrade_id]
 	var current_level: int = get_purchased_level(upgrade_id)
 
-	if current_level >= data.max_purchase_level: return -1.0 # Max level reached
+	if current_level >= data.max_purchase_level: return -1 # Max level reached
 
 	var next_level_index = current_level
-	var cost = data.money_cost * pow(data.money_cost_scaling_factor, next_level_index)
+	var cost = int(floor(data.money_cost * pow(data.money_cost_scaling_factor, next_level_index)))
 	return cost
 
 ## Gets the currently purchased level for a given upgrade ID.
