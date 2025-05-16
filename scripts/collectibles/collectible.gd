@@ -5,7 +5,7 @@ extends Area2D
 # Constant Variables
 #-----------------------------------------------------------------------------
 # Base values before upgrades are applied.
-const BASE_LIFESPAN: float = 4.0
+const BASE_LIFESPAN: float = 1.5
 const BASE_ATTRACTION_RADIUS: float = 80.0
 
 #-----------------------------------------------------------------------------
