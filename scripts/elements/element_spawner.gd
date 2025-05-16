@@ -88,7 +88,7 @@ func _ready() -> void:
 	# Connect the timer's timeout signal
 	_spawn_timer.timeout.connect(_on_spawn_timer_timeout)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _is_spawning and RunManager and is_instance_valid(_spawn_timer):
 		RunManager.update_next_spawn_time(_spawn_timer.time_left)
 
