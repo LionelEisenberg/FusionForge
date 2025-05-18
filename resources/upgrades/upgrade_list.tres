@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="UpgradeList" load_steps=21 format=3 uid="uid://dbkbjks3y1soc"]
+
+[ext_resource type="Script" uid="uid://bpu2dheskc4qr" path="res://scripts/core/upgrade_data.gd" id="1_tajkg"]
+[ext_resource type="Script" uid="uid://uwahwcr8u814" path="res://scripts/core/upgrade_list.gd" id="1_ym75p"]
+[ext_resource type="Resource" uid="uid://cgejrl5jybiwc" path="res://resources/upgrades/decrease_wall_collision_slowdown_1.tres" id="3_ddai4"]
+[ext_resource type="Resource" uid="uid://cmsoojibiksx5" path="res://resources/upgrades/decrease_wall_stability_damage_base_1.tres" id="4_xkim2"]
+[ext_resource type="Resource" uid="uid://cydarckiqjrb" path="res://resources/upgrades/decrease_wall_stability_damage_momentum_1.tres" id="5_5vqtt"]
+[ext_resource type="Resource" uid="uid://drofauevkfi6g" path="res://resources/upgrades/improve_acceleration_efficiency_1.tres" id="6_hlyk6"]
+[ext_resource type="Resource" uid="uid://dvgbxeuxfum2y" path="res://resources/upgrades/increase_acceleration_force_1.tres" id="7_br4wv"]
+[ext_resource type="Resource" uid="uid://chm4t02o6waaa" path="res://resources/upgrades/increase_base_collision_energy_1.tres" id="8_td7um"]
+[ext_resource type="Resource" uid="uid://wpatcrmyk6x8" path="res://resources/upgrades/increase_base_money_collision_1.tres" id="9_xgxjq"]
+[ext_resource type="Resource" uid="uid://dq40iv8xq57yr" path="res://resources/upgrades/increase_collectible_lifespan_1.tres" id="10_kipb2"]
+[ext_resource type="Resource" uid="uid://bf0wbjs2wsseq" path="res://resources/upgrades/increase_collection_radius_1.tres" id="11_7qfpq"]
+[ext_resource type="Resource" uid="uid://bqwyqcsu4xrty" path="res://resources/upgrades/increase_fusion_combo_duration_1.tres" id="12_l01kg"]
+[ext_resource type="Resource" uid="uid://d022fvq5suji2" path="res://resources/upgrades/increase_initial_speed_1.tres" id="13_vpy6s"]
+[ext_resource type="Resource" uid="uid://dehylr07i6uoe" path="res://resources/upgrades/increase_max_elements_1.tres" id="14_rnej7"]
+[ext_resource type="Resource" uid="uid://cg4thqpulw4m" path="res://resources/upgrades/increase_max_energy_1.tres" id="15_t85cv"]
+[ext_resource type="Resource" uid="uid://dotwjtqik8ifs" path="res://resources/upgrades/increase_max_fusion_combo_1.tres" id="16_q3lad"]
+[ext_resource type="Resource" uid="uid://roqanq0bn084" path="res://resources/upgrades/increase_max_stability_1.tres" id="17_6h8od"]
+[ext_resource type="Resource" uid="uid://b3tja18bu626b" path="res://resources/upgrades/increase_momentum_collision_energy_1.tres" id="18_8krqh"]
+[ext_resource type="Resource" uid="uid://gv8gwcfppwc8" path="res://resources/upgrades/increase_spawn_rate_1.tres" id="19_3hcbv"]
+[ext_resource type="Resource" uid="uid://dyw5l5ifkexqy" path="res://resources/upgrades/unlock_fusion_h_h_he.tres" id="20_u2cef"]
+
+[resource]
+script = ExtResource("1_ym75p")
+upgrades = Array[ExtResource("1_tajkg")]([ExtResource("3_ddai4"), ExtResource("4_xkim2"), ExtResource("5_5vqtt"), ExtResource("6_hlyk6"), ExtResource("7_br4wv"), ExtResource("8_td7um"), ExtResource("9_xgxjq"), ExtResource("10_kipb2"), ExtResource("11_7qfpq"), ExtResource("12_l01kg"), ExtResource("13_vpy6s"), ExtResource("14_rnej7"), ExtResource("15_t85cv"), ExtResource("16_q3lad"), ExtResource("17_6h8od"), ExtResource("18_8krqh"), ExtResource("19_3hcbv"), ExtResource("20_u2cef")])
+metadata/_custom_type_script = "uid://uwahwcr8u814"

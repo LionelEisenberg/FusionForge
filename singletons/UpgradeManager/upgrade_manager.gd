@@ -13,7 +13,7 @@ signal upgrades_applied(effects_data: UpgradeEffects)
 #-----------------------------------------------------------------------------
 # Constants
 #-----------------------------------------------------------------------------
-const UPGRADE_RESOURCE_DIR := "res://resources/upgrades/" # Example path, adjust as needed
+const UPGRADE_LIST_PATH := "res://resources/upgrades/upgrade_list.tres"
 
 #-----------------------------------------------------------------------------
 # State Variables
@@ -183,29 +183,30 @@ func calculate_and_emit_effects() -> void:
 # Private Helper Functions
 #-----------------------------------------------------------------------------
 
-## Loads all UpgradeData resource (.tres) files from the UPGRADE_RESOURCE_DIR.
 func _load_all_upgrade_resources() -> void:
 	_all_upgrades.clear()
-	var dir = DirAccess.open(UPGRADE_RESOURCE_DIR)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if not dir.current_is_dir() and file_name.ends_with(".tres"):
-				var file_path = UPGRADE_RESOURCE_DIR.path_join(file_name)
-				var upgrade_res = ResourceLoader.load(file_path, "", ResourceLoader.CACHE_MODE_IGNORE)
-				if upgrade_res is UpgradeData:
-					if upgrade_res.id.is_empty():
-						printerr("Upgrade resource file has empty ID: ", file_path)
-					elif _all_upgrades.has(upgrade_res.id):
-						printerr("Duplicate upgrade ID found: '%s' in file %s" % [upgrade_res.id, file_path])
-					else:
-						_all_upgrades[upgrade_res.id] = upgrade_res
+
+	if not ResourceLoader.exists(UPGRADE_LIST_PATH):
+		printerr("UpgradeManager: Upgrade list resource not found at: ", UPGRADE_LIST_PATH)
+		return
+
+	var upgrade_list = ResourceLoader.load(UPGRADE_LIST_PATH)
+	if upgrade_list is UpgradeList:
+		for upgrade_data_instance in upgrade_list.upgrades:
+			if upgrade_data_instance is UpgradeData: # Double check type
+				if upgrade_data_instance.id.is_empty():
+					printerr("Upgrade resource (from list) has empty ID: ", upgrade_data_instance.resource_path)
+				elif _all_upgrades.has(upgrade_data_instance.id):
+					printerr("Duplicate upgrade ID found: '%s' from list." % upgrade_data_instance.id)
 				else:
-					printerr("Resource file is not of type UpgradeData: ", file_path)
-			file_name = dir.get_next()
+					_all_upgrades[upgrade_data_instance.id] = upgrade_data_instance
+			else:
+				printerr("Item in upgrade list is not of type UpgradeData: ", upgrade_data_instance)
 	else:
-		printerr("Could not open upgrade resource directory: ", UPGRADE_RESOURCE_DIR)
+		printerr("Failed to load UpgradeListResource or it's the wrong type from: ", UPGRADE_LIST_PATH)
+
+	if _all_upgrades.is_empty():
+		printerr("UpgradeManager: No upgrade data loaded from UpgradeListResource!")
 
 
 ## Checks if all prerequisite upgrades for a given upgrade ID have been met.
