@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="SaveGameData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://singletons/PersistenceManager/save_game_data.gd" id="1_dw8s2"]
+
+[resource]
+script = ExtResource("1_dw8s2")
+money = 271
+fusion_cores = 1
+discovered_fusions = {
+"Helium": true
+}
+purchased_upgrades = {
+"decrease_wall_stability_damage_base_1": 1,
+"decrease_wall_stability_damage_momentum_1": 1,
+"improve_acceleration_efficiency_1": 2,
+"increase_acceleration_force_1": 2,
+"increase_base_collision_energy_1": 2,
+"increase_initial_speed_1": 5,
+"increase_max_energy_1": 3,
+"increase_max_stability_1": 3,
+"increase_momentum_collision_energy_1": 1,
+"increase_spawn_rate_1": 3,
+"unlock_fusion_h_h_he": 1
+}
