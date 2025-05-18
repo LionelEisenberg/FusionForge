@@ -14,7 +14,7 @@ signal next_spawn_time_updated(time_left: float)
 # Constant Variables
 #-----------------------------------------------------------------------------
 const BASE_COMBO_DECAY_TIME: float = 3.0
-const BASE_MAX_COMBO_CAP: float = 10.0
+const BASE_MAX_COMBO_CAP: float = 3.0
 
 #-----------------------------------------------------------------------------
 # State Variables
