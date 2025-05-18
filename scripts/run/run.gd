@@ -83,7 +83,7 @@ func conclude_run() -> void:
 				child.set_physics_process(false)
 			if child is Collectible:
 				child.apply_pickup_effect()
-				child.queue_free()
+				child.call_deferred("queue_free")
 
 	else:
 		printerr("RunScene: Reactor chamber instance invalid during conclude_run!")
