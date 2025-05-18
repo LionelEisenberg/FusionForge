@@ -52,7 +52,7 @@ extends Resource
 
 ## --- Collectible Effects ---
 @export_group("Collectible Effects")
-@export var collection_radius_add: float = 0.0 # Affects Collectible.gd attraction Area2D size? Needs implementation.
+@export var collection_radius_mult: float = 1.0 # Affects Collectible.gd attraction Area2D size
 @export var collectible_lifespan_mult: float = 1.0 # Affects Collectible.lifespan (Multiplicative)
 
 ## --- Game State Effects ---

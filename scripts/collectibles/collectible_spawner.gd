@@ -51,8 +51,6 @@ func _on_spawn_energy_value(spawn_pos: Vector2, total_value: float) -> void:
 
 	var remaining_value = total_value
 	
-	print("Requested to spawn Energy, for an amount of %.02f" % total_value)
-
 	# Greedy algorithm: Spawn highest tier possible first
 	for tier_value in ENERGY_VALUE_TIERS:
 		if remaining_value < tier_value:
@@ -103,4 +101,4 @@ func _spawn_single_collectible(scene: PackedScene, base_pos: Vector2, value) -> 
 	var direction = Vector2.from_angle(_rng.randf_range(0, TAU))
 	if value == 10:
 		collectible.modulate = Color(Color.RED, 1.0)
-	collectible.initialize(direction) # Call base setup for movement/lifespan
+	collectible.call_deferred("initialize", direction) # Call base setup for movement/lifespan

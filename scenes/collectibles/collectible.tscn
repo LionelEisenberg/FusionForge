@@ -26,4 +26,5 @@ texture = ExtResource("1_lb3xb")
 unique_name_in_owner = true
 
 [node name="AttractionShape" type="CollisionShape2D" parent="AttractionArea"]
+unique_name_in_owner = true
 shape = SubResource("CircleShape2D_irp14")

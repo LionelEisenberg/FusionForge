@@ -54,6 +54,7 @@ func _ready() -> void:
 	mouse_entered.connect(_on_mouse_entered_pickup_area)
 	attraction_area.mouse_entered.connect(_on_mouse_entered_attraction_area)
 
+
 func _physics_process(delta: float) -> void:	
 	# Apply attraction force if mouse is in the outer radius
 	if _is_attracted:
@@ -84,7 +85,7 @@ func _physics_process(delta: float) -> void:
 func initialize(direction: Vector2) -> void:
 	# Apply initial velocity
 	_velocity = direction.normalized() * initial_speed
-
+	
 	# Apply initial upgrade effects by pulling from UpgradeManager
 	if UpgradeManager:
 		var initial_effects = UpgradeManager.get_upgrade_effects()
@@ -118,7 +119,7 @@ func initialize(direction: Vector2) -> void:
 func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
 	lifespan = BASE_LIFESPAN * effects_data.collectible_lifespan_mult
 
-	attraction_radius = BASE_ATTRACTION_RADIUS + effects_data.collection_radius_add
+	attraction_radius = BASE_ATTRACTION_RADIUS * effects_data.collection_radius_mult
 
 	lifespan = max(0.1, lifespan) # Ensure lifespan is positive
 	attraction_radius = max(0.0, attraction_radius) # Ensure radius isn't negative

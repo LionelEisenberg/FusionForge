@@ -4,12 +4,12 @@
 class_name UpgradeNodeContainer
 extends Panel
 
-## Scene for the individual upgrade nodes (assign UpgradeNode.tscn in Inspector)
+## Scene for the individual upgrade nodes
 @export var upgrade_node_scene: PackedScene
-## Resource file containing the layout positions (assign upgrade_layout.tres in Inspector)
+## Resource file containing the layout positions
 @export var layout_resource: UpgradeTreeLayout # Assumes UpgradeTreeLayout.gd exists
 
-# Node References (None needed if adding directly to self)
+# Node References
 @onready var node_container: Control = self
 
 const UPGRADE_NODE_SIZE := Vector2(64, 64)

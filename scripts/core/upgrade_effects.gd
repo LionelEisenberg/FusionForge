@@ -13,7 +13,6 @@ extends Resource
 @export var max_elements_add: int = 0
 @export var initial_speed_add: float = 0.0
 @export var base_accel_magnitude_add: float = 0.0
-@export var collection_radius_add: float = 0.0
 @export var base_money_per_collision_add: float = 0.0
 @export var combo_decay_time_add: float = 0.0
 @export var max_combo_cap_add: float = 0.0 # Changed to float
@@ -26,7 +25,8 @@ extends Resource
 @export var momentum_stability_factor_mult: float = 1.0 # Value < 1.0 reduces scaling
 @export var wall_collision_slowing_factor_mult: float = 1.0 # Value < 1.0 reduces slowdown
 @export var force_to_energy_conversion_factor_mult: float = 1.0 # Value < 1.0 improves efficiency
-@export var collectible_lifespan_mult: float = 1.0
+@export var collectible_lifespan_mult: float = 1.0 
+@export var collection_radius_mult: float = 1.0
 
 # --- Unlocks ---
 # List of unlocked fusion recipe resource FILENAMES (e.g., ["H_H_He.tres", "He_He_Be.tres"])

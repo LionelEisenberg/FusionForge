@@ -154,7 +154,6 @@ func calculate_and_emit_effects() -> void:
 		effects_data.max_elements_add += data.max_elements_add * level
 		effects_data.initial_speed_add += data.initial_speed_add * level
 		effects_data.base_accel_magnitude_add += data.base_accel_magnitude_add * level
-		effects_data.collection_radius_add += data.collection_radius_add * level
 		effects_data.base_money_per_collision_add += data.base_money_per_collision_add * level
 		effects_data.combo_decay_time_add += data.combo_decay_time_add * level
 		effects_data.max_combo_cap_add += data.max_combo_cap_add * level
@@ -168,6 +167,7 @@ func calculate_and_emit_effects() -> void:
 		effects_data.wall_collision_slowing_factor_mult *= pow(data.wall_collision_slowing_factor_mult, level)
 		effects_data.force_to_energy_conversion_factor_mult *= pow(data.force_to_energy_conversion_factor_mult, level)
 		effects_data.collectible_lifespan_mult *= pow(data.collectible_lifespan_mult, level)
+		effects_data.collection_radius_mult *= pow(data.collection_radius_mult, level)
 
 		# --- Handle Unlocks ---
 		# Add recipe filename if level >= 1 and not already present
