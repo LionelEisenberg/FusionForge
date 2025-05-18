@@ -20,8 +20,6 @@ upgrade_menu_scene = ExtResource("3_36pl1")
 subviewport_path = NodePath("TopLevelRunSceneContainer/RunSceneViewportContainer/SubViewport")
 top_level_run_scene_container_path = NodePath("TopLevelRunSceneContainer")
 upgrade_canvas_layer_path = NodePath("UpgradeCanvasLayer")
-override_save_file = true
-infinite_resources = true
 
 [node name="TopLevelRunSceneContainer" type="HBoxContainer" parent="."]
 visible = false
