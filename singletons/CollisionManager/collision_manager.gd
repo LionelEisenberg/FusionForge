@@ -24,7 +24,7 @@ signal spawn_fusion_core_collectible(position: Vector2, value: float) # To Colle
 const BASE_COLLISION_ENERGY: float = 5.0
 const BASE_WALL_COLLISION_ENERGY: float = 2.0
 const BASE_STABILITY_DAMAGE: float = 1.0
-const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.05
+const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
 
@@ -156,7 +156,8 @@ func _check_fusion_conditions(e1: Element, e2: Element, combined_momentum: float
 
 ## Handles the outcome of a successful fusion.
 func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
-	spawn_energy_collectible.emit(_find_collision_position(e1, e2), recipe.energy_yield)
+	if recipe.energy_yield > 0:
+		spawn_energy_collectible.emit(_find_collision_position(e1, e2), recipe.energy_yield)
 
 	# Check if this fusion product is newly discovered (using SaveGameData)
 	if _live_save_data and not _live_save_data.discovered_fusions.has(recipe.result_type):
