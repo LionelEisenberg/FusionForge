@@ -28,6 +28,8 @@ const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
 
+const FUSION_RECIPE_LIST_PATH: String = "res://resources/recipes/fusion_recipe_list.tres"
+
 #-----------------------------------------------------------------------------
 # State Variables (Upgradeable)
 #-----------------------------------------------------------------------------
@@ -195,26 +197,23 @@ func _handle_element_collision(e1: Element, e2: Element) -> void:
 
 func _load_fusion_recipes() -> void:
 	_all_loaded_recipes.clear()
-	var dir = DirAccess.open(recipe_folder_path)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				pass 
-			elif file_name.ends_with(".tres"): # Load only .tres files
-				var file_path = recipe_folder_path.path_join(file_name)
-				var loaded_resource = ResourceLoader.load(file_path)
-				if loaded_resource is FusionRecipe:
-					_all_loaded_recipes.append(loaded_resource)
-				else:
-					printerr("CollisionManager: File is not a FusionRecipe: ", file_path)
-
-			file_name = dir.get_next()
-		dir.list_dir_end()
+	
+	if not ResourceLoader.exists(FUSION_RECIPE_LIST_PATH):
+		printerr("CollisionManager: Fusion Recipe list resource not found at: ", FUSION_RECIPE_LIST_PATH)
+		return
+		
+	var recipe_list = ResourceLoader.load(FUSION_RECIPE_LIST_PATH)
+	if recipe_list is FusionRecipeList:
+		for recipe in recipe_list.fusion_recipes:
+			if recipe is FusionRecipe:
+				_all_loaded_recipes.append(recipe)
+			else:
+				printerr("Item in fusion recipe list is not of type FusionRecipe: ", recipe)
 	else:
-		printerr("CollisionManager: Could not open recipe directory: ", recipe_folder_path)
+		printerr("Failed to load FusionRecipeList or it's the wrong type from: ", FUSION_RECIPE_LIST_PATH)
 
+	if _all_loaded_recipes.is_empty():
+		printerr("UpgradeManager: No upgrade data loaded from UpgradeListResource!")
 
 ## Filters the loaded recipes based on the currently unlocked recipe list.
 func _filter_available_recipes() -> void:

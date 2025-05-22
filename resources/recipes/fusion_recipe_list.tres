@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FusionRecipeList" load_steps=4 format=3 uid="uid://53jepvcaggko"]
+
+[ext_resource type="Script" uid="uid://7jsoumhbv8gm" path="res://scripts/core/fusion_recipe.gd" id="1_pq284"]
+[ext_resource type="Script" uid="uid://cqxqmc88pe0wl" path="res://scripts/core/fusion_recipe_list.gd" id="2_78nrr"]
+[ext_resource type="Resource" uid="uid://cv20swq14kl5l" path="res://resources/recipes/h_h_to_he.tres" id="2_h7eam"]
+
+[resource]
+script = ExtResource("2_78nrr")
+fusion_recipes = Array[ExtResource("1_pq284")]([ExtResource("2_h7eam")])
+metadata/_custom_type_script = "uid://cqxqmc88pe0wl"
