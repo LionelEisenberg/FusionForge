@@ -96,7 +96,6 @@ func can_purchase(upgrade_id: String) -> bool:
 	return true
 
 ## Calculates the cost for purchasing the *next* available level of the upgrade.
-# TODO: Implement Fusion Core Costs logic
 func get_upgrade_cost(upgrade_id: String) -> int:
 	if not _all_upgrades.has(upgrade_id): return -1
 
@@ -104,9 +103,12 @@ func get_upgrade_cost(upgrade_id: String) -> int:
 	var current_level: int = get_purchased_level(upgrade_id)
 
 	if current_level >= data.max_purchase_level: return -1 # Max level reached
+	if data.max_purchase_level != len(data.money_cost_per_level): 
+		push_warning("UpgradeManager: Poorly Formatted Data: %s" % upgrade_id)
+		return -1
 
 	var next_level_index = current_level
-	var cost = int(floor(data.money_cost * pow(data.money_cost_scaling_factor, next_level_index)))
+	var cost = int(data.money_cost_per_level[next_level_index])
 	return cost
 
 ## Gets the currently purchased level for a given upgrade ID.
