@@ -59,10 +59,15 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 		return false
 
 	var current_level: int = get_purchased_level(upgrade_id)
-	var cost: int = get_upgrade_cost(upgrade_id) 
-
-	if not GameManager.spend_money(cost):
-		printerr("Purchase failed: Could not spend money (%.2f) for upgrade '%s'" % [int(cost), upgrade_id])
+	var costs: Vector2i = get_upgrade_costs(upgrade_id)
+	var money_cost: int = costs.x
+	var fusion_core_cost: int = costs.y
+	
+	if not GameManager.spend_money(money_cost):
+		printerr("Purchase failed: Could not spend money (%.2f) for upgrade '%s'" % [int(money_cost), upgrade_id])
+		return false
+	if not GameManager.spend_fusion_cores(fusion_core_cost):
+		printerr("Purchase failed: Could not spend fusion cores (%.2f) for upgrade '%s'" % [int(fusion_core_cost), upgrade_id])
 		return false
 
 	var new_level = current_level + 1
@@ -88,27 +93,33 @@ func can_purchase(upgrade_id: String) -> bool:
 	if not _are_all_prerequisites_met(upgrade_id): return false
 
 	# Check cost TODO: Implement Fusion Core Costs logic
-	var cost: int = get_upgrade_cost(upgrade_id)
-	if cost < 0: return false # Invalid cost (already max level)
+	var costs: Vector2i = get_upgrade_costs(upgrade_id)
+	var money_cost: int = costs.x
+	var fusion_core_cost: int = costs.y
+	if money_cost < 0: return false # Invalid cost (already max level)
+	if fusion_core_cost < 0: return false # Invalid cost (already max level)
 
-	if not GameManager.can_spend_money(cost): return false
+	if not GameManager.can_spend_money(money_cost): return false
+	if not GameManager.can_spend_fusion_cores(fusion_core_cost): return false
 
 	return true
 
 ## Calculates the cost for purchasing the *next* available level of the upgrade.
-func get_upgrade_cost(upgrade_id: String) -> int:
-	if not _all_upgrades.has(upgrade_id): return -1
+# returns a Vector2i(money_cost, fusion_core_cost)
+# returns (-1, -1) if an error takes place
+func get_upgrade_costs(upgrade_id: String) -> Vector2i:
+	if not _all_upgrades.has(upgrade_id): return Vector2i(-1, -1)
 
 	var data: UpgradeData = _all_upgrades[upgrade_id]
 	var current_level: int = get_purchased_level(upgrade_id)
 
-	if current_level >= data.max_purchase_level: return -1 # Max level reached
-	if data.max_purchase_level != len(data.money_cost_per_level): 
+	if current_level >= data.max_purchase_level: return Vector2i(-1, -1) # Max level reached
+	if data.max_purchase_level != len(data.money_cost_per_level) or data.max_purchase_level != len(data.fusion_core_cost_per_level):
 		push_warning("UpgradeManager: Poorly Formatted Data: %s" % upgrade_id)
-		return -1
+		return Vector2i(-1, -1)
 
 	var next_level_index = current_level
-	var cost = int(data.money_cost_per_level[next_level_index])
+	var cost = Vector2i(data.money_cost_per_level[next_level_index], data.fusion_core_cost_per_level[next_level_index])
 	return cost
 
 ## Gets the currently purchased level for a given upgrade ID.

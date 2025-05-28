@@ -17,7 +17,7 @@ func _ready() -> void:
 	pressed.connect(_on_pressed)
 
 
-func update_display(data: UpgradeData, purchased_level: int, cost_money: float, can_afford: bool) -> void:
+func update_display(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int, can_afford: bool) -> void:
 	_upgrade_data = data
 	if _upgrade_data == null:
 		printerr("UpgradeNode: update_display called with null data for id: ", upgrade_id)
@@ -43,9 +43,9 @@ func update_display(data: UpgradeData, purchased_level: int, cost_money: float, 
 	upgrade_completed_border.visible = (purchased_level == data.max_purchase_level)
 
 	# --- Update Tooltip ---
-	tooltip_text = _create_tooltip_text(data, purchased_level, cost_money, can_afford)
+	tooltip_text = _create_tooltip_text(data, purchased_level, money_cost, fusion_core_cost, can_afford)
 
-func _create_tooltip_text(data: UpgradeData, purchased_level: int, cost_money: float, can_afford: bool) -> String:
+func _create_tooltip_text(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int, can_afford: bool) -> String:
 	var tooltip_lines: Array[String] = []
 
 	# Name and Level
@@ -55,12 +55,16 @@ func _create_tooltip_text(data: UpgradeData, purchased_level: int, cost_money: f
 	tooltip_lines.append("") # Spacer
 
 	if purchased_level < data.max_purchase_level:
-		var cost_str = "Cost: %d $" % int(ceil(cost_money))
-		# TODO: Add core cost when implemented
+		var cost_string_parts = []
+		if money_cost > 0:
+			cost_string_parts.append("%d $" % int(ceil(money_cost)))
+		if fusion_core_cost > 0:
+			cost_string_parts.append("%d FC" % fusion_core_cost)
 		
-		if not can_afford: # Still useful to show if affordable
-			cost_str += " (Cannot Afford)"
-		tooltip_lines.append(cost_str)
+		if cost_string_parts.is_empty(): # Should not happen if purchasable unless cost is 0 for both
+			tooltip_lines.append("Cost: Free")
+		else:
+			tooltip_lines.append("Cost: " + " and ".join(cost_string_parts))
 
 	# Removed dynamic effect description lines
 
