@@ -14,9 +14,9 @@ extends Resource
 
 @export_category("Cost")
 @export_group("Money Costs")
-@export var money_cost_per_level: Array[float] = [0.0, 1.0, 2.0, 3.0, 0.0, 1.0, 2.0, 3.0, 0.0, 1.0, 2.0, 3.0]
+@export var money_cost_per_level: Array[float] = []
 @export_group("Fusion Core Costs")
-@export var fusion_core_cost_per_level: Array[float] = [0.0, 3.0, 3.0]
+@export var fusion_core_cost_per_level: Array[float] = []
 
 @export_category("Upgrade Effects")
 ## Requirements

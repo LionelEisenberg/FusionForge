@@ -46,3 +46,4 @@ scenes/main/main_game.tscn
 *.import
 *.tmp
 /exports
+export_presets.cfg
