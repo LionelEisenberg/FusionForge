@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FusionRecipe" load_steps=2 format=3 uid="uid://dg0vdtov81h0r"]
+
+[ext_resource type="Script" uid="uid://7jsoumhbv8gm" path="res://scripts/core/fusion_recipe.gd" id="1_fop4v"]
+
+[resource]
+script = ExtResource("1_fop4v")
+reactant_1_type = "Hydrogen"
+reactant_2_type = "Hydrogen"
+result_type = "Deuterium"
+result_mass = 3.0
+energy_yield = 25.0
+min_momentum = 150.0
+required_temp = 0.0
+metadata/_custom_type_script = "uid://7jsoumhbv8gm"

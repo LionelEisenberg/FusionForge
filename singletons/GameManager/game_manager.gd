@@ -118,7 +118,7 @@ func can_spend_fusion_cores(amount: int) -> bool:
 	return live_save_data.fusion_cores >= amount
 
 func spend_fusion_cores(amount: int) -> bool:
-	if amount <= 0: return false
+	if amount < 0: return false
 	if can_spend_fusion_cores(amount):
 		live_save_data.fusion_cores -= amount
 		fusion_cores_updated.emit(live_save_data.fusion_cores)

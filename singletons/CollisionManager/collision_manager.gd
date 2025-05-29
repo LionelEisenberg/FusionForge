@@ -27,6 +27,7 @@ const BASE_STABILITY_DAMAGE: float = 1.0
 const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
+const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"]
 
 const FUSION_RECIPE_LIST_PATH: String = "res://resources/recipes/fusion_recipe_list.tres"
 
@@ -138,7 +139,7 @@ func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
 	momentum_stability_factor = max(0.0, momentum_stability_factor)
 	wall_collision_slowing_factor = max(1.0, wall_collision_slowing_factor) # Ensure slowing factor is at least 1 (no speed up)
 
-	unlocked_fusion_recipes = effects_data.unlocked_fusion_recipes
+	unlocked_fusion_recipes = BASE_UNLOCKED_RECIPE_LIST + effects_data.unlocked_fusion_recipes
 	_filter_available_recipes()
 
 #-----------------------------------------------------------------------------
