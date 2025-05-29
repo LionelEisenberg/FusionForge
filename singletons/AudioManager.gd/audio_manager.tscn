@@ -33,4 +33,5 @@ script = ExtResource("1_yrirq")
 
 [node name="ASP - 4" type="AudioStreamPlayer" parent="SFX Player Pool" groups=["sfx_players_pool"]]
 
-[node name="Music Player Pool" type="Node2D" parent="."]
+[node name="Music Player" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true

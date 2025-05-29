@@ -8,15 +8,21 @@ var sfx_dict: Dictionary = {
 	"stability_depleted": [preload("res://assets/audio/sfx/run/stability_depleted.wav")]
 }
 
+var music_array: Array = [preload("res://assets/audio/music/background_music_1.wav")]
+
 # --- Consts ---
 const BASE_SFX_VOLUME_LINEAR: float = 0.1
 const BASE_SFX_PITCH: float = 1.0
+
+const BASE_MUSIC_VOLUME_LINEAR: float = 0.1
+const base_MUSIC_PITCH: float = 1.0
 
 # --- Node Pools ---
 # This pool will be populated from nodes in the "sfx_players_2d_pool" group
 @onready var sfx_player_2d_pool: Array[AudioStreamPlayer2D] = []
 # This pool will be populated from nodes in the "sfx_players_pool" group
 @onready var sfx_player_pool: Array[AudioStreamPlayer] = []
+@onready var music_player: AudioStreamPlayer = %"Music Player"
 
 #-----------------------------------------------------------------------------
 # Initialization
@@ -37,8 +43,15 @@ func _ready() -> void:
 		GameManager.stability_depleted_sfx_required.connect(_on_stability_depleted_sfx_request)
 	else:
 		push_warning("AudioManager: GameManager not found. SFX signals will not be connected.")
-
-
+	
+	if music_player and not music_player.playing:
+		music_player.volume_linear = BASE_MUSIC_VOLUME_LINEAR
+		music_player.autoplay = true
+		music_player.stream = music_array.pick_random()
+		
+		music_player.play()
+	else:
+		push_warning("AudioManager: Unable to start music, no AudioStreamPlayer found.")
 
 #-----------------------------------------------------------------------------
 # Signal Handlers
@@ -100,6 +113,9 @@ func _play_sfx(sfx_key: String, volume_db_override: float = NAN, pitch_scale_ove
 	player.pitch_scale = BASE_SFX_PITCH
 	
 	player.play()
+
+func _on_loop_sound(player) -> void:
+	player.stream_paused = false
 
 #-----------------------------------------------------------------------------
 # Helper Functions
