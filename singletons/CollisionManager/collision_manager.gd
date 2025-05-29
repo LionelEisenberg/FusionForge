@@ -17,6 +17,10 @@ signal request_element_destroy(element: Element) # To Reactor/RunScene
 signal spawn_energy_collectible(position: Vector2, value: float) # To CollectibleSpawner
 signal spawn_fusion_core_collectible(position: Vector2, value: float) # To CollectibleSpawner
 
+## VFX / SFX
+signal element_wall_sfx_requested(position: Vector2, intensity: float)
+signal element_element_sfx_requested(position: Vector2, intensity: float)
+
 #-----------------------------------------------------------------------------
 # Constant Variables
 #-----------------------------------------------------------------------------
@@ -215,12 +219,14 @@ func _handle_element_collision(e1: Element, e2: Element) -> void:
 	var effective_momentum: float = (e1.mass + e2.mass) * 0.5 * relative_velocity
 	
 	var energy = base_collision_energy + (effective_momentum * momentum_energy_factor)
-	spawn_energy_collectible.emit(_find_collision_position(e1, e2), energy)
+	var pos = _find_collision_position(e1, e2)
+	spawn_energy_collectible.emit(pos, energy)
 
 	# Notify RunManager
 	element_collision_processed.emit()
-
-	# TODO: Incorporate active click bonus check here?
+	
+	
+	element_element_sfx_requested.emit(_find_collision_position(e1, e2), clamp(effective_momentum, 0, 100))
 
 
 func _load_fusion_recipes() -> void:

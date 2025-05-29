@@ -21,6 +21,7 @@ GameManager="*res://singletons/GameManager/game_manager.gd"
 RunManager="*res://singletons/RunManager/run_manager.gd"
 CollisionManager="*res://singletons/CollisionManager/collision_manager.gd"
 UpgradeManager="*res://singletons/UpgradeManager/upgrade_manager.gd"
+AudioManager="*res://singletons/AudioManager.gd/audio_manager.tscn"
 
 [display]
 
@@ -42,6 +43,7 @@ folder_colors={
 
 elements="Elements in the Reactor Chamber"
 collectibles="Collectibles (such as energy and fusion cores) in the reactor chamber"
+audiostreamplayer2d="Audio Stream Player2D Pool"
 
 [physics]
 
