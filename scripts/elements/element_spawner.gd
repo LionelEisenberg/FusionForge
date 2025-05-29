@@ -11,6 +11,11 @@ const BASE_INITIAL_SPEED: float = 75.0
 const BASE_SPAWN_WAIT_TIME: float = 5.0
 const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity
 
+const BASE_SPAWN_DISTRIBUTION: Dictionary = {
+	"Hydrogen": 0.95,
+	"Deuterium": 0.05
+}
+
 #-----------------------------------------------------------------------------
 # State Variables (Upgradeable)
 #-----------------------------------------------------------------------------
@@ -19,6 +24,7 @@ const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity
 var initial_speed: float = BASE_INITIAL_SPEED
 var spawn_wait_time: float = BASE_SPAWN_WAIT_TIME
 var max_element_capacity: int = BASE_MAX_ELEMENT_CAPACITY
+var spawn_distribution: Dictionary = BASE_SPAWN_DISTRIBUTION
 
 #-----------------------------------------------------------------------------
 # Exports
@@ -27,6 +33,8 @@ var max_element_capacity: int = BASE_MAX_ELEMENT_CAPACITY
 ## Dictionary mapping element type names (String) to their PackedScene files.
 @export var element_scenes: Dictionary = {
 	"Hydrogen": preload("res://scenes/elements/hydrogen.tscn"),
+	"Deuterium": preload("res://scenes/elements/deuterium.tscn"),
+	"Helium-3": preload("res://scenes/elements/helium_3.tscn"),
 	"Helium": preload("res://scenes/elements/helium.tscn")
 }
 
@@ -220,7 +228,7 @@ func _spawn_element(element_type_to_spawn : String = "", spawn_position : Vector
 		printerr("ElementSpawner: No element scenes defined in element_scenes dictionary!")
 		return
 	if element_type_to_spawn == "":
-		element_type_to_spawn = element_scenes.keys()[0] # Just spawn the first one for now
+		element_type_to_spawn = _select_element_to_spawn()
 
 	var packed_element_scene = element_scenes.get(element_type_to_spawn) as PackedScene
 	if packed_element_scene == null:
@@ -236,3 +244,29 @@ func _spawn_element(element_type_to_spawn : String = "", spawn_position : Vector
 	# --- Initialize & Add ---
 	element_container.call_deferred("add_child", new_element) # Add before initialize? Or after? Usually add first.
 	new_element.initialize(spawn_position, spawn_velocity)
+
+func _select_element_to_spawn() -> String:
+	if spawn_distribution == null or spawn_distribution.is_empty():
+		push_error("Spawn distribution is null or empty. Cannot select element.")
+		return ""
+
+	var random_value: float = _rng.randf() 
+	var cumulative_probability: float = 0.0
+
+	for element_name in spawn_distribution.keys():
+		var probability: float = spawn_distribution[element_name]
+		if probability < 0.0:
+			push_warning("Negative probability found for element '%s'. Skipping." % element_name)
+			continue
+
+		cumulative_probability += probability
+		if random_value < cumulative_probability:
+			return element_name
+
+	# Fallback: Should ideally not be reached if probabilities sum to 1.0 and are non-negative.
+	if not spawn_distribution.is_empty():
+		push_warning("Fallback in select_element_to_spawn. Random: %f, Final Cumulative: %f. Returning last element." % [random_value, cumulative_probability])
+		return spawn_distribution.keys().back() 
+	
+	push_error("Could not select any element from spawn distribution, it might be invalid after processing.")
+	return "" # Or your default element
