@@ -27,7 +27,7 @@ const BASE_STABILITY_DAMAGE: float = 1.0
 const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
-const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"]
+const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"] #, "h_d_to_he3", "d_d_to_he"]
 
 const FUSION_RECIPE_LIST_PATH: String = "res://resources/recipes/fusion_recipe_list.tres"
 

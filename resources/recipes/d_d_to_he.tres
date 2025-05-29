@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="FusionRecipe" load_steps=2 format=3 uid="uid://c1qrkoftu4csk"]
+
+[ext_resource type="Script" uid="uid://7jsoumhbv8gm" path="res://scripts/core/fusion_recipe.gd" id="1_20d7g"]
+
+[resource]
+script = ExtResource("1_20d7g")
+reactant_1_type = "Deuterium"
+reactant_2_type = "Deuterium"
+result_type = "Helium"
+result_mass = 4.0
+energy_yield = 100.0
+min_momentum = 600.0
+required_temp = 0.0
+metadata/_custom_type_script = "uid://7jsoumhbv8gm"
