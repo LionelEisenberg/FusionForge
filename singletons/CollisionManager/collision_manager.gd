@@ -20,6 +20,7 @@ signal spawn_fusion_core_collectible(position: Vector2, value: float) # To Colle
 ## VFX / SFX
 signal element_wall_sfx_requested(position: Vector2, intensity: float)
 signal element_element_sfx_requested(position: Vector2, intensity: float)
+signal fusion_event_sfx_requested(position: Vector2, intensity: float)
 
 #-----------------------------------------------------------------------------
 # Constant Variables
@@ -119,9 +120,7 @@ func _on_element_hit_wall(element: Element) -> void:
 
 	# Notify RunManager
 	wall_collision_processed.emit()
-
-	# TODO: Incorporate active click bonus check here?
-
+	element_wall_sfx_requested.emit(element.position, element.get_momentum())
 
 #-----------------------------------------------------------------------------
 # Upgrade Handling
@@ -202,6 +201,7 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 	# Notify RunManager about the fusion event
 	var result_data = { "type": recipe.result_type, "mass": recipe.result_mass }
 	fusion_processed.emit(e1, e2, result_data)
+	fusion_event_sfx_requested.emit(_find_collision_position(e1, e2), 0.0)
 
 	# --- Trigger Spawning/Destruction ---
 	var collision_pos = _find_collision_position(e1, e2)
@@ -210,7 +210,7 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 	request_element_spawn.emit(recipe.result_type, collision_pos, result_velocity)
 	request_element_destroy.emit(e1)
 	request_element_destroy.emit(e2)
-
+	
 	# TODO: Incorporate active click bonus check here?
 
 ## Handles the outcome of a non-fusion element-element collision.

@@ -43,7 +43,8 @@ folder_colors={
 
 elements="Elements in the Reactor Chamber"
 collectibles="Collectibles (such as energy and fusion cores) in the reactor chamber"
-audiostreamplayer2d="Audio Stream Player2D Pool"
+sfx_players_2d_pool="Audio Stream Player2D Pool"
+sfx_players_pool="Audio Stream Player Pool"
 
 [physics]
 

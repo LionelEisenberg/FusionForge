@@ -5,18 +5,32 @@
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_yrirq")
 
-[node name="ASP 2D - 1" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="SFX Player 2D Pool" type="Node2D" parent="."]
 
-[node name="ASP 2D - 2" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 1" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
 
-[node name="ASP 2D - 3" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 2" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
 
-[node name="ASP 2D - 4" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 3" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
 
-[node name="ASP 2D - 5" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 4" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
 
-[node name="ASP 2D - 6" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 5" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
 
-[node name="ASP 2D - 7" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 6" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
 
-[node name="ASP 2D - 8" type="AudioStreamPlayer2D" parent="." groups=["audiostreamplayer2d"]]
+[node name="ASP 2D - 7" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
+
+[node name="ASP 2D - 8" type="AudioStreamPlayer2D" parent="SFX Player 2D Pool" groups=["sfx_players_2d_pool"]]
+
+[node name="SFX Player Pool" type="Node2D" parent="."]
+
+[node name="ASP - 1" type="AudioStreamPlayer" parent="SFX Player Pool" groups=["sfx_players_pool"]]
+
+[node name="ASP - 2" type="AudioStreamPlayer" parent="SFX Player Pool" groups=["sfx_players_pool"]]
+
+[node name="ASP - 3" type="AudioStreamPlayer" parent="SFX Player Pool" groups=["sfx_players_pool"]]
+
+[node name="ASP - 4" type="AudioStreamPlayer" parent="SFX Player Pool" groups=["sfx_players_pool"]]
+
+[node name="Music Player Pool" type="Node2D" parent="."]

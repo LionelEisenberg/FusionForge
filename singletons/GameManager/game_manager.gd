@@ -8,8 +8,12 @@ signal stability_updated(current_stability: float, max_stability: float)
 signal money_updated(current_money: int)
 signal fusion_cores_updated(current_cores: int)
 signal energy_depleted # Emitted when energy <= 0
-signal reactor_destroyed # Emitted when stability <= 0
+signal stability_depleted # Emitted when stability <= 0
 signal run_results_calculated(money_earned: int) # Emitted after calculating end-of-run money
+
+## SFX & VFX
+signal energy_depleted_sfx_required()
+signal stability_depleted_sfx_required()
 
 #-----------------------------------------------------------------------------
 # Constant Variables
@@ -146,6 +150,7 @@ func spend_energy(amount: float) -> void:
 		current_energy = 0.0 # Clamp to zero
 		if not invincible_mode:
 			energy_depleted.emit()
+			energy_depleted_sfx_required.emit()
 			print("GameManager: Energy depleted!") # Keep critical event print
 
 # --- Stability ---
@@ -169,7 +174,8 @@ func decrease_stability(amount: float) -> void:
 		current_stability = 0.0 # Clamp to zero
 		stability_updated.emit(current_stability, max_stability)
 		if not invincible_mode:
-			reactor_destroyed.emit()
+			stability_depleted.emit()
+			stability_depleted_sfx_required.emit()
 			print("GameManager: Reactor destroyed!") 
 
 #-----------------------------------------------------------------------------

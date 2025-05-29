@@ -29,7 +29,7 @@ var _element_spawner_ref: Node = null
 func _ready() -> void:	
 	if GameManager:
 		GameManager.energy_depleted.connect(conclude_run)
-		GameManager.reactor_destroyed.connect(conclude_run)
+		GameManager.stability_depleted.connect(conclude_run)
 	
 	if CollisionManager:
 		CollisionManager.request_element_destroy.connect(destroy_element)
