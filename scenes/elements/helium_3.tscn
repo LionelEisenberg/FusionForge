@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://76affam73q2y"]
+
+[ext_resource type="PackedScene" uid="uid://ctlkhprkkrb7" path="res://scenes/elements/element.tscn" id="1_bfiw0"]
+[ext_resource type="Texture2D" uid="uid://1kpm7yb2xn8q" path="res://assets/sprites/elements/helium3.png" id="2_ck52u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ck52u"]
+resource_local_to_scene = true
+radius = 33.0
+
+[node name="helium3" instance=ExtResource("1_bfiw0")]
+element_type = "Helium3"
+element_symbol = "He3"
+element_mass_amu = 3.0
+element_base_color = Color(1, 0.737255, 1, 1)
+scaling_factor = 0.875
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ck52u")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_ck52u")

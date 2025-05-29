@@ -16,9 +16,9 @@ signal hit_wall(element: Element)
 @export var element_type: String = "Hydrogen"
 @export var element_symbol: String = "H"
 @export var element_mass_amu: float = 1.0 : set = set_element_mass_amu
-@export var element_base_color: Color = Color.CYAN
-@export var element_size: float = 32.0
+@export var element_base_color: Color = Color.WHITE
 @export var override_velocity: Vector2 = Vector2(0, 0)
+@export var scaling_factor: float = 1.0 # 1.0 = 64x64
 
 #-----------------------------------------------------------------------------
 # Node References (Using Scene Unique Names)
@@ -124,14 +124,8 @@ func _on_body_entered(body: Node) -> void:
 #-----------------------------------------------------------------------------
 
 func _apply_element_size() -> void:
-	if _sprite and _sprite.texture:
-		var texture_size: Vector2 = _sprite.texture.get_size()
-		if texture_size.x > 0 and texture_size.y > 0: # Avoid division by zero
-			_sprite.scale = Vector2(element_size, element_size) / texture_size
-	
-	if _collision_shape and _collision_shape.shape:
-		var shape : CircleShape2D = _collision_shape.shape
-		shape.radius = element_size / 2.0
+	_sprite.scale = Vector2(scaling_factor, scaling_factor)
+	_collision_shape.scale = Vector2(scaling_factor, scaling_factor)
 
 func _update_visuals() -> void:
 	_apply_element_size()

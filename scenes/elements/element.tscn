@@ -19,6 +19,7 @@ continuous_cd = 2
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_ho77b")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
