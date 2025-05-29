@@ -28,6 +28,8 @@ const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
 const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"] #, "h_d_to_he3", "d_d_to_he"]
+const BASE_FUSION_CORE_DROP_CHANCE: float = 0.0
+const BASE_FUSION_CORE_YIELD_MULTIPLIER: float = 1.0
 
 const FUSION_RECIPE_LIST_PATH: String = "res://resources/recipes/fusion_recipe_list.tres"
 
@@ -41,6 +43,8 @@ var base_stability_damage: float = BASE_STABILITY_DAMAGE
 var momentum_energy_factor: float = BASE_MOMENTUM_ENERGY_FACTOR
 var momentum_stability_factor: float = BASE_MOMENTUM_STABILITY_FACTOR
 var wall_collision_slowing_factor: float = BASE_WALL_COLLISION_SLOWING_FACTOR
+var fusion_core_drop_chance: float = BASE_FUSION_CORE_DROP_CHANCE
+var fusion_core_yield_multiplier: float = BASE_FUSION_CORE_YIELD_MULTIPLIER
 
 #-----------------------------------------------------------------------------
 # Other Variables
@@ -121,6 +125,8 @@ func _on_element_hit_wall(element: Element) -> void:
 
 ## Signal handler connected to UpgradeManager.upgrades_applied.
 func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
+	# TODO: Apply Fusion Core upgrade effects here
+	
 	# Apply additive effects
 	base_collision_energy = BASE_COLLISION_ENERGY + effects_data.base_element_collision_energy_add
 	base_wall_collision_energy = BASE_WALL_COLLISION_ENERGY + effects_data.base_wall_collision_energy_add
@@ -140,6 +146,8 @@ func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
 	wall_collision_slowing_factor = max(1.0, wall_collision_slowing_factor) # Ensure slowing factor is at least 1 (no speed up)
 
 	unlocked_fusion_recipes = BASE_UNLOCKED_RECIPE_LIST + effects_data.unlocked_fusion_recipes
+	
+	
 	_filter_available_recipes()
 
 #-----------------------------------------------------------------------------
@@ -162,11 +170,30 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 	if recipe.energy_yield > 0:
 		spawn_energy_collectible.emit(_find_collision_position(e1, e2), recipe.energy_yield)
 
-	# Check if this fusion product is newly discovered (using SaveGameData)
+	var should_spawn_cores_this_fusion: bool = false
+	var base_yield_from_recipe: int = 0 # Number of cores this recipe would give before multiplier
+
+	# Check for First-Time Fusion
 	if _live_save_data and not _live_save_data.discovered_fusions.has(recipe.result_type):
 		_live_save_data.discovered_fusions[recipe.result_type] = true
-		spawn_fusion_core_collectible.emit(_find_collision_position(e1, e2), 1)
 		PersistenceManager.save_data()
+		should_spawn_cores_this_fusion = true
+		base_yield_from_recipe = recipe.fusion_core_yield
+	else:
+		var recipe_specific_chance = recipe.fusion_core_spawn_chance 
+		var total_spawn_chance = fusion_core_drop_chance + recipe_specific_chance
+		total_spawn_chance = clampf(total_spawn_chance, 0.0, 1.0) # Ensure chance is capped
+		
+		if randf() < total_spawn_chance: # randf() is 0.0 to <1.0
+			should_spawn_cores_this_fusion = true
+			base_yield_from_recipe = recipe.fusion_core_yield
+	
+	if should_spawn_cores_this_fusion and base_yield_from_recipe > 0:
+		var final_cores_to_spawn = int(ceil(float(base_yield_from_recipe) * fusion_core_yield_multiplier))
+		
+		if final_cores_to_spawn > 0:
+			spawn_fusion_core_collectible.emit(_find_collision_position(e1, e2), final_cores_to_spawn)
+			fusion_core_awarded.emit()
 
 	# Notify RunManager about the fusion event
 	var result_data = { "type": recipe.result_type, "mass": recipe.result_mass }

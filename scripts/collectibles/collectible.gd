@@ -2,23 +2,9 @@ class_name Collectible
 extends Area2D
 
 #-----------------------------------------------------------------------------
-# Constant Variables
-#-----------------------------------------------------------------------------
-# Base values before upgrades are applied.
-const BASE_LIFESPAN: float = 1.5
-const BASE_ATTRACTION_RADIUS: float = 80.0
-
-#-----------------------------------------------------------------------------
-# State Variables (Upgradeable)
-#-----------------------------------------------------------------------------
-# Current values used during gameplay, potentially modified by upgrades.
-# Initialized by apply_upgrade_effects() called from initialize().
-var lifespan: float = BASE_LIFESPAN
-var attraction_radius: float = BASE_ATTRACTION_RADIUS
-
-#-----------------------------------------------------------------------------
 # Exports (Non-Upgradeable Physics/Visual Parameters)
 #-----------------------------------------------------------------------------
+@export_category("Movement")
 @export var initial_speed: float = 150.0
 @export var initial_deceleration: float = 300.0
 @export var attraction_deceleration: float = 600.0
@@ -26,6 +12,9 @@ var attraction_radius: float = BASE_ATTRACTION_RADIUS
 @export var max_scale_age: float = 2.0 # e.g., effect ramps up over 2 seconds
 @export var age_scaling_factor: float = 1.5 # e.g., 150% increase = 2.5x strength at max age
 
+@export_category("Collectible Information")
+@export var lifespan: float = 1.5
+@export var attraction_radius: float = 80.0
 #-----------------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------------
@@ -117,9 +106,9 @@ func initialize(direction: Vector2) -> void:
 
 ## Applies effects data to this node's parameters. Called during initialization.
 func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
-	lifespan = BASE_LIFESPAN * effects_data.collectible_lifespan_mult
+	lifespan = lifespan * effects_data.collectible_lifespan_mult
 
-	attraction_radius = BASE_ATTRACTION_RADIUS * effects_data.collection_radius_mult
+	attraction_radius = attraction_radius * effects_data.collection_radius_mult
 
 	lifespan = max(0.1, lifespan) # Ensure lifespan is positive
 	attraction_radius = max(0.0, attraction_radius) # Ensure radius isn't negative

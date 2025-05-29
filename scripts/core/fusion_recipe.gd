@@ -15,9 +15,10 @@ extends Resource
 @export var energy_yield: float = 100.0
 ## Minimum combined momentum energy the two reactants need to fuse.
 @export var min_momentum: float = 50.0
-## Optional: Minimum reactor temperature required (value fetched from GameManager).
-@export var required_temp: float = 0.0
-
+## Chance (from 0.0 to 1.0) that this specific recipe will spawn a Fusion Core.
+@export var fusion_core_spawn_chance: float = 0.0 
+## Number of Fusion Cores to spawn if the chance is successful.
+@export var fusion_core_yield: int = 1
 
 ## Helper function to check if two element types match this recipe's reactants,
 ## regardless of order. Returns true if they match, false otherwise.
