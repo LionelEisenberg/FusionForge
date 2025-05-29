@@ -4,6 +4,8 @@ extends Area2D
 #-----------------------------------------------------------------------------
 # Exports (Non-Upgradeable Physics/Visual Parameters)
 #-----------------------------------------------------------------------------
+@export var scaling_factor: float = 1.0
+
 @export_category("Movement")
 @export var initial_speed: float = 150.0
 @export var initial_deceleration: float = 300.0
@@ -12,11 +14,10 @@ extends Area2D
 @export var max_scale_age: float = 2.0 # e.g., effect ramps up over 2 seconds
 @export var age_scaling_factor: float = 1.5 # e.g., 150% increase = 2.5x strength at max age
 
-@export_category("Collectible Information")
+
+@export_category("Despawn")
 @export var lifespan: float = 1.5
 @export var attraction_radius: float = 80.0
-
-@export_category("Despawn Settings")
 ## At what percentage of lifespan lived should blinking start (e.g., 0.6 means blinking starts when 60% of life is used, so last 40% of life).
 @export var blink_start_ratio: float = 0.6
 ## The minimum alpha value during a blink (e.g., 0.2 for mostly transparent).
@@ -56,6 +57,8 @@ func _ready() -> void:
 
 	mouse_entered.connect(_on_mouse_entered_pickup_area)
 	attraction_area.mouse_entered.connect(_on_mouse_entered_attraction_area)
+	
+	self.scale *= scaling_factor
 
 
 func _physics_process(delta: float) -> void:	

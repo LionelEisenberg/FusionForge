@@ -15,6 +15,7 @@ radius = 80.0
 [node name="FusionCoreCollectible" instance=ExtResource("1_raalu")]
 script = ExtResource("2_rujeu")
 core_amount = 1
+scaling_factor = 0.667
 lifespan = 5.0
 attraction_radius = 160.0
 
