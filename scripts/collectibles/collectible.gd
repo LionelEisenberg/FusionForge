@@ -15,6 +15,14 @@ extends Area2D
 @export_category("Collectible Information")
 @export var lifespan: float = 1.5
 @export var attraction_radius: float = 80.0
+
+@export_category("Despawn Settings")
+## At what percentage of lifespan lived should blinking start (e.g., 0.6 means blinking starts when 60% of life is used, so last 40% of life).
+@export var blink_start_ratio: float = 0.6
+## The minimum alpha value during a blink (e.g., 0.2 for mostly transparent).
+@export var blink_min_alpha: float = 0.1
+## The maximum alpha value during a blink (e.g., 1.0 for fully visible).
+@export var blink_max_alpha: float = 1.0
 #-----------------------------------------------------------------------------
 # Variables
 #-----------------------------------------------------------------------------
@@ -23,6 +31,10 @@ var _velocity: Vector2 = Vector2.ZERO
 var _is_attracted: bool = false
 var _time_attracted: float = 0.0
 var _lifespan_timer: Timer = null
+
+# Internal Despawn Settings
+var _is_blinking_phase_active: bool = false # True if we are in the time window where blinking should occur.
+var _current_despawn_blink_tween: Tween
 
 #-----------------------------------------------------------------------------
 # Node References
@@ -36,6 +48,8 @@ var _lifespan_timer: Timer = null
 #-----------------------------------------------------------------------------
 
 func _ready() -> void:
+	
+	
 	# Ensure the sprite node exists
 	if sprite == null:
 		printerr("Collectible: %Sprite node not found!")
@@ -65,7 +79,61 @@ func _physics_process(delta: float) -> void:
 	# Apply final movement based on the calculated velocity
 	global_position += _velocity * delta
 
+#-----------------------------------------------------------------------------
+# Despawn Logic
+#-----------------------------------------------------------------------------
 
+func _process(delta: float) -> void:
+	var time_lived = _lifespan_timer.wait_time - _lifespan_timer.time_left
+	
+	if not is_instance_valid(sprite):
+		return
+
+	# Determine if we should be in the blinking phase
+	var blink_trigger_time: float = lifespan * blink_start_ratio
+	var should_be_blinking_now: bool = time_lived >= blink_trigger_time
+
+	if should_be_blinking_now:
+		_is_blinking_phase_active = true
+		if not is_instance_valid(_current_despawn_blink_tween) or not _current_despawn_blink_tween.is_running():
+			_start_or_update_despawn_blink_animation()
+
+func _start_or_update_despawn_blink_animation() -> void:
+	if not is_instance_valid(sprite): return
+
+	if is_instance_valid(_current_despawn_blink_tween):
+		_current_despawn_blink_tween.kill() 
+
+	_current_despawn_blink_tween = create_tween()
+	
+	# Calculate blink cycle duration: make it shorter as remaining_lifespan decreases.
+	# Example: A full blink cycle (fade out + fade in) takes 30% of the remaining life,
+	# clamped between a minimum of 0.08s (very fast) and a maximum of 0.5s (slower initial blink).
+	# Adjust these values (0.30, 0.08, 0.5) to get the desired visual pacing.
+	var time_lived = _lifespan_timer.wait_time - _lifespan_timer.time_left
+	var remaining_lifespan_for_vfx: float = max(0.01, lifespan - time_lived)
+	var blink_cycle_duration: float = clampf(remaining_lifespan_for_vfx * 0.60, 0.125, 0.5)
+	var half_cycle_duration: float = blink_cycle_duration / 2.0
+	
+	# Ensure the visual node starts from the "visible" (max alpha) state for a clean animation start
+	sprite.self_modulate.a = blink_max_alpha
+
+	# --- Tween Sequence for Alpha Only ---
+	# 1. Fade out alpha
+	_current_despawn_blink_tween.tween_property(
+		sprite, "self_modulate:a", # Target only the alpha component
+		blink_min_alpha, 
+		half_cycle_duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	# 2. Fade back in alpha
+	_current_despawn_blink_tween.tween_property(
+		sprite, "self_modulate:a", # Target only the alpha component
+		blink_max_alpha, 
+		half_cycle_duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	_current_despawn_blink_tween.play()
 
 #-----------------------------------------------------------------------------
 # Public Setup Method (Called by Spawner)
