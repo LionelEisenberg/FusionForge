@@ -49,7 +49,7 @@ func _ready() -> void:
 		music_player.autoplay = true
 		music_player.stream = music_array.pick_random()
 		
-		music_player.play()
+		#music_player.play()
 	else:
 		push_warning("AudioManager: Unable to start music, no AudioStreamPlayer found.")
 
@@ -113,9 +113,6 @@ func _play_sfx(sfx_key: String, volume_db_override: float = NAN, pitch_scale_ove
 	player.pitch_scale = BASE_SFX_PITCH
 	
 	player.play()
-
-func _on_loop_sound(player) -> void:
-	player.stream_paused = false
 
 #-----------------------------------------------------------------------------
 # Helper Functions

@@ -22,6 +22,7 @@ RunManager="*res://singletons/RunManager/run_manager.gd"
 CollisionManager="*res://singletons/CollisionManager/collision_manager.gd"
 UpgradeManager="*res://singletons/UpgradeManager/upgrade_manager.gd"
 AudioManager="*res://singletons/AudioManager.gd/audio_manager.tscn"
+VfxManager="*res://singletons/VFXManager/vfx_manager.gd"
 
 [display]
 

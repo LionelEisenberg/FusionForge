@@ -24,6 +24,7 @@ signal fusion_event_sfx_requested(position: Vector2, intensity: float)
 
 ## VFX
 signal element_wall_vfx_requested(momentum: float)
+signal fusion_event_vfx_requested(epicenter_position: Vector2)
 
 #-----------------------------------------------------------------------------
 # Constant Variables
@@ -195,17 +196,19 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 			should_spawn_cores_this_fusion = true
 			base_yield_from_recipe = recipe.fusion_core_yield
 	
+	var pos = _find_collision_position(e1, e2)
 	if should_spawn_cores_this_fusion and base_yield_from_recipe > 0:
 		var final_cores_to_spawn = int(ceil(float(base_yield_from_recipe) * fusion_core_yield_multiplier))
 		
 		if final_cores_to_spawn > 0:
-			spawn_fusion_core_collectible.emit(_find_collision_position(e1, e2), final_cores_to_spawn)
+			spawn_fusion_core_collectible.emit(pos, final_cores_to_spawn)
 			fusion_core_awarded.emit()
 
 	# Notify RunManager about the fusion event
 	var result_data = { "type": recipe.result_type, "mass": recipe.result_mass }
 	fusion_processed.emit(e1, e2, result_data)
-	fusion_event_sfx_requested.emit(_find_collision_position(e1, e2), 0.0)
+	fusion_event_sfx_requested.emit(pos, 0.0)
+	fusion_event_vfx_requested.emit(pos)
 
 	# --- Trigger Spawning/Destruction ---
 	var collision_pos = _find_collision_position(e1, e2)
