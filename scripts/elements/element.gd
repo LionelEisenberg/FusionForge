@@ -1,12 +1,16 @@
 class_name Element
 extends RigidBody2D
 
+enum CollisionType {
+	POLYGON2D,
+	CIRCLE2D,
+}
+
 #-----------------------------------------------------------------------------
 # Signals
 #-----------------------------------------------------------------------------
 
 signal pair_collided(element_a: Element, element_b: Element)
-
 signal hit_wall(element: Element)
 
 #-----------------------------------------------------------------------------
@@ -20,12 +24,16 @@ signal hit_wall(element: Element)
 @export var override_velocity: Vector2 = Vector2(0, 0)
 @export var scaling_factor: float = 1.0 # 1.0 = 64x64
 
+@export_subgroup("Collision Shape")
+@export var collision_type: CollisionType = CollisionType.CIRCLE2D
+@export var collision_radius: float = 0.0
+@export var collision_points: PackedVector2Array = []
 #-----------------------------------------------------------------------------
 # Node References (Using Scene Unique Names)
 #-----------------------------------------------------------------------------
 
 @onready var _sprite : Sprite2D = %Sprite2D
-@onready var _collision_shape : CollisionShape2D = %CollisionShape2D
+var _active_collision_node: Node2D = null
 
 #-----------------------------------------------------------------------------
 # Constants
@@ -40,13 +48,16 @@ const ZERO_VELOCITY_THRESHOLD_SQ: float = 0.01
 # Godot Lifecycle Functions
 #-----------------------------------------------------------------------------
 
-func _ready() -> void:	
+func _ready() -> void:
 	# Ensure physics properties are set correctly based on exports
 	if not contact_monitor:
 		printerr("Element %s: Contact Monitor is not enabled!" % element_type)
 	if max_contacts_reported <= 0:
 		printerr("Element %s: Max Contacts Reported is not > 0!" % element_type)
 
+	# Create and add CollisionShape2D
+	_initialize_collision_area()
+	
 	# Set physics mass based on AMU
 	set_element_mass_amu(element_mass_amu)
 
@@ -67,6 +78,27 @@ func _ready() -> void:
 	
 	modulate = element_base_color
 
+func _initialize_collision_area() -> void:
+	if is_instance_valid(_active_collision_node):
+		_active_collision_node.queue_free()
+		_active_collision_node = null
+	
+	if collision_type == CollisionType.CIRCLE2D:
+		var shape_node = CollisionShape2D.new()
+		var circle = CircleShape2D.new()
+		circle.radius = collision_radius # Set initial radius
+		shape_node.shape = circle
+		_active_collision_node = shape_node
+	elif collision_type == CollisionType.POLYGON2D:
+		var polygon_node = CollisionPolygon2D.new()
+		polygon_node.polygon = collision_points # Set initial points
+		_active_collision_node = polygon_node
+	else:
+		push_error("Unknown collision type for element: " + element_type)
+		# Fallback to a default or no collision shape
+
+	if is_instance_valid(_active_collision_node):
+		add_child(_active_collision_node)
 
 #-----------------------------------------------------------------------------
 # Initialization
@@ -125,7 +157,7 @@ func _on_body_entered(body: Node) -> void:
 
 func _apply_element_size() -> void:
 	_sprite.scale = Vector2(scaling_factor, scaling_factor)
-	_collision_shape.scale = Vector2(scaling_factor, scaling_factor)
+	_active_collision_node.scale = Vector2(scaling_factor, scaling_factor)
 
 func _update_visuals() -> void:
 	_apply_element_size()

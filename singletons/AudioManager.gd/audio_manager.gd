@@ -49,7 +49,7 @@ func _ready() -> void:
 		music_player.autoplay = true
 		music_player.stream = music_array.pick_random()
 		
-		#music_player.play()
+		music_player.play()
 	else:
 		push_warning("AudioManager: Unable to start music, no AudioStreamPlayer found.")
 

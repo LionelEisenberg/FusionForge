@@ -51,7 +51,7 @@ void fragment() {
         displacement_direction = vec2(0.0, 0.0);
     }
     vec2 displacement_offset = displacement_direction * force * mask;
-    
+
     // Sample the screen texture at the displaced UV coordinate.
     COLOR = texture(SCREEN_TEXTURE, SCREEN_UV - displacement_offset);
 }

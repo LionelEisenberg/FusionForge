@@ -75,9 +75,9 @@ func update_display(data: UpgradeData, purchased_level: int, money_cost: int, fu
 	upgrade_completed_border.visible = (purchased_level == data.max_purchase_level)
 
 	# --- Update Tooltip ---
-	tooltip_text = _create_tooltip_text(data, purchased_level, money_cost, fusion_core_cost, can_afford)
+	tooltip_text = _create_tooltip_text(data, purchased_level, money_cost, fusion_core_cost)
 
-func _create_tooltip_text(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int, can_afford: bool) -> String:
+func _create_tooltip_text(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int) -> String:
 	var tooltip_lines: Array[String] = []
 
 	# Name and Level
