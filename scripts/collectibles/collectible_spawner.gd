@@ -16,7 +16,7 @@ extends Node
 # Tier Definitions
 #-----------------------------------------------------------------------------
 
-const ENERGY_VALUE_TIERS = [250.0, 100.0, 50.0, 10.0, 1.0] # Highest to lowest
+const ENERGY_VALUE_TIERS = [250.0, 100.0, 50.0, 10.0] # Highest to lowest
 
 #-----------------------------------------------------------------------------
 # Internal Variables
@@ -99,6 +99,4 @@ func _spawn_single_collectible(scene: PackedScene, base_pos: Vector2, value) -> 
 
 	# Calculate random initial direction
 	var direction = Vector2.from_angle(_rng.randf_range(0, TAU))
-	if value == 10:
-		collectible.modulate = Color(Color.RED, 1.0)
 	collectible.call_deferred("initialize", direction) # Call base setup for movement/lifespan
