@@ -17,10 +17,13 @@ signal request_element_destroy(element: Element) # To Reactor/RunScene
 signal spawn_energy_collectible(position: Vector2, value: float) # To CollectibleSpawner
 signal spawn_fusion_core_collectible(position: Vector2, value: float) # To CollectibleSpawner
 
-## VFX / SFX
+## SFX
 signal element_wall_sfx_requested(position: Vector2, intensity: float)
 signal element_element_sfx_requested(position: Vector2, intensity: float)
 signal fusion_event_sfx_requested(position: Vector2, intensity: float)
+
+## VFX
+signal element_wall_vfx_requested(momentum: float)
 
 #-----------------------------------------------------------------------------
 # Constant Variables
@@ -121,6 +124,7 @@ func _on_element_hit_wall(element: Element) -> void:
 	# Notify RunManager
 	wall_collision_processed.emit()
 	element_wall_sfx_requested.emit(element.position, element.get_momentum())
+	element_wall_vfx_requested.emit(element.get_momentum())
 
 #-----------------------------------------------------------------------------
 # Upgrade Handling
