@@ -2,6 +2,9 @@
 class_name UpgradeNode
 extends TextureButton
 
+const hover_scale_factor: float = 1.2 # How much to scale up on hover
+const hover_tween_duration: float = 0.15 # Duration of scale/shadow animation
+
 @export var upgrade_id: String = ""
 
 @onready var overlay: Panel = %PurchasedOverlay
@@ -10,12 +13,41 @@ extends TextureButton
 
 var _upgrade_data: UpgradeData = null
 
+var _current_hover_tween: Tween
+var _original_scale: Vector2
+var _is_mouse_over: bool = false
+
 func _ready() -> void:
+	_original_scale = self.scale
+	self.pivot_offset = self.size / 2.0
+	
 	assert(overlay != null, "UpgradeNode requires a child Panel named Overlay.")
 	assert(level_label != null, "UpgradeNode requires a child Label named LevelLabel (possibly nested).")
 
 	pressed.connect(_on_pressed)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
+func _on_mouse_entered() -> void:
+	_is_mouse_over = true
+	_animate_hover_effect(true)
+
+func _on_mouse_exited() -> void:
+	_is_mouse_over = false
+	_animate_hover_effect(false)
+
+func _animate_hover_effect(is_hovering: bool) -> void:
+	if is_instance_valid(_current_hover_tween):
+		_current_hover_tween.kill() # Stop any previous animation
+
+	_current_hover_tween = create_tween()
+	_current_hover_tween.set_parallel(true) # Scale and shadow animate together
+	_current_hover_tween.set_trans(Tween.TRANS_SINE) # Smooth transition
+	_current_hover_tween.set_ease(Tween.EASE_OUT if is_hovering else Tween.EASE_IN)
+
+	# --- Scale Animation ---
+	var target_scale = _original_scale * hover_scale_factor if is_hovering else _original_scale
+	_current_hover_tween.tween_property(self, "scale", target_scale, hover_tween_duration)
 
 func update_display(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int, can_afford: bool) -> void:
 	_upgrade_data = data
@@ -69,7 +101,6 @@ func _create_tooltip_text(data: UpgradeData, purchased_level: int, money_cost: i
 	# Removed dynamic effect description lines
 
 	return "\n".join(tooltip_lines)
-
 
 func _on_pressed() -> void:
 	if UpgradeManager:

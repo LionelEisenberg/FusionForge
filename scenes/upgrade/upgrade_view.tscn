@@ -8,7 +8,7 @@
 [ext_resource type="StyleBox" uid="uid://ds8pybhlk30f" path="res://assets/styleboxes/UpgradeResourcePanel.tres" id="6_817m1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3t83i"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+bg_color = Color(0.196078, 0.196078, 0.196078, 0)
 
 [node name="UpgradeView" type="Panel"]
 anchors_preset = 15

@@ -86,7 +86,7 @@ func _physics_process(delta: float) -> void:
 # Despawn Logic
 #-----------------------------------------------------------------------------
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var time_lived = _lifespan_timer.wait_time - _lifespan_timer.time_left
 	
 	if not is_instance_valid(sprite):

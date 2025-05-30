@@ -57,13 +57,13 @@ func _ready() -> void:
 # Signal Handlers
 #-----------------------------------------------------------------------------
 
-func _on_element_element_sfx_requested(position: Vector2, intensity: float) -> void:
+func _on_element_element_sfx_requested(position: Vector2, _intensity: float) -> void:
 	_play_2d_sfx("element_element_collision", position)
 
-func _on_element_wall_sfx_requested(position: Vector2, intensity: float) -> void:
+func _on_element_wall_sfx_requested(position: Vector2, _intensity: float) -> void:
 	_play_2d_sfx("element_wall_collision", position)
 
-func _on_fusion_event_sfx_requested(position: Vector2, intensity: float) -> void:
+func _on_fusion_event_sfx_requested(position: Vector2, _intensity: float) -> void:
 	_play_2d_sfx("fusion_event", position)
 
 func _on_energy_depleted_sfx_requested() -> void:
@@ -99,13 +99,12 @@ func _play_2d_sfx(sfx_key: String, position: Vector2, _intensity: float = -1.0) 
 	player.pitch_scale = BASE_SFX_PITCH
 	player.play()
 
-func _play_sfx(sfx_key: String, volume_db_override: float = NAN, pitch_scale_override: float = NAN) -> void:
+func _play_sfx(sfx_key: String) -> void:
 	var sound_streams: Array = _get_sound_streams_from_dict(sfx_key)
 	if sound_streams.is_empty(): return
 
 	var player: Node = _get_next_available_player_from_pool(sfx_player_pool) as AudioStreamPlayer
 	if not player:
-		push_error("AudioManager: Player from 'sfx_players_non_positional_pool' is not an AudioStreamPlayer. Node: '%s'. Check group setup." % [player.name if is_instance_valid(player) else "Invalid Node"])
 		return
 		
 	player.stream = sound_streams.pick_random()

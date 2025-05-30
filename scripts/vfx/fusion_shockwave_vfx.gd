@@ -15,7 +15,7 @@ func _ready() -> void:
 	material.set_shader_parameter("screen_size", size)
 
 # Call this from VFXManager after instancing
-func init_and_play(epicenter_world_pos: Vector2, intensity_factor: float = 1.0) -> void:
+func init_and_play(epicenter_world_pos: Vector2, _intensity_factor: float = 1.0) -> void:
 	if not material is ShaderMaterial:
 		push_warning("FusionShockwaveVFX: Cannot play, ShaderMaterial missing.")
 		queue_free()
