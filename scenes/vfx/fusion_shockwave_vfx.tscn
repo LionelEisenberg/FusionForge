@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bulis8kcwdpfr"]
 
-[ext_resource type="Script" uid="uid://6lgbax5s3s2h" path="res://scripts/vfx/fusion_shockwave_vfx.gd" id="1_4qfvh"]
+[ext_resource type="Script" uid="uid://6lgbax5s3s2h" path="res://scripts/effects/vfx/fusion_shockwave_vfx.gd" id="1_4qfvh"]
 [ext_resource type="Shader" uid="uid://cj3r6rxisxx4n" path="res://assets/shaders/shockwave.gdshader" id="1_ubnoq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_14hmt"]

@@ -1,8 +1,32 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dcf2x1pbw7dob"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://dcf2x1pbw7dob"]
+
+[ext_resource type="FontFile" uid="uid://bbpcahvpcehyl" path="res://assets/fonts/Blockblueprint-LV7z5.ttf" id="1_3f3va"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3f3va"]
+bg_color = Color(0.10175, 0.0561, 0.33, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+expand_margin_left = 15.0
+expand_margin_right = 15.0
+shadow_size = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ioqn"]
 bg_color = Color(0.192157, 0.305882, 0.368627, 1)
 
 [resource]
+Button/styles/disabled = SubResource("StyleBoxFlat_3f3va")
+Button/styles/focus = SubResource("StyleBoxFlat_3f3va")
+Button/styles/hover = SubResource("StyleBoxFlat_3f3va")
+Button/styles/normal = SubResource("StyleBoxFlat_3f3va")
+Button/styles/pressed = SubResource("StyleBoxFlat_3f3va")
 GameBackground/colors/background_color = Color(0.192157, 0.305882, 0.368627, 1)
+Label/fonts/font = ExtResource("1_3f3va")
 Panel/styles/panel = SubResource("StyleBoxFlat_6ioqn")

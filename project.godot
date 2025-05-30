@@ -47,6 +47,11 @@ collectibles="Collectibles (such as energy and fusion cores) in the reactor cham
 sfx_players_2d_pool="Audio Stream Player2D Pool"
 sfx_players_pool="Audio Stream Player Pool"
 
+[gui]
+
+theme/custom="uid://dcf2x1pbw7dob"
+theme/custom_font="uid://bbpcahvpcehyl"
+
 [physics]
 
 2d/physics_engine="GodotPhysics2D"

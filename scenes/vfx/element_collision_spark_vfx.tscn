@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5vshy6f2wi85"]
 
 [ext_resource type="Texture2D" uid="uid://bidh3atvas1oo" path="res://assets/materials/element_element_collision.png" id="1_s40jc"]
-[ext_resource type="Script" uid="uid://b6cpv63rvy620" path="res://scripts/vfx/element_collision_spark_vfx.gd" id="1_vfu47"]
+[ext_resource type="Script" uid="uid://b6cpv63rvy620" path="res://scripts/effects/vfx/element_collision_spark_vfx.gd" id="1_vfu47"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2p6o5"]
 lifetime_randomness = 0.5
