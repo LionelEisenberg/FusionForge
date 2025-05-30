@@ -1,10 +1,12 @@
 extends Node
 
 var _fusion_shockwave_shader_scene: PackedScene = preload("res://scenes/vfx/fusion_shockwave_vfx.tscn")
+var _element_collision_spark_scene: PackedScene = preload("res://scenes/vfx/element_collision_spark_vfx.tscn")
 
 func _ready() -> void:
 	if CollisionManager:
 		CollisionManager.fusion_event_vfx_requested.connect(_on_fusion_vfx_requested)
+		CollisionManager.element_element_vfx_requested.connect(_on_element_element_vfx_requested)
 	else:
 		push_warning("VFXManager: Unable to connect to CollisionManager.")
 	
@@ -28,3 +30,22 @@ func _on_fusion_vfx_requested(position: Vector2, intensity_factor: float = 1.0) 
 	else:
 		push_warning("VFXManager: FusionShockwaveVFX instance does not have 'init_and_play' method.")
 		vfx_instance.queue_free() # Clean up if it can't be played
+
+func _on_element_element_vfx_requested(position: Vector2, intensity_factor: float = 1.0) -> void:
+	if not is_instance_valid(_element_collision_spark_scene):
+		push_warning("VFXManager: ElementCollisionSparkVFX scene not loaded.")
+		return
+
+	var vfx_instance := _element_collision_spark_scene.instantiate() as Node2D
+	if not is_instance_valid(vfx_instance):
+		push_error("VFXManager: Failed to instance ElementCollisionSparkVFX scene.")
+		return
+
+	# Add to a suitable parent, e.g., current scene or a dedicated VFX layer
+	get_tree().current_scene.add_child(vfx_instance)
+	vfx_instance.global_position = position
+
+	if vfx_instance.has_method("init_effect"):
+		vfx_instance.call("init_effect", intensity_factor)
+	if vfx_instance.has_method("play"):
+		vfx_instance.call("play")

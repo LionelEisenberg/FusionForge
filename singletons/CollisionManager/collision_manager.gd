@@ -25,6 +25,7 @@ signal fusion_event_sfx_requested(position: Vector2, intensity: float)
 ## VFX
 signal element_wall_vfx_requested(momentum: float)
 signal fusion_event_vfx_requested(epicenter_position: Vector2)
+signal element_element_vfx_requested(epicenter_position: Vector2, intensity_factor: float)
 
 #-----------------------------------------------------------------------------
 # Constant Variables
@@ -232,8 +233,8 @@ func _handle_element_collision(e1: Element, e2: Element) -> void:
 	# Notify RunManager
 	element_collision_processed.emit()
 	
-	
-	element_element_sfx_requested.emit(_find_collision_position(e1, e2), clamp(effective_momentum, 0, 100))
+	element_element_sfx_requested.emit(pos, effective_momentum)
+	element_element_vfx_requested.emit(pos, effective_momentum)
 
 
 func _load_fusion_recipes() -> void:
