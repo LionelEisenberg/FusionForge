@@ -8,14 +8,50 @@ uniform float force;
 uniform float size;
 uniform float thickness;
 
-void fragment(){
-	vec2 center = global_position;
-	float ratio = SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y;
-	center.x = center.x / screen_size.x;
-	center.x = (center.x - 0.5) / ratio + 0.5;
-	center.y = (screen_size.y - center.y) / screen_size.y;
-	vec2 scaledUV = (SCREEN_UV - vec2(0.5, 0.0) ) / vec2(ratio, 1.0) + vec2(0.5, 0.0);
-	float mask = (1.0 - smoothstep(size-0.1, size, length(scaledUV - center))) * smoothstep(size-thickness-0.1, size-thickness, length(scaledUV - center));
-	vec2 disp = normalize(SCREEN_UV - center) * force * mask;
-	COLOR = texture(SCREEN_TEXTURE, SCREEN_UV - disp);
+// Small constant for smoothstep edges to avoid hard cutoffs
+const float EDGE_SOFTNESS = 0.01; // Adjust as needed
+
+void fragment() {
+    // Calculate viewport aspect ratio (width / height)
+    float aspect_ratio = screen_size.x / screen_size.y;
+
+    // 1. Normalize the epicenter's screen pixel coordinates to UV space (0.0 to 1.0, Y-down)
+    // SCREEN_UV is also 0.0-1.0, Y-down (0,0 is top-left).
+    vec2 center_uv = global_position / screen_size;
+
+    // 2. Calculate the UV vector from the current pixel to the center
+    vec2 delta_uv = SCREEN_UV - center_uv;
+
+    // 3. Correct the aspect ratio for distance calculation.
+    // We want to make distances isotropic (circular). If the screen is wider (aspect_ratio > 1),
+    // we need to make horizontal UV differences "count more" towards the distance.
+    // So, we scale delta_uv.x by the aspect_ratio.
+    vec2 aspect_corrected_delta_uv = delta_uv;
+    aspect_corrected_delta_uv.x *= aspect_ratio;
+
+    // 4. Calculate the distance from the center in this aspect-corrected space.
+    // Now, 'dist' represents a visually uniform distance from the center.
+    float dist = length(aspect_corrected_delta_uv);
+
+    // 5. Create the ring mask using the corrected distance.
+    // 'current_radius' and 'thickness' should be interpreted as fractions of screen height
+    // if you want them to scale consistently (e.g., current_radius=0.5 means half screen height).
+    float outer_edge = size;
+    float inner_edge = size - thickness;
+
+    float mask = smoothstep(outer_edge + EDGE_SOFTNESS, outer_edge - EDGE_SOFTNESS, dist) *
+                   smoothstep(inner_edge - EDGE_SOFTNESS, inner_edge + EDGE_SOFTNESS, dist);
+    // Clamping to ensure mask is always positive and not > 1
+    mask = clamp(mask, 0.0, 1.0);
+
+    // 6. Calculate displacement vector.
+    // The direction of displacement should be from the original, uncorrected center.
+    vec2 displacement_direction = normalize(delta_uv); // Use original delta_uv for direction
+    if (length(delta_uv) == 0.0) { // Avoid normalize(0,0) at the exact epicenter
+        displacement_direction = vec2(0.0, 0.0);
+    }
+    vec2 displacement_offset = displacement_direction * force * mask;
+    
+    // Sample the screen texture at the displaced UV coordinate.
+    COLOR = texture(SCREEN_TEXTURE, SCREEN_UV - displacement_offset);
 }

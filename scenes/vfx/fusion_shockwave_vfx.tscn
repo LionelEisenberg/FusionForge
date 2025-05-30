@@ -1,69 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://bulis8kcwdpfr"]
 
 [ext_resource type="Script" uid="uid://6lgbax5s3s2h" path="res://scripts/vfx/fusion_shockwave_vfx.gd" id="1_4qfvh"]
-
-[sub_resource type="Shader" id="Shader_4qfvh"]
-code = "shader_type canvas_item;
-
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
-
-uniform vec2 global_position;
-uniform vec2 screen_size;
-uniform float force;
-uniform float size;
-uniform float thickness;
-
-// Small constant for smoothstep edges to avoid hard cutoffs
-const float EDGE_SOFTNESS = 0.01; // Adjust as needed
-
-void fragment() {
-    // Calculate viewport aspect ratio (width / height)
-    float aspect_ratio = screen_size.x / screen_size.y;
-
-    // 1. Normalize the epicenter's screen pixel coordinates to UV space (0.0 to 1.0, Y-down)
-    // SCREEN_UV is also 0.0-1.0, Y-down (0,0 is top-left).
-    vec2 center_uv = global_position / screen_size;
-
-    // 2. Calculate the UV vector from the current pixel to the center
-    vec2 delta_uv = SCREEN_UV - center_uv;
-
-    // 3. Correct the aspect ratio for distance calculation.
-    // We want to make distances isotropic (circular). If the screen is wider (aspect_ratio > 1),
-    // we need to make horizontal UV differences \"count more\" towards the distance.
-    // So, we scale delta_uv.x by the aspect_ratio.
-    vec2 aspect_corrected_delta_uv = delta_uv;
-    aspect_corrected_delta_uv.x *= aspect_ratio;
-
-    // 4. Calculate the distance from the center in this aspect-corrected space.
-    // Now, 'dist' represents a visually uniform distance from the center.
-    float dist = length(aspect_corrected_delta_uv);
-
-    // 5. Create the ring mask using the corrected distance.
-    // 'current_radius' and 'thickness' should be interpreted as fractions of screen height
-    // if you want them to scale consistently (e.g., current_radius=0.5 means half screen height).
-    float outer_edge = size;
-    float inner_edge = size - thickness;
-
-    float mask = smoothstep(outer_edge + EDGE_SOFTNESS, outer_edge - EDGE_SOFTNESS, dist) *
-                   smoothstep(inner_edge - EDGE_SOFTNESS, inner_edge + EDGE_SOFTNESS, dist);
-    // Clamping to ensure mask is always positive and not > 1
-    mask = clamp(mask, 0.0, 1.0);
-
-    // 6. Calculate displacement vector.
-    // The direction of displacement should be from the original, uncorrected center.
-    vec2 displacement_direction = normalize(delta_uv); // Use original delta_uv for direction
-    if (length(delta_uv) == 0.0) { // Avoid normalize(0,0) at the exact epicenter
-        displacement_direction = vec2(0.0, 0.0);
-    }
-    vec2 displacement_offset = displacement_direction * force * mask;
-    
-    // Sample the screen texture at the displaced UV coordinate.
-    COLOR = texture(SCREEN_TEXTURE, SCREEN_UV - displacement_offset);
-}
-"
+[ext_resource type="Shader" uid="uid://cj3r6rxisxx4n" path="res://assets/shaders/shockwave.gdshader" id="1_ubnoq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_14hmt"]
-shader = SubResource("Shader_4qfvh")
+shader = ExtResource("1_ubnoq")
 shader_parameter/global_position = Vector2(0, 0)
 shader_parameter/screen_size = Vector2(1280, 720)
 shader_parameter/force = 0.0
