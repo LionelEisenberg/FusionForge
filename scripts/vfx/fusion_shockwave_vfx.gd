@@ -1,55 +1,37 @@
-# FusionHaloWaveVFX.gd
-extends Node2D
+extends ColorRect
 
-@onready var particles: GPUParticles2D = %GPUParticles2D
-
-# Default values, can be overridden by init()
-var base_initial_velocity: float = 300.0
-var base_lifetime: float = 0.8
-var base_scale: float = 1.0
+@onready var animation_player: AnimationPlayer = $AnimationPlayer # Assuming child is named AnimationPlayer
 
 func _ready() -> void:
-	# Ensure particles are ready but not emitting until play() is called
-	if not is_instance_valid(particles):
-		push_error("FusionHaloWaveVFX: GPUParticles2D node 'HaloParticles' not found!")
-		queue_free() # Can't function without particles
+	size = get_viewport_rect().size
+	global_position = Vector2.ZERO # Ensure it's at the top-left for screen shader
+
+	if not material is ShaderMaterial:
+		push_error("FusionShockwaveVFX: ShaderMaterial not assigned to ColorRect!")
+		queue_free()
 		return
-	particles.emitting = false
-	
-	position = Vector2(600, 600)
-	print("HI")
-	play()
 
-# Call this from VFXManager after instancing the scene
-func init_effect(intensity_factor: float = 1.0) -> void:
-	if not is_instance_valid(particles): return
+	# Initialize screen_size uniform once
+	material.set_shader_parameter("screen_size", size)
 
-	# Scale effect parameters based on intensity_factor (0.0 to 1.0+)
-	# Adjust these multipliers and properties as needed.
-	var mat = particles.process_material as ParticleProcessMaterial
-	if mat:
-		mat.initial_velocity_min = base_initial_velocity * lerpf(0.8, 1.5, intensity_factor) # Example scaling
-		mat.initial_velocity_max = mat.initial_velocity_min 
-	
-	particles.lifetime = base_lifetime * lerpf(0.7, 1.3, intensity_factor)
-	particles.speed_scale = lerpf(0.9, 1.2, intensity_factor) # Overall speed adjustment
-	
-	# You could also scale the particle amount if desired, but do it before 'emitting'
-	# particles.amount = int(base_particle_amount * lerpf(0.5, 1.5, intensity_factor))
-	
-	# Scale the entire node for a larger or smaller overall effect
-	self.scale = Vector2.ONE * lerpf(0.8, 1.5, intensity_factor)
+# Call this from VFXManager after instancing
+func init_and_play(epicenter_world_pos: Vector2, intensity_factor: float = 1.0) -> void:
+	if not material is ShaderMaterial:
+		push_warning("FusionShockwaveVFX: Cannot play, ShaderMaterial missing.")
+		queue_free()
+		return
 
+	if not is_instance_valid(animation_player):
+		push_warning("FusionShockwaveVFX: AnimationPlayer not found.")
+		queue_free()
+		return
 
-func play() -> void:
-	if not is_instance_valid(particles): return
+	# The shader takes 'global_position' which it then normalizes using screen_size.
+	# If this ColorRect is at (0,0) and covers the screen, epicenter_world_pos can be used directly.
+	material.set_shader_parameter("global_position", epicenter_world_pos)
+
+	animation_player.play("play_shockwave")
 	
-	particles.restart() # Resets particle simulation time and emits
-	particles.emitting = true
+	await animation_player.animation_finished # Wait for the animation to complete
 	
-	# Self-destruct after particles are likely done
-	# Create a timer that waits for slightly longer than the particle lifetime + processing
-	#var self_destruct_delay = particles.lifetime + particles.preprocess + 0.5 # Add a small buffer
-	#var timer = get_tree().create_timer(self_destruct_delay)
-	#timer.timeout.connect(queue_free)
-	
+	queue_free() # Self-destruct

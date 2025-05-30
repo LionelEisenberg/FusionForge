@@ -47,3 +47,4 @@ scenes/main/main_game.tscn
 *.tmp
 /exports
 export_presets.cfg
+*.uid
