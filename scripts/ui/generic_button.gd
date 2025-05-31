@@ -31,14 +31,17 @@ func _ready() -> void:
 	
 	# Set initial text without the wave effect
 	rich_text_label.bbcode_enabled = true # Ensure BBCode is enabled on the RichTextLabel
-	rich_text_label.text = button_text 
+	rich_text_label.text = button_text
+	
+	if disabled:
+		rich_text_label.text = "[color=gray]%s[/color]" % rich_text_label.text 
 	
 	# Connect hover signals
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
 func _on_mouse_entered() -> void:
-	if not is_instance_valid(rich_text_label) or not is_instance_valid(_active_hover_effect_instance) or _active_hover_bbcode_tag.is_empty():
+	if disabled or not is_instance_valid(rich_text_label) or not is_instance_valid(_active_hover_effect_instance) or _active_hover_bbcode_tag.is_empty():
 		return # No effect to apply or label missing
 
 	var params_string: String = ""
@@ -52,6 +55,6 @@ func _on_mouse_entered() -> void:
 	rich_text_label.bbcode_text = "[%s%s]%s[/%s]" % [_active_hover_bbcode_tag, params_string, button_text, _active_hover_bbcode_tag]
 
 func _on_mouse_exited() -> void:
-	if not is_instance_valid(rich_text_label): return
+	if disabled or not is_instance_valid(rich_text_label): return
 	# Remove the hover effect by setting plain text (or text without the specific hover tag)
 	rich_text_label.text = button_text

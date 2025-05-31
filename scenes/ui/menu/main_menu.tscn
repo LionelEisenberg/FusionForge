@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://6s3v0grhn6w7"]
+[gd_scene load_steps=5 format=3 uid="uid://6s3v0grhn6w7"]
 
 [ext_resource type="Texture2D" uid="uid://dx0emvhoe2haw" path="res://assets/ui_images/main_menu_background.png" id="1_5ssjm"]
 [ext_resource type="Texture2D" uid="uid://bcn2t4yqkyhqk" path="res://assets/ui_images/FUSION-FORGE-5-31-2025(1).png" id="2_eip10"]
+[ext_resource type="PackedScene" uid="uid://b0wcqvhm4bwtl" path="res://scenes/ui/generic_button.tscn" id="3_araup"]
+[ext_resource type="Texture2D" uid="uid://dhj5nuvr4yu28" path="res://assets/ui_images/Gemini_Generated_Image_iu3sheiu3sheiu3s.png" id="3_eip10"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -50,9 +52,10 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 20
 
-[node name="Button" type="Button" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer"]
+[node name="GenericButton" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer" instance=ExtResource("3_araup")]
 layout_mode = 2
-text = "CONTINUE"
+disabled = true
+button_text = "CONTINUE"
 
 [node name="PanelContainer2" type="MarginContainer" parent="TextureRect/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -63,9 +66,9 @@ theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 200
 theme_override_constants/margin_bottom = 20
 
-[node name="Button" type="Button" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer2"]
+[node name="GenericButton" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer2" instance=ExtResource("3_araup")]
 layout_mode = 2
-text = "NEW GAME"
+button_text = "NEW GAME"
 
 [node name="PanelContainer3" type="MarginContainer" parent="TextureRect/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -76,9 +79,9 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 40
 
-[node name="Button" type="Button" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer3"]
+[node name="GenericButton" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer3" instance=ExtResource("3_araup")]
 layout_mode = 2
-text = "OPTIONS"
+button_text = "OPTIONS"
 
 [node name="PanelContainer4" type="MarginContainer" parent="TextureRect/VBoxContainer/GridContainer"]
 layout_mode = 2
@@ -89,9 +92,9 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 200
 theme_override_constants/margin_bottom = 40
 
-[node name="Button" type="Button" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer4"]
+[node name="GenericButton" parent="TextureRect/VBoxContainer/GridContainer/PanelContainer4" instance=ExtResource("3_araup")]
 layout_mode = 2
-text = "QUIT"
+button_text = "QUIT"
 
 [node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
 layout_mode = 1
@@ -100,14 +103,18 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -40.0
+offset_left = -60.0
+offset_top = -60.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="TextureButton" type="TextureButton" parent="TextureRect/MarginContainer"]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
+texture_normal = ExtResource("3_eip10")
+ignore_texture_size = true
+stretch_mode = 0
