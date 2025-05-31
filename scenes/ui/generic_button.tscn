@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0wcqvhm4bwtl"]
+
+[ext_resource type="Script" uid="uid://bn3qqq2ggiynt" path="res://scripts/ui/generic_button.gd" id="1_p7dwb"]
+[ext_resource type="Script" uid="uid://cfbd3wb5uyyvy" path="res://scripts/effects/text_effects/wave_text_effect.gd" id="1_pvfip"]
+
+[node name="GenericButton" type="Button"]
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.34
+mouse_filter = 1
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 45
+script = ExtResource("1_p7dwb")
+hover_effect_script = ExtResource("1_pvfip")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1

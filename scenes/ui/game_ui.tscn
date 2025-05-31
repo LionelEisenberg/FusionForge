@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bntbyn7ulcarj"]
+[gd_scene load_steps=10 format=3 uid="uid://bntbyn7ulcarj"]
 
 [ext_resource type="StyleBox" uid="uid://cy2mbg6natjml" path="res://assets/styleboxes/GameUI.tres" id="1_bma8u"]
 [ext_resource type="LabelSettings" uid="uid://b285iamcnlkh" path="res://assets/labelsettings/run_results_popup_stat_titles.tres" id="2_fct72"]
 [ext_resource type="Script" uid="uid://er5hu3j1k6uu" path="res://scripts/ui/game_ui.gd" id="2_ru5ln"]
 [ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="3_ru5ln"]
+[ext_resource type="LabelSettings" uid="uid://d3lybavjsdlbe" path="res://assets/labelsettings/game_ui_subtitles.tres" id="3_v1bdg"]
+[ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="6_qrkc0"]
+[ext_resource type="Texture2D" uid="uid://ccvd8iqtcp22b" path="res://assets/icons/resources/fusion_core_resource.png" id="7_yvtb5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fct72"]
 bg_color = Color(1, 0.901961, 0.176471, 1)
@@ -41,6 +44,7 @@ size_flags_vertical = 3
 [node name="RunStatsTitle" type="Label" parent="MainVBox/RunStatsContainer"]
 layout_mode = 2
 text = "Current Run Statistics"
+label_settings = ExtResource("3_v1bdg")
 horizontal_alignment = 1
 
 [node name="RunStatsGrid" type="GridContainer" parent="MainVBox/RunStatsContainer"]
@@ -57,7 +61,7 @@ label_settings = ExtResource("2_fct72")
 [node name="RunTimeValue" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 7
 size_flags_vertical = 8
 text = "0m 0s"
 label_settings = ExtResource("3_ru5ln")
@@ -72,7 +76,7 @@ label_settings = ExtResource("2_fct72")
 [node name="MaxFusionComboValue" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 7
 size_flags_vertical = 8
 text = "0"
 label_settings = ExtResource("3_ru5ln")
@@ -87,34 +91,42 @@ label_settings = ExtResource("2_fct72")
 [node name="TotalCollisionsValue" type="Label" parent="MainVBox/RunStatsContainer/RunStatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 7
 size_flags_vertical = 8
 text = "0"
 label_settings = ExtResource("3_ru5ln")
 horizontal_alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox/RunStatsContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/RunStatsContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox/RunStatsContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 10
 
-[node name="ElementsLabel" type="Label" parent="MainVBox/RunStatsContainer/HBoxContainer"]
+[node name="ElementsLabel" type="Label" parent="MainVBox/RunStatsContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Elements:"
 label_settings = ExtResource("2_fct72")
 
-[node name="ElementsValue" type="Label" parent="MainVBox/RunStatsContainer/HBoxContainer"]
+[node name="ElementsValue" type="Label" parent="MainVBox/RunStatsContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0 / 10"
 label_settings = ExtResource("3_ru5ln")
 
-[node name="NextSpawnLabel" type="Label" parent="MainVBox/RunStatsContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainVBox/RunStatsContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="NextSpawnLabel" type="Label" parent="MainVBox/RunStatsContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Next Spawn: "
 label_settings = ExtResource("2_fct72")
 
-[node name="NextSpawnValue" type="Label" parent="MainVBox/RunStatsContainer/HBoxContainer"]
+[node name="NextSpawnValue" type="Label" parent="MainVBox/RunStatsContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "5.0s"
@@ -132,6 +144,7 @@ theme_override_constants/separation = 35
 [node name="RunResourcesTitle" type="Label" parent="MainVBox/RunResourcesContainer"]
 layout_mode = 2
 text = "Current Run Resources"
+label_settings = ExtResource("3_v1bdg")
 horizontal_alignment = 1
 
 [node name="EnergyProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer"]
@@ -201,35 +214,62 @@ theme_override_constants/separation = 48
 [node name="PermanentResourcesSection" type="VBoxContainer" parent="MainVBox"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 20
 
 [node name="PermanentResourcesTitle" type="Label" parent="MainVBox/PermanentResourcesSection"]
 layout_mode = 2
-text = "Permanent Game Resources"
+text = "Permanent Resources"
+label_settings = ExtResource("3_v1bdg")
 horizontal_alignment = 1
 
-[node name="PermanentResourcesGrid" type="GridContainer" parent="MainVBox/PermanentResourcesSection"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/PermanentResourcesSection"]
 layout_mode = 2
-size_flags_vertical = 6
-columns = 2
+size_flags_vertical = 4
 
-[node name="MoneyLabel" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+[node name="MarginContainer" type="MarginContainer" parent="MainVBox/PermanentResourcesSection/VBoxContainer"]
 layout_mode = 2
-text = "Money ($):"
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
 
-[node name="MoneyValue" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox/PermanentResourcesSection/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="MainVBox/PermanentResourcesSection/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_qrkc0")
+expand_mode = 2
+
+[node name="MoneyValue" type="Label" parent="MainVBox/PermanentResourcesSection/VBoxContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "0"
+theme_override_font_sizes/font_size = 40
+text = "1000"
 horizontal_alignment = 2
 
-[node name="CoresLabel" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+[node name="MarginContainer2" type="MarginContainer" parent="MainVBox/PermanentResourcesSection/VBoxContainer"]
 layout_mode = 2
-text = "Fusion Cores (FC):"
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
 
-[node name="FusionCoreValue" type="Label" parent="MainVBox/PermanentResourcesSection/PermanentResourcesGrid"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainVBox/PermanentResourcesSection/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="MainVBox/PermanentResourcesSection/VBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_yvtb5")
+expand_mode = 2
+
+[node name="FusionCoreValue" type="Label" parent="MainVBox/PermanentResourcesSection/VBoxContainer/MarginContainer2/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "0"
+theme_override_font_sizes/font_size = 40
+text = "1000"
 horizontal_alignment = 2
