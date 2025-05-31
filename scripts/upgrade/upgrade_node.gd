@@ -35,9 +35,6 @@ func _ready() -> void:
 	pressed.connect(_on_pressed)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
-	# For keyboard/controller accessibility
-	focus_entered.connect(_on_mouse_entered) 
-	focus_exited.connect(_on_mouse_exited)
 
 func _on_mouse_entered() -> void:
 	_is_mouse_over = true
