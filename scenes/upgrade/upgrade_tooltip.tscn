@@ -1,0 +1,175 @@
+[gd_scene load_steps=8 format=3 uid="uid://12wyar88xtdn"]
+
+[ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="1_5oshg"]
+[ext_resource type="Texture2D" uid="uid://ccvd8iqtcp22b" path="res://assets/icons/resources/fusion_core_resource.png" id="2_n8f4n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ole6"]
+bg_color = Color(0.0196078, 0.113725, 0.141176, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.0745098, 0.14902, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n8f4n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2210y"]
+bg_color = Color(0, 0.0745098, 0.14902, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7pg4n"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n8f4n"]
+bg_color = Color(0.13, 0.13, 0.13, 1)
+border_width_left = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0.0745098, 0.14902, 1)
+corner_radius_bottom_right = 75
+corner_radius_bottom_left = 75
+
+[node name="UpgradeTooltip" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="InformationPanel" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ole6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/InformationPanel"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TitleContainer" type="PanelContainer" parent="VBoxContainer/InformationPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_n8f4n")
+
+[node name="TitleLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/TitleContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Max Speed Increase! (0 / 10)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DescriptionContainer" type="PanelContainer" parent="VBoxContainer/InformationPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.25
+theme_override_styles/panel = SubResource("StyleBoxFlat_2210y")
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/DescriptionContainer"]
+layout_mode = 2
+text = "Increases the base energy yield of Wall to Element and Element to Element collisions."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EffectContainer" type="PanelContainer" parent="VBoxContainer/InformationPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7pg4n")
+
+[node name="EffectLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/EffectContainer"]
+layout_mode = 2
+text = "10 %"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CostHBox" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="LeftSpacerContainer" type="Control" parent="VBoxContainer/CostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="MoneyCost" type="PanelContainer" parent="VBoxContainer/CostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_n8f4n")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CostHBox/MoneyCost"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CostHBox/MoneyCost/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CostHBox/MoneyCost/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_5oshg")
+expand_mode = 2
+
+[node name="MoneyValue" type="RichTextLabel" parent="VBoxContainer/CostHBox/MoneyCost/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 16
+text = "1000"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MiddleSpacerContainer" type="Control" parent="VBoxContainer/CostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.75
+
+[node name="FusionCoreCost" type="PanelContainer" parent="VBoxContainer/CostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_n8f4n")
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/CostHBox/FusionCoreCost"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CostHBox/FusionCoreCost/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CostHBox/FusionCoreCost/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_n8f4n")
+expand_mode = 2
+
+[node name="FusionCoreValue" type="RichTextLabel" parent="VBoxContainer/CostHBox/FusionCoreCost/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 16
+text = "1000"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightSpacerContainer" type="Control" parent="VBoxContainer/CostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3

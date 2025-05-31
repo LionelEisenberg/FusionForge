@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8ljise60gc1x"]
+[gd_scene load_steps=6 format=3 uid="uid://b8ljise60gc1x"]
 
 [ext_resource type="Texture2D" uid="uid://bh052jvejm4s5" path="res://icon.svg" id="1_ycfkb"]
 [ext_resource type="Script" uid="uid://wyyklkeca7su" path="res://scripts/upgrade/upgrade_node.gd" id="2_ycfkb"]
+[ext_resource type="PackedScene" uid="uid://12wyar88xtdn" path="res://scenes/upgrade/upgrade_tooltip.tscn" id="3_6ao2m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36dbd"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -76,3 +77,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycfkb")
+
+[node name="UpgradeTooltip" parent="." instance=ExtResource("3_6ao2m")]
+layout_mode = 1
+offset_left = -150.0
+offset_top = -159.0
+offset_right = 150.0
+offset_bottom = -63.0
