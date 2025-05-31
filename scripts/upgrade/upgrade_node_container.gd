@@ -165,11 +165,8 @@ func _on_upgrade_purchased(_upgrade_id: String, _new_level: int) -> void:
 ## Draw connection lines between nodes.
 func _draw() -> void:
 	if not UpgradeManager: return
-
-	# Define line appearance
-	var line_color = Color.GRAY
-	var purchased_line_color = Color.YELLOW
-	var line_width = 2.0
+	
+	var line_width = 3.0
 	var antialiased = true
 
 	# Iterate through nodes that *have* prerequisites
@@ -180,24 +177,27 @@ func _draw() -> void:
 		var data: UpgradeData = UpgradeManager.get_upgrade_data(upgrade_id)
 		if data == null or data.prerequisites.is_empty(): continue # Skip nodes without prereqs
 
-		# Define connection points (e.g., center, top-middle, bottom-middle)
-		# Using center for simplicity here
 		var end_pos = node_instance.position + node_instance.size / 2.0
-		# TODO: Define better connection points (e.g., top center: node_instance.position + Vector2(node_instance.size.x / 2.0, 0))
 
 		for prereq_id in data.prerequisites:
 			if _upgrade_nodes.has(prereq_id):
 				var prereq_node = _upgrade_nodes[prereq_id] as UpgradeNode
 				if prereq_node and prereq_node.visible: # Only draw if prereq node is also visible
 					var prereq_level = UpgradeManager.get_current_upgrade_level(prereq_id)
+					var max_prereq_level = UpgradeManager.get_upgrade_data(prereq_id).max_purchase_level
+					var is_max_purchased = prereq_level == max_prereq_level
 
-					# Determine start position on prerequisite node
 					var start_pos = prereq_node.position + prereq_node.size / 2.0
-					# TODO: Define better connection points (e.g., bottom center: prereq_node.position + Vector2(prereq_node.size.x / 2.0, prereq_node.size.y))
 
 					# Determine line color based on whether prerequisite is met (purchased)
-					var color_to_use = purchased_line_color if prereq_level > 0 else line_color
-
+					var color_to_use = Color.BLACK
+					if is_max_purchased:
+						color_to_use = Color.GREEN
+					elif prereq_level > 0:
+						color_to_use = Color.WHITE
+					elif prereq_level == 0:
+						color_to_use = Color.WEB_GRAY
+						
 					# Draw the line
 					draw_line(start_pos, end_pos, color_to_use, line_width, antialiased)
 			else:

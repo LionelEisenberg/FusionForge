@@ -15,7 +15,6 @@ const hover_tween_duration: float = 0.15 # Duration of scale/shadow animation
 var _upgrade_data: UpgradeData = null
 var _current_level: int = 0
 
-
 var _current_hover_tween: Tween
 var _original_scale: Vector2
 var _is_mouse_over: bool = false
@@ -111,12 +110,21 @@ func update_display(data: UpgradeData, current_level: int, can_afford: bool) -> 
 		icon_path = "res://icon.svg"
 
 	level_label.text = "%d / %d" % [_current_level, _upgrade_data.max_purchase_level]
-	if data.max_purchase_level == 1:
+	if _upgrade_data.max_purchase_level == 1:
 		level_label.visible = false
 
 	# --- Update State ---
-	overlay.visible = (_current_level == 0)
-	upgrade_completed_border.visible = (_current_level == _upgrade_data.max_purchase_level)
+	var new_style_box = upgrade_completed_border.get_theme_stylebox("panel")
+	var is_max_purchased = _current_level == _upgrade_data.max_purchase_level
+	overlay.visible = not can_afford && not is_max_purchased
+	if is_max_purchased:
+		new_style_box.border_color = Color.GREEN
+	elif _current_level > 0:
+		new_style_box.border_color = Color.WHITE
+	elif _current_level == 0:
+		new_style_box.border_color = Color.WEB_GRAY
+	
+	upgrade_completed_border.add_theme_stylebox_override("panel", new_style_box)
 
 func _on_pressed() -> void:
 	if UpgradeManager:

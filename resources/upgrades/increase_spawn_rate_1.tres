@@ -6,9 +6,10 @@
 script = ExtResource("1_0dt8j")
 id = "increase_spawn_rate_1"
 display_name = "Increase Spawn Rate (I)"
-description = "Increases the rate at which the reactor spawns new Elements."
+description = "Increases the [wave][color=darkorchid]rate[/color][/wave] at which the [wave][color=darkorchid]reactor spawns new Elements[/color][/wave]."
 max_purchase_level = 5
 prerequisites = Array[String]([])
+effect_string = "10%"
 money_cost_per_level = Array[float]([50.0, 85.0, 150.0, 275.0, 500.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0

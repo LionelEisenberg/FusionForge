@@ -15,6 +15,9 @@ extends Control
 @onready var fusion_core_cost_container: Control = %FusionCoreCost
 @onready var fusion_core_icon: TextureRect = %FusionCoreIcon
 @onready var fusion_core_value_label: RichTextLabel = %FusionCoreValue
+
+# TextEffectImporter
+@onready var text_effect_importer: Node = %TextEffectImporter
 # --- End Node Path References ---
 
 var _current_animation_tween: Tween
@@ -36,6 +39,10 @@ func _ready() -> void:
 	if GameManager:
 		GameManager.money_updated.connect(_on_money_changed)
 		GameManager.fusion_cores_updated.connect(_on_fusion_cores_updated)
+	
+	for rich_text_label in [title_label, description_label, effect_label, money_value_label, fusion_core_value_label]:
+		rich_text_label.custom_effects = text_effect_importer.get_text_effect_instances()
+		rich_text_label.bbcode_enabled = true
 
 # Call this from UpgradeNode.gd to populate and style the tooltip
 func update_content(data: Dictionary) -> void:
@@ -44,8 +51,13 @@ func update_content(data: Dictionary) -> void:
 	var upgrade_name = data.get("name", "N/A")
 	var current_lvl = data.get("current_level", 0)
 	var max_lvl = data.get("max_level", 0)
+	var lvl_text = "(%s/%s)" % [current_lvl, max_lvl]
 	if is_instance_valid(title_label):
-		title_label.text = "%s (%s/%s)" % [upgrade_name, current_lvl, max_lvl] # Combined name and level
+		if current_lvl == max_lvl:
+			title_label.text = "[wave]%s [color=olivedrab](%s/%s)[/color][/wave]" % [upgrade_name, current_lvl, max_lvl] # Combined name and level
+		else:
+			title_label.text = "%s (%s/%s)" % [upgrade_name, current_lvl, max_lvl] # Combined name and level
+		print(title_label.text)
 	
 	if is_instance_valid(description_label): description_label.text = data.get("description", "")
 	if is_instance_valid(effect_label): effect_label.text = data.get("effect_string", "")

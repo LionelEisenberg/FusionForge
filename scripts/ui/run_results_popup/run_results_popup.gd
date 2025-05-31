@@ -6,13 +6,10 @@ signal dismissed()
 @onready var wall_collisions_value: Label = %WallCollisionsValue
 @onready var elements_collisions_value: Label = %ElementCollisionsValue
 @onready var max_fusion_combo_value: Label = %MaxFusionComboValue
-@onready var heaviest_element_mass_value: Label = %HeaviestElementMassValue
 @onready var money_earned_value: Label = %MoneyEarnedValue
 @onready var continue_button: Button = %ContinueButton
 
 func _ready() -> void:
-	#visible = false
-
 	if continue_button:
 		continue_button.pressed.connect(_on_continue_button_pressed)
 	else:
@@ -25,7 +22,7 @@ func show_results(run_stats: RunStats, money_earned: int) -> void:
 	elements_collisions_value.text = str(run_stats.collision_counts.y)
 	max_fusion_combo_value.text = "x %.1f" % ((run_stats.max_fusion_combo) as float)
 
-	money_earned_value.text = "$ %d" % money_earned
+	money_earned_value.text = " %d" % money_earned
 	
 	call_deferred("_center_popup")
 

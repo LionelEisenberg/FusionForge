@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://12wyar88xtdn"]
+[gd_scene load_steps=10 format=3 uid="uid://12wyar88xtdn"]
 
 [ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="1_5oshg"]
 [ext_resource type="Script" uid="uid://cd3stvtevdfjj" path="res://scripts/upgrade/upgrade_tooltip.gd" id="1_2210y"]
+[ext_resource type="PackedScene" uid="uid://jhyky7k74oum" path="res://scenes/utils/text_effect_importer.tscn" id="2_2ole6"]
 [ext_resource type="Texture2D" uid="uid://ccvd8iqtcp22b" path="res://assets/icons/resources/fusion_core_resource.png" id="2_n8f4n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ole6"]
@@ -40,6 +41,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2210y")
+
+[node name="TextEffectImporter" parent="." instance=ExtResource("2_2ole6")]
+unique_name_in_owner = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -81,6 +85,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_2210y")
 [node name="DescriptionLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/DescriptionContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+bbcode_enabled = true
 text = "Increases the base energy yield of Wall to Element and Element to Element collisions."
 horizontal_alignment = 1
 vertical_alignment = 1
