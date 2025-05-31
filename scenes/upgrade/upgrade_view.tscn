@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dm8ujlmypb1tb"]
+[gd_scene load_steps=12 format=3 uid="uid://dm8ujlmypb1tb"]
 
 [ext_resource type="Script" uid="uid://b47gkp0r6jnxe" path="res://scripts/upgrade/upgrade_view.gd" id="1_3t83i"]
 [ext_resource type="Theme" uid="uid://dcf2x1pbw7dob" path="res://assets/themes/main_theme.tres" id="1_817m1"]
 [ext_resource type="PackedScene" uid="uid://b8ljise60gc1x" path="res://scenes/upgrade/upgrade_node.tscn" id="2_3t83i"]
+[ext_resource type="Texture2D" uid="uid://brn2mr8u8olk8" path="res://assets/ui_images/upgrade_view_background.png" id="3_mkm6h"]
 [ext_resource type="Resource" uid="uid://bwsojt67q8fw6" path="res://resources/upgrade_layout/upgrade_tree_layour.tres" id="3_vyv2k"]
 [ext_resource type="Script" uid="uid://clorvkxq36pok" path="res://scripts/upgrade/upgrade_node_container.gd" id="4_3t83i"]
 [ext_resource type="StyleBox" uid="uid://ds8pybhlk30f" path="res://assets/styleboxes/UpgradeResourcePanel.tres" id="6_817m1"]
@@ -26,7 +27,7 @@ theme = ExtResource("1_817m1")
 theme_override_styles/panel = SubResource("StyleBoxFlat_3t83i")
 script = ExtResource("1_3t83i")
 
-[node name="UpgradeNodeContainer" type="Panel" parent="."]
+[node name="UpgradeNodeContainer" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,6 +35,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_817m1")
+texture = ExtResource("3_mkm6h")
 script = ExtResource("4_3t83i")
 upgrade_node_scene = ExtResource("2_3t83i")
 layout_resource = ExtResource("3_vyv2k")

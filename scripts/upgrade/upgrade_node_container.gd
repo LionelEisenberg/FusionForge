@@ -2,7 +2,7 @@
 # Manages the display of the upgrade tree.
 # Instantiates, positions, connects, and updates UpgradeNode instances.
 class_name UpgradeNodeContainer
-extends Panel
+extends TextureRect
 
 ## Scene for the individual upgrade nodes
 @export var upgrade_node_scene: PackedScene
