@@ -124,5 +124,6 @@ func update_display(data: UpgradeData, current_level: int, can_afford: bool) -> 
 func _on_pressed() -> void:
 	if UpgradeManager:
 		UpgradeManager.purchase_upgrade(upgrade_id)
+		_on_mouse_entered()
 	else:
 		printerr("UpgradeNode: UpgradeManager not found! Cannot purchase.")

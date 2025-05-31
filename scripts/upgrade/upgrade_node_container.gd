@@ -143,8 +143,6 @@ func _update_all_node_displays() -> void:
 		# Get current state for this upgrade
 		var purchased_level: int = UpgradeManager.get_current_upgrade_level(upgrade_id)
 		var costs: Vector2i = UpgradeManager.get_upgrade_costs(upgrade_id)
-		var money_cost: int = costs.x
-		var fusion_core_cost: int = costs.y
 		var can_afford: bool = UpgradeManager.can_purchase(upgrade_id) # Checks everything needed for purchase button state
 		var prereqs_met: bool = UpgradeManager._at_least_one_prerequisite_met(upgrade_id) # Check at least one prereq separately for visibility
 

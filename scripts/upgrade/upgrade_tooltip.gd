@@ -29,7 +29,6 @@ var _latest_data: Dictionary
 @export var initial_scale_for_bloom: Vector2 = Vector2(1.0, 0.2)
 
 func _ready() -> void:
-	modulate.a = 0.0
 	scale = initial_scale_for_bloom 
 	visible = false
 	call_deferred("_update_pivot_for_bloom")
@@ -58,10 +57,10 @@ func update_content(data: Dictionary) -> void:
 	
 	call_deferred("_update_pivot_for_bloom")
 
-func _on_money_changed(current_money: int) -> void:
+func _on_money_changed(_current_money: int) -> void:
 	update_content(_latest_data)
 	
-func _on_fusion_cores_updated(current_fusion_core: int) -> void:
+func _on_fusion_cores_updated(_current_fusion_core: int) -> void:
 	update_content(_latest_data)
 
 func _update_money_cost_container(money_cost_val: int) -> void:
@@ -111,7 +110,6 @@ func show_animated() -> void:
 	_update_pivot_for_bloom()
 
 	visible = true
-	modulate.a = 0.0 
 	scale = initial_scale_for_bloom 
 
 	_current_animation_tween = create_tween()
