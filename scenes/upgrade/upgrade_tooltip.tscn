@@ -1,15 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://12wyar88xtdn"]
+[gd_scene load_steps=9 format=3 uid="uid://12wyar88xtdn"]
 
 [ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="1_5oshg"]
+[ext_resource type="Script" uid="uid://cd3stvtevdfjj" path="res://scripts/upgrade/upgrade_tooltip.gd" id="1_2210y"]
 [ext_resource type="Texture2D" uid="uid://ccvd8iqtcp22b" path="res://assets/icons/resources/fusion_core_resource.png" id="2_n8f4n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ole6"]
-bg_color = Color(0.0196078, 0.113725, 0.141176, 1)
+bg_color = Color(0.321569, 0.133333, 0.345098, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0, 0.0745098, 0.14902, 1)
+border_color = Color(0.85098, 0.372549, 0.34902, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
@@ -18,7 +19,7 @@ corner_radius_bottom_left = 3
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n8f4n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2210y"]
-bg_color = Color(0, 0.0745098, 0.14902, 1)
+bg_color = Color(0.85098, 0.372549, 0.34902, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7pg4n"]
 
@@ -27,7 +28,7 @@ bg_color = Color(0.13, 0.13, 0.13, 1)
 border_width_left = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0, 0.0745098, 0.14902, 1)
+border_color = Color(0.85098, 0.372549, 0.34902, 1)
 corner_radius_bottom_right = 75
 corner_radius_bottom_left = 75
 
@@ -38,6 +39,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2210y")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -63,6 +65,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_n8f4n")
 
 [node name="TitleLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/TitleContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 bbcode_enabled = true
 text = "Max Speed Increase! (0 / 10)"
@@ -76,6 +79,7 @@ size_flags_stretch_ratio = 2.25
 theme_override_styles/panel = SubResource("StyleBoxFlat_2210y")
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/DescriptionContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Increases the base energy yield of Wall to Element and Element to Element collisions."
 horizontal_alignment = 1
@@ -87,6 +91,7 @@ size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_7pg4n")
 
 [node name="EffectLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/EffectContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "10 %"
 horizontal_alignment = 1
@@ -103,6 +108,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.3
 
 [node name="MoneyCost" type="PanelContainer" parent="VBoxContainer/CostHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_n8f4n")
@@ -118,7 +124,8 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CostHBox/MoneyCost/MarginContainer/HBoxContainer"]
+[node name="MoneyIcon" type="TextureRect" parent="VBoxContainer/CostHBox/MoneyCost/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("1_5oshg")
 expand_mode = 2
@@ -139,6 +146,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.75
 
 [node name="FusionCoreCost" type="PanelContainer" parent="VBoxContainer/CostHBox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_n8f4n")
@@ -154,7 +162,8 @@ theme_override_constants/margin_bottom = 8
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/CostHBox/FusionCoreCost/MarginContainer2/HBoxContainer"]
+[node name="FusionCoreIcon" type="TextureRect" parent="VBoxContainer/CostHBox/FusionCoreCost/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("2_n8f4n")
 expand_mode = 2

@@ -10,8 +10,11 @@ const hover_tween_duration: float = 0.15 # Duration of scale/shadow animation
 @onready var overlay: Panel = %PurchasedOverlay
 @onready var level_label: Label = %LevelLabel
 @onready var upgrade_completed_border: Panel = %UpgradeCompletedBorder
+@onready var upgrade_tooltip: Control = %UpgradeTooltip 
 
 var _upgrade_data: UpgradeData = null
+var _current_level: int = 0
+
 
 var _current_hover_tween: Tween
 var _original_scale: Vector2
@@ -23,18 +26,61 @@ func _ready() -> void:
 	
 	assert(overlay != null, "UpgradeNode requires a child Panel named Overlay.")
 	assert(level_label != null, "UpgradeNode requires a child Label named LevelLabel (possibly nested).")
+	assert(upgrade_completed_border != null, "UpgradeNode requires a child Panel named 'UpgradeCompletedBorder'.")
+	assert(upgrade_tooltip != null, "UpgradeNode requires a child Control named 'UpgradeTooltip'.")
+	
+	if is_instance_valid(upgrade_tooltip):
+		upgrade_tooltip.visible = false
 
 	pressed.connect(_on_pressed)
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
+	# For keyboard/controller accessibility
+	focus_entered.connect(_on_mouse_entered) 
+	focus_exited.connect(_on_mouse_exited)
 
 func _on_mouse_entered() -> void:
 	_is_mouse_over = true
 	_animate_hover_effect(true)
 
+	if is_instance_valid(upgrade_tooltip) and is_instance_valid(_upgrade_data):
+		var costs = UpgradeManager.get_upgrade_costs(_upgrade_data.id)
+		
+		var tooltip_data = {
+			"name": _upgrade_data.display_name, # Assuming UpgradeData has display_name
+			"current_level": _current_level,
+			"max_level": _upgrade_data.max_purchase_level,
+			"description": _upgrade_data.description, # Assuming UpgradeData has description
+			"effect_string": _upgrade_data.effect_string, # Effect of the next level (or current if maxed)
+			"money_cost": costs.x,
+			"fc_cost": costs.y,
+		}
+		# Ensure the tooltip script has an update_content method
+		if upgrade_tooltip.has_method("update_content"):
+			upgrade_tooltip.update_content(tooltip_data)
+		else:
+			push_warning("UpgradeTooltip on '%s' does not have 'update_content' method." % name)
+			
+		# Ensure the tooltip script has a show_animated method
+		if upgrade_tooltip.has_method("show_animated"):
+			upgrade_tooltip.show_animated()
+		else:
+			push_warning("UpgradeTooltip on '%s' does not have 'show_animated' method." % name)
+			upgrade_tooltip.visible = true # Fallback to just making it visible
+
+
 func _on_mouse_exited() -> void:
 	_is_mouse_over = false
-	_animate_hover_effect(false)
+	_animate_hover_effect(false) # Animate the node itself
+
+	if is_instance_valid(upgrade_tooltip):
+		# Ensure the tooltip script has a hide_animated method
+		if upgrade_tooltip.has_method("hide_animated"):
+			upgrade_tooltip.hide_animated()
+		else:
+			push_warning("UpgradeTooltip on '%s' does not have 'hide_animated' method." % name)
+			upgrade_tooltip.visible = false # Fallback to just making it invisible
+
 
 func _animate_hover_effect(is_hovering: bool) -> void:
 	if is_instance_valid(_current_hover_tween):
@@ -49,8 +95,9 @@ func _animate_hover_effect(is_hovering: bool) -> void:
 	var target_scale = _original_scale * hover_scale_factor if is_hovering else _original_scale
 	_current_hover_tween.tween_property(self, "scale", target_scale, hover_tween_duration)
 
-func update_display(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int, can_afford: bool) -> void:
+func update_display(data: UpgradeData, current_level: int, can_afford: bool) -> void:
 	_upgrade_data = data
+	_current_level = current_level
 	if _upgrade_data == null:
 		printerr("UpgradeNode: update_display called with null data for id: ", upgrade_id)
 		visible = false
@@ -66,41 +113,13 @@ func update_display(data: UpgradeData, purchased_level: int, money_cost: int, fu
 		printerr("UpgradeNode: Icon not found for %s at %s" % [upgrade_id, icon_path])
 		icon_path = "res://icon.svg"
 
-	level_label.text = "%d / %d" % [purchased_level, data.max_purchase_level]
+	level_label.text = "%d / %d" % [_current_level, _upgrade_data.max_purchase_level]
 	if data.max_purchase_level == 1:
 		level_label.visible = false
 
 	# --- Update State ---
-	overlay.visible = (purchased_level == 0)
-	upgrade_completed_border.visible = (purchased_level == data.max_purchase_level)
-
-	# --- Update Tooltip ---
-	tooltip_text = _create_tooltip_text(data, purchased_level, money_cost, fusion_core_cost)
-
-func _create_tooltip_text(data: UpgradeData, purchased_level: int, money_cost: int, fusion_core_cost: int) -> String:
-	var tooltip_lines: Array[String] = []
-
-	# Name and Level
-	tooltip_lines.append("%s (Level %d / %d)" % [data.display_name, purchased_level, data.max_purchase_level])
-	# Static Description from UpgradeData
-	tooltip_lines.append(data.description)
-	tooltip_lines.append("") # Spacer
-
-	if purchased_level < data.max_purchase_level:
-		var cost_string_parts = []
-		if money_cost > 0:
-			cost_string_parts.append("%d $" % int(ceil(money_cost)))
-		if fusion_core_cost > 0:
-			cost_string_parts.append("%d FC" % fusion_core_cost)
-		
-		if cost_string_parts.is_empty(): # Should not happen if purchasable unless cost is 0 for both
-			tooltip_lines.append("Cost: Free")
-		else:
-			tooltip_lines.append("Cost: " + " and ".join(cost_string_parts))
-
-	# Removed dynamic effect description lines
-
-	return "\n".join(tooltip_lines)
+	overlay.visible = (_current_level == 0)
+	upgrade_completed_border.visible = (_current_level == _upgrade_data.max_purchase_level)
 
 func _on_pressed() -> void:
 	if UpgradeManager:

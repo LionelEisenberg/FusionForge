@@ -21,11 +21,16 @@ corner_radius_bottom_left = 1
 
 [node name="UpgradeNode" type="TextureButton"]
 custom_minimum_size = Vector2(64, 64)
+offset_left = 225.0
+offset_top = 269.0
+offset_right = 289.0
+offset_bottom = 333.0
 tooltip_text = "HI THIS IS THE UPGRADE NODE"
 texture_normal = ExtResource("1_ycfkb")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("2_ycfkb")
+metadata/_edit_group_ = true
 
 [node name="PurchasedOverlay" type="Panel" parent="."]
 unique_name_in_owner = true
@@ -79,6 +84,8 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ycfkb")
 
 [node name="UpgradeTooltip" parent="." instance=ExtResource("3_6ao2m")]
+unique_name_in_owner = true
+z_index = 1
 layout_mode = 1
 offset_left = -150.0
 offset_top = -159.0

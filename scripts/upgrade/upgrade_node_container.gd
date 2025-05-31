@@ -141,7 +141,7 @@ func _update_all_node_displays() -> void:
 			continue
 
 		# Get current state for this upgrade
-		var purchased_level: int = UpgradeManager.get_purchased_level(upgrade_id)
+		var purchased_level: int = UpgradeManager.get_current_upgrade_level(upgrade_id)
 		var costs: Vector2i = UpgradeManager.get_upgrade_costs(upgrade_id)
 		var money_cost: int = costs.x
 		var fusion_core_cost: int = costs.y
@@ -153,8 +153,7 @@ func _update_all_node_displays() -> void:
 
 		# --- Update Display (if visible) ---
 		if node_instance.visible:
-			# Pass only the data needed by the simplified update_display
-			node_instance.update_display(data, purchased_level, money_cost, fusion_core_cost, can_afford)
+			node_instance.update_display(data, purchased_level, can_afford)
 
 	# Request redraw to update connection lines after visibility/state changes
 	queue_redraw()
@@ -192,7 +191,7 @@ func _draw() -> void:
 			if _upgrade_nodes.has(prereq_id):
 				var prereq_node = _upgrade_nodes[prereq_id] as UpgradeNode
 				if prereq_node and prereq_node.visible: # Only draw if prereq node is also visible
-					var prereq_level = UpgradeManager.get_purchased_level(prereq_id)
+					var prereq_level = UpgradeManager.get_current_upgrade_level(prereq_id)
 
 					# Determine start position on prerequisite node
 					var start_pos = prereq_node.position + prereq_node.size / 2.0

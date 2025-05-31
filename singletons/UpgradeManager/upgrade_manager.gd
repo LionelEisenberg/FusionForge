@@ -58,7 +58,7 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 	if not can_purchase(upgrade_id):
 		return false
 
-	var current_level: int = get_purchased_level(upgrade_id)
+	var current_level: int = get_current_upgrade_level(upgrade_id)
 	var costs: Vector2i = get_upgrade_costs(upgrade_id)
 	var money_cost: int = costs.x
 	var fusion_core_cost: int = costs.y
@@ -84,7 +84,7 @@ func can_purchase(upgrade_id: String) -> bool:
 	if not _all_upgrades.has(upgrade_id): return false # Unknown upgrade
 
 	var data: UpgradeData = _all_upgrades[upgrade_id]
-	var current_level: int = get_purchased_level(upgrade_id)
+	var current_level: int = get_current_upgrade_level(upgrade_id)
 
 	# Check max level
 	if current_level >= data.max_purchase_level: return false
@@ -111,7 +111,7 @@ func get_upgrade_costs(upgrade_id: String) -> Vector2i:
 	if not _all_upgrades.has(upgrade_id): return Vector2i(-1, -1)
 
 	var data: UpgradeData = _all_upgrades[upgrade_id]
-	var current_level: int = get_purchased_level(upgrade_id)
+	var current_level: int = get_current_upgrade_level(upgrade_id)
 
 	if current_level >= data.max_purchase_level: return Vector2i(-1, -1) # Max level reached
 	if data.max_purchase_level != len(data.money_cost_per_level) or data.max_purchase_level != len(data.fusion_core_cost_per_level):
@@ -123,7 +123,7 @@ func get_upgrade_costs(upgrade_id: String) -> Vector2i:
 	return cost
 
 ## Gets the currently purchased level for a given upgrade ID.
-func get_purchased_level(upgrade_id: String) -> int:
+func get_current_upgrade_level(upgrade_id: String) -> int:
 	if _live_save_data and _live_save_data.purchased_upgrades:
 		return _live_save_data.purchased_upgrades.get(upgrade_id, 0) # Return 0 if key not found
 	return 0 # Return 0 if save data invalid
@@ -228,7 +228,7 @@ func _are_all_prerequisites_met(upgrade_id: String) -> bool:
 	if data == null or data.prerequisites.is_empty(): return true # No data or no prereqs
 
 	for prereq_id in data.prerequisites:
-		if get_purchased_level(prereq_id) < 1: # Check if prereq is purchased at least once
+		if get_current_upgrade_level(prereq_id) < 1: # Check if prereq is purchased at least once
 			return false
 	return true # All prerequisites met
 
@@ -237,6 +237,6 @@ func _at_least_one_prerequisite_met(upgrade_id: String) -> bool:
 	if data == null or data.prerequisites.is_empty(): return true # No data or no prereqs
 
 	for prereq_id in data.prerequisites:
-		if get_purchased_level(prereq_id) >= 1: # Check if prereq is purchased at least once
+		if get_current_upgrade_level(prereq_id) >= 1: # Check if prereq is purchased at least once
 			return true
 	return false

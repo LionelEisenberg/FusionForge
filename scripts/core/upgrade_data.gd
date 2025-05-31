@@ -11,6 +11,7 @@ extends Resource
 @export var max_purchase_level: int = 1 # Maximum number of times this upgrade can be purchased. 1 means it's a one-time purchase.
 @export var prerequisites: Array[String] = [] # Array of 'id' strings of upgrades that must be purchased (level 1+) before this one is available.
 @export var sprite_svg: Image = null
+@export var effect_string: String = "10%"
 
 @export_category("Cost")
 @export_group("Money Costs")
