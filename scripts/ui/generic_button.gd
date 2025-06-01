@@ -1,4 +1,3 @@
-# MyHoverButton.gd
 extends Button # Or whatever your button's root node type is
 
 @onready var rich_text_label: RichTextLabel = $RichTextLabel # Path to your RichTextLabel child

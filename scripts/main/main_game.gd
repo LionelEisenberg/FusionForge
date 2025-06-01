@@ -10,6 +10,8 @@ extends Node2D
 @export var top_level_run_scene_container_path: NodePath = NodePath("")
 @export var upgrade_canvas_layer_path: NodePath = NodePath("")
 
+@onready var main_menu: Control = %MainMenu
+
 #-----------------------------------------------------------------------------
 # Override exports
 #-----------------------------------------------------------------------------
@@ -32,6 +34,7 @@ var upgrade_canvas_layer_node: CanvasLayer = null
 # Game State Machine
 enum GameState {
 	INITIALIZING,
+	MAIN_MENU,
 	UPGRADING,
 	STARTING_RUN,
 	RUNNING
@@ -50,9 +53,14 @@ func _ready() -> void:
 	# Load persistent data first (ensure PersistenceManager loads before MainGame in Autoload)
 	if PersistenceManager:
 		if override_save_file:
-			PersistenceManager.delete_data()
+			PersistenceManager.load_new_save_data()
 	else:
 		printerr("MainGame: PersistenceManager not found!")
+
+	# Connect MainMenu signals
+	if main_menu:
+		main_menu.continue_game.connect(continue_game)
+		main_menu.newgame_game.connect(new_game)
 
 	# Get node references from paths
 	if subviewport_path.is_empty():
@@ -77,7 +85,7 @@ func _ready() -> void:
 			printerr("MainGame: Failed to get UpgradeCanvasLayerNode node from path: ", upgrade_canvas_layer_path)
 
 	# Start in the upgrading state
-	set_game_state(GameState.UPGRADING)
+	_set_game_state(GameState.MAIN_MENU)
 
 
 func _notification(what):
@@ -93,22 +101,18 @@ func _notification(what):
 # State Management
 #-----------------------------------------------------------------------------
 
-func set_game_state(new_state: GameState) -> void:
+func _set_game_state(new_state: GameState) -> void:
 	if new_state == current_state:
 		return
 
 	current_state = new_state
-
+	_reset_subcomponents()
+	
 	match current_state:
-		GameState.INITIALIZING:
-			pass # Should only happen briefly
+		GameState.MAIN_MENU:
+			main_menu.visible = true
 
 		GameState.UPGRADING:
-			# Clean up previous run scene if it exists
-			if is_instance_valid(run_scene_instance):
-				run_scene_instance.queue_free()
-				run_scene_instance = null
-
 			# --- Upgrade Menu Instantiation ---
 			if upgrade_menu_scene:
 				upgrade_menu_instance = upgrade_menu_scene.instantiate()
@@ -120,31 +124,22 @@ func set_game_state(new_state: GameState) -> void:
 					printerr("MainGame: Upgrade Menu scene missing 'start_run_requested' signal!")
 			else:
 				printerr("MainGame: Upgrade Menu Scene not assigned in Inspector!")
-			
+
 			if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = true
-			if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = false
 
-		GameState.STARTING_RUN:
-			# Hide upgrade menu, show run view container
-			if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = false
-			if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = true
-
-			# Clean up just in case (should already be null from UPGRADING state)
-			if is_instance_valid(run_scene_instance):
-				run_scene_instance.queue_free()
-			
-			if is_instance_valid(upgrade_menu_instance): 
-				upgrade_menu_instance.queue_free()
-
+		GameState.RUNNING:
+			# show run view container
+			if top_level_run_scene_container_node: 
+				top_level_run_scene_container_node.visible = true
 
 			# Validate nodes needed for starting
 			if run_scene == null:
 				printerr("MainGame: Run Scene not assigned in Inspector!")
-				set_game_state(GameState.UPGRADING) # Go back if scene missing
+				_set_game_state(GameState.UPGRADING) # Go back if scene missing
 				return
 			if subviewport_node == null:
 				printerr("MainGame: SubViewport node is invalid!")
-				set_game_state(GameState.UPGRADING) # Go back if viewport missing
+				_set_game_state(GameState.UPGRADING) # Go back if viewport missing
 				return
 
 			# Instance and setup the new run scene
@@ -161,11 +156,18 @@ func set_game_state(new_state: GameState) -> void:
 			# Start run
 			run_scene_instance.start_run()
 
-			set_game_state(GameState.RUNNING)
-
-		GameState.RUNNING:
-			# Main gameplay happens within RunScene instance
-			pass
+func _reset_subcomponents():
+	# Clean up instances
+	if is_instance_valid(run_scene_instance): run_scene_instance.queue_free()
+	
+	if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.queue_free()
+		
+	# Reset visibility
+	if is_instance_valid(upgrade_menu_instance): upgrade_menu_instance.visible = false
+	
+	if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = false
+	
+	if main_menu: main_menu.visible = false
 
 #-----------------------------------------------------------------------------
 # Public Functions / Triggers
@@ -174,7 +176,16 @@ func set_game_state(new_state: GameState) -> void:
 ## Triggered by Upgrade Menu signal (when connected)
 func start_new_run() -> void:
 	if current_state == GameState.UPGRADING:
-		set_game_state(GameState.STARTING_RUN)
+		_set_game_state(GameState.RUNNING)
+
+## Triggered by the Main Menu signal
+func new_game() -> void:
+	PersistenceManager.load_new_save_data()
+	_set_game_state(GameState.UPGRADING)
+
+func continue_game() -> void:
+	PersistenceManager.load_data()
+	_set_game_state(GameState.UPGRADING)
 
 #-----------------------------------------------------------------------------
 # Signal Handlers
@@ -183,4 +194,4 @@ func start_new_run() -> void:
 ## Called by RunScene signal when its conclusion sequence (results popup) is done.
 func _on_run_conclusion_finished() -> void:
 	if current_state == GameState.RUNNING:
-		set_game_state(GameState.UPGRADING)
+		_set_game_state(GameState.UPGRADING)

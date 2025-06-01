@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://loaefnvwwg85"]
+[gd_scene load_steps=7 format=3 uid="uid://loaefnvwwg85"]
 
 [ext_resource type="Script" uid="uid://bshcexhy16i3j" path="res://scripts/main/main_game.gd" id="1_exxld"]
 [ext_resource type="PackedScene" uid="uid://mdcotdqhkfpm" path="res://scenes/run/run.tscn" id="2_2jj13"]
 [ext_resource type="PackedScene" uid="uid://bntbyn7ulcarj" path="res://scenes/ui/game_ui.tscn" id="3_5fn2n"]
 [ext_resource type="PackedScene" uid="uid://dm8ujlmypb1tb" path="res://scenes/upgrade/upgrade_view.tscn" id="3_36pl1"]
+[ext_resource type="PackedScene" uid="uid://6s3v0grhn6w7" path="res://scenes/ui/menu/main_menu.tscn" id="4_bebfr"]
 
 [sub_resource type="GDScript" id="GDScript_2jj13"]
 script/source = "extends Timer
@@ -20,8 +21,20 @@ upgrade_menu_scene = ExtResource("3_36pl1")
 subviewport_path = NodePath("TopLevelRunSceneContainer/RunSceneViewportContainer/SubViewport")
 top_level_run_scene_container_path = NodePath("TopLevelRunSceneContainer")
 upgrade_canvas_layer_path = NodePath("UpgradeCanvasLayer")
-override_save_file = true
 infinite_resources = true
+
+[node name="MainMenu" parent="." instance=ExtResource("4_bebfr")]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 640.0
+offset_top = 360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="TopLevelRunSceneContainer" type="HBoxContainer" parent="."]
 visible = false
@@ -51,5 +64,6 @@ layout_mode = 2
 [node name="UpgradeCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="SaveTimer" type="Timer" parent="."]
+wait_time = 4096.0
 autostart = true
 script = SubResource("GDScript_2jj13")

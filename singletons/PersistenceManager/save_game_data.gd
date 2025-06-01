@@ -11,4 +11,10 @@ extends Resource
 
 func _to_string() -> String:
 	return "SaveGameData(Money: %d, Cores: %d, Discoveries: %s, Purchased Upgrades: %s)" % \
-			[money, fusion_cores, str(discovered_fusions.keys()), str(purchased_upgrades)]
+			[money, fusion_cores, str(discovered_fusions.keys()), str(purchased_upgrades)]	
+
+func _reset_state() -> void:
+	money = 25
+	fusion_cores = 0
+	discovered_fusions = {}
+	purchased_upgrades = {}

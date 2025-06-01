@@ -33,6 +33,7 @@ func _ready() -> void:
 
 	if PersistenceManager:
 		_live_save_data = PersistenceManager.save_game_data
+		print("live"+_live_save_data.to_string())
 	else:
 		printerr("UpgradeManager CRITICAL ERROR: Could not get SaveGameData from PersistenceManager!")
 		return # Cannot proceed without SaveGameData.

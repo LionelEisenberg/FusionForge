@@ -35,7 +35,6 @@ bg_color = Color(0.192157, 0.305882, 0.368627, 1)
 
 [resource]
 Button/styles/disabled = SubResource("StyleBoxFlat_lxams")
-Button/styles/focus = SubResource("StyleBoxFlat_3f3va")
 Button/styles/hover = SubResource("StyleBoxFlat_3f3va")
 Button/styles/normal = SubResource("StyleBoxFlat_3f3va")
 Button/styles/pressed = SubResource("StyleBoxFlat_3f3va")
