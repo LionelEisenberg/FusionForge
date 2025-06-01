@@ -23,6 +23,7 @@ CollisionManager="*res://singletons/CollisionManager/collision_manager.gd"
 UpgradeManager="*res://singletons/UpgradeManager/upgrade_manager.gd"
 AudioManager="*res://singletons/AudioManager.gd/audio_manager.tscn"
 VfxManager="*res://singletons/VFXManager/vfx_manager.gd"
+OptionsManager="*res://singletons/OptionsManager/options_manager.gd"
 
 [display]
 

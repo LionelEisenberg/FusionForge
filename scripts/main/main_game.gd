@@ -11,6 +11,7 @@ extends Node2D
 @export var upgrade_canvas_layer_path: NodePath = NodePath("")
 
 @onready var main_menu: Control = %MainMenu
+@onready var options_menu: Control = %OptionsMenu
 
 #-----------------------------------------------------------------------------
 # Override exports
@@ -35,6 +36,7 @@ var upgrade_canvas_layer_node: CanvasLayer = null
 enum GameState {
 	INITIALIZING,
 	MAIN_MENU,
+	OPTIONS_MENU,
 	UPGRADING,
 	STARTING_RUN,
 	RUNNING
@@ -60,7 +62,11 @@ func _ready() -> void:
 	# Connect MainMenu signals
 	if main_menu:
 		main_menu.continue_game.connect(continue_game)
-		main_menu.newgame_game.connect(new_game)
+		main_menu.start_newgame.connect(start_newgame)
+		main_menu.options_menu.connect(open_options_menu)
+
+	if options_menu:
+		options_menu.open_main_menu.connect(open_main_menu)
 
 	# Get node references from paths
 	if subviewport_path.is_empty():
@@ -111,6 +117,9 @@ func _set_game_state(new_state: GameState) -> void:
 	match current_state:
 		GameState.MAIN_MENU:
 			main_menu.visible = true
+
+		GameState.OPTIONS_MENU:
+			options_menu.visible = true
 
 		GameState.UPGRADING:
 			# --- Upgrade Menu Instantiation ---
@@ -168,6 +177,8 @@ func _reset_subcomponents():
 	if top_level_run_scene_container_node: top_level_run_scene_container_node.visible = false
 	
 	if main_menu: main_menu.visible = false
+	
+	if options_menu: options_menu.visible = false
 
 #-----------------------------------------------------------------------------
 # Public Functions / Triggers
@@ -179,13 +190,19 @@ func start_new_run() -> void:
 		_set_game_state(GameState.RUNNING)
 
 ## Triggered by the Main Menu signal
-func new_game() -> void:
+func start_newgame() -> void:
 	PersistenceManager.load_new_save_data()
 	_set_game_state(GameState.UPGRADING)
 
 func continue_game() -> void:
 	PersistenceManager.load_data()
 	_set_game_state(GameState.UPGRADING)
+
+func open_options_menu() -> void:
+	_set_game_state(GameState.OPTIONS_MENU)
+
+func open_main_menu() -> void:
+	_set_game_state(GameState.MAIN_MENU)
 
 #-----------------------------------------------------------------------------
 # Signal Handlers

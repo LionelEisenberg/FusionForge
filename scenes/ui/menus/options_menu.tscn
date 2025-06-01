@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://biv2vjvr37rxy"]
+
+[ext_resource type="Script" uid="uid://chy63bkqdcgmh" path="res://scripts/ui/menus/options_menu.gd" id="1_8sva7"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8sva7")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 332.0
+offset_top = 265.0
+offset_right = 950.0
+offset_bottom = 417.0
+theme_override_font_sizes/font_size = 75
+text = "MUTE"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 27.0
+offset_top = 25.0
+offset_right = 172.0
+offset_bottom = 124.0
+theme_override_font_sizes/font_size = 20
+text = "BACK"

@@ -24,13 +24,31 @@ const base_MUSIC_PITCH: float = 1.0
 @onready var sfx_player_pool: Array[AudioStreamPlayer] = []
 @onready var music_player: AudioStreamPlayer = %"Music Player"
 
+# --- Volume Control ---
+var master_bus_idx: int = -1
+const MASTER_BUS_NAME: String = "Master"
+
 #-----------------------------------------------------------------------------
 # Initialization
 #-----------------------------------------------------------------------------
 
 func _ready() -> void:
 	_populate_audio_player_pool()
-		
+	
+	master_bus_idx = AudioServer.get_bus_index(MASTER_BUS_NAME)
+	if master_bus_idx == -1:
+		push_error("AudioManager: 'Master' audio bus not found!")
+
+	if OptionsManager:
+		if OptionsManager.has_signal("master_volume_changed"):
+			OptionsManager.master_volume_changed.connect(_on_master_volume_setting_changed)
+			_on_master_volume_setting_changed(OptionsManager.get_master_volume_normalized())
+		else:
+			push_warning("AudioManager: OptionsManager does not have 'master_volume_changed' signal.")
+	else:
+		push_warning("AudioManager: OptionsManager not found. Master volume will use AudioServer default.")
+
+	
 	if CollisionManager:
 		CollisionManager.element_element_sfx_requested.connect(_on_element_element_sfx_requested)
 		CollisionManager.element_wall_sfx_requested.connect(_on_element_wall_sfx_requested)
@@ -52,6 +70,16 @@ func _ready() -> void:
 		music_player.play()
 	else:
 		push_warning("AudioManager: Unable to start music, no AudioStreamPlayer found.")
+
+#-----------------------------------------------------------------------------
+# Volume Signal Handler
+#-----------------------------------------------------------------------------
+
+func _on_master_volume_setting_changed(new_value_normalized: float) -> void:
+	if master_bus_idx != -1:
+		AudioServer.set_bus_volume_db(master_bus_idx, linear_to_db(new_value_normalized))
+	else:
+		push_warning("AudioManager: Master bus not found, cannot update volume via signal.")
 
 #-----------------------------------------------------------------------------
 # Signal Handlers

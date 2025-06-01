@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dcf2x1pbw7dob"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://dcf2x1pbw7dob"]
 
 [ext_resource type="FontFile" uid="uid://bbpcahvpcehyl" path="res://assets/fonts/main_font.ttf" id="1_3f3va"]
 
@@ -15,6 +15,8 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 shadow_size = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3f3va"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3f3va"]
 bg_color = Color(0.10175, 0.0561, 0.33, 1)
@@ -35,6 +37,7 @@ bg_color = Color(0.192157, 0.305882, 0.368627, 1)
 
 [resource]
 Button/styles/disabled = SubResource("StyleBoxFlat_lxams")
+Button/styles/focus = SubResource("StyleBoxEmpty_3f3va")
 Button/styles/hover = SubResource("StyleBoxFlat_3f3va")
 Button/styles/normal = SubResource("StyleBoxFlat_3f3va")
 Button/styles/pressed = SubResource("StyleBoxFlat_3f3va")
