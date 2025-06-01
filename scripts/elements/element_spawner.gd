@@ -11,7 +11,7 @@ const BASE_INITIAL_SPEED: float = 75.0
 const BASE_SPAWN_WAIT_TIME: float = 5.0
 const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity
 
-const BASE_SPAWN_DISTRIBUTION: Dictionary = {
+const BASEspawn_distribution: Dictionary = {
 	"Hydrogen": 0.95,
 	"Deuterium": 0.05
 }
@@ -24,7 +24,7 @@ const BASE_SPAWN_DISTRIBUTION: Dictionary = {
 var initial_speed: float = BASE_INITIAL_SPEED
 var spawn_wait_time: float = BASE_SPAWN_WAIT_TIME
 var max_element_capacity: int = BASE_MAX_ELEMENT_CAPACITY
-var spawn_distribution: Dictionary = BASE_SPAWN_DISTRIBUTION
+var spawn_distribution: Dictionary = BASEspawn_distribution
 
 #-----------------------------------------------------------------------------
 # Exports
@@ -104,20 +104,56 @@ func _process(_delta: float) -> void:
 # Upgrade Handling
 #-----------------------------------------------------------------------------
 
-## Called by _ready() to apply effects data to this node's parameters.
-func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
+func apply_upgrade_effects(effects_data: UpgradeEffects) -> void: # Or 'effects_data: Dictionary'
 	initial_speed = BASE_INITIAL_SPEED + effects_data.initial_speed_add
 	spawn_wait_time = BASE_SPAWN_WAIT_TIME + effects_data.spawn_timer_wait_time_remove
 	max_element_capacity = BASE_MAX_ELEMENT_CAPACITY + effects_data.max_elements_add
-
+	
 	# Clamp / Validate values
 	initial_speed = max(0.0, initial_speed)
 	spawn_wait_time = max(0.05, spawn_wait_time) # Ensure wait time is positive and reasonably small
 	max_element_capacity = max(1, max_element_capacity) # Ensure at least 1 element can spawn
 
-	
 	if _spawn_timer:
 		_spawn_timer.wait_time = spawn_wait_time
+	
+	_updatespawn_distribution(effects_data)
+
+# --- Update Spawn Distribution ---
+func _updatespawn_distribution(effects_data: UpgradeEffects) -> void:
+	var new_dist: Dictionary = {}
+	var deuterium_bonus: float = effects_data.spawn_chance_deuterium
+	var helium3_bonus: float = effects_data.spawn_chance_helium3
+
+	# Calculate new chances for Deuterium and Helium3
+	var current_deuterium_chance = BASEspawn_distribution.get("Deuterium", 0.0) + deuterium_bonus
+	new_dist["Deuterium"] = clampf(current_deuterium_chance, 0.0, 1.0)
+
+	var current_helium3_chance = BASEspawn_distribution.get("Helium3", 0.0) + helium3_bonus
+	new_dist["Helium3"] = clampf(current_helium3_chance, 0.0, 1.0)
+	
+	var sum_of_other_elements_chance: float = 0.0
+	if new_dist["Deuterium"] > 0.0:
+		sum_of_other_elements_chance += new_dist["Deuterium"]
+	if new_dist["Helium3"] > 0.0:
+		sum_of_other_elements_chance += new_dist["Helium3"]
+
+	if sum_of_other_elements_chance >= 1.0:
+		new_dist["Hydrogen"] = 0.0
+		if sum_of_other_elements_chance > 0:
+			var scale_factor = 1.0 / sum_of_other_elements_chance
+			new_dist["Deuterium"] *= scale_factor
+			new_dist["Helium3"] *= scale_factor
+			# Scale other elements here if they were part of sum_of_other_elements_chance
+	else:
+		new_dist["Hydrogen"] = 1.0 - sum_of_other_elements_chance
+	
+	new_dist["Hydrogen"] = clampf(new_dist["Hydrogen"], 0.0, 1.0) # Final clamp for Hydrogen
+
+	if not new_dist.has("Deuterium"): new_dist["Deuterium"] = 0.0
+	if not new_dist.has("Helium3"): new_dist["Helium3"] = 0.0
+	if not new_dist.has("Hydrogen"): new_dist["Hydrogen"] = 0.0
+	spawn_distribution = new_dist 
 
 #-----------------------------------------------------------------------------
 # Public Control Functions (Called by RunScene/ReactorChamber)
@@ -220,10 +256,6 @@ func _get_random_spawn_position() -> Vector2:
 	return Vector2(random_x, random_y)
 
 func _spawn_element(element_type_to_spawn : String = "", spawn_position : Vector2 = _get_random_spawn_position(), spawn_velocity : Vector2 = Vector2.from_angle(_rng.randf_range(0, TAU)) * initial_speed) -> void:	
-	# --- Select Element Type ---
-	# TODO: Implement weighted random selection based on unlocked elements/probabilities
-	#       Get this data from UpgradeManager/RunManager/GameManager.
-	# For MVP, always spawn the first element type available (e.g., Hydrogen)
 	if element_scenes.is_empty():
 		printerr("ElementSpawner: No element scenes defined in element_scenes dictionary!")
 		return

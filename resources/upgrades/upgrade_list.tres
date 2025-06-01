@@ -19,7 +19,7 @@
 [ext_resource type="Resource" uid="uid://roqanq0bn084" path="res://resources/upgrades/increase_max_stability_1.tres" id="17_8krqh"]
 [ext_resource type="Resource" uid="uid://b3tja18bu626b" path="res://resources/upgrades/increase_momentum_collision_energy_1.tres" id="18_3hcbv"]
 [ext_resource type="Resource" uid="uid://gv8gwcfppwc8" path="res://resources/upgrades/increase_spawn_rate_1.tres" id="19_u2cef"]
-[ext_resource type="Resource" uid="uid://dyw5l5ifkexqy" path="res://resources/upgrades/unlock_fusion_h_h_he.tres" id="20_rdr6w"]
+[ext_resource type="Resource" uid="uid://dyw5l5ifkexqy" path="res://resources/upgrades/unlock_fusion_d_d_he.tres" id="20_rdr6w"]
 
 [resource]
 script = ExtResource("1_ym75p")

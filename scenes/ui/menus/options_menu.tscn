@@ -21,6 +21,7 @@ theme_override_font_sizes/font_size = 75
 text = "MUTE"
 
 [node name="Button2" type="Button" parent="."]
+layout_mode = 0
 offset_left = 27.0
 offset_top = 25.0
 offset_right = 172.0
