@@ -1,5 +1,7 @@
 extends Node
 
+signal save_data_reset
+
 var save_game_data : SaveGameData
 
 const SAVE_PATH : String = "user://save.tres"
@@ -11,7 +13,7 @@ func load_new_save_data() -> void:
 	save_game_data.reset_state()
 	if save_data() != Error.OK:
 		print("PersistenceManager: Error saving data.")
-	print("PersistenceManager: Deleted save file found. Initialized with default SaveGameData.")
+	save_data_reset.emit()
 
 func save_data() -> Error :
 	return ResourceSaver.save(save_game_data, SAVE_PATH)

@@ -54,9 +54,8 @@ func _ready() -> void:
 	
 	if PersistenceManager and PersistenceManager.save_game_data:
 		live_save_data = PersistenceManager.save_game_data
-
-		money_updated.emit(live_save_data.money)
-		fusion_cores_updated.emit(live_save_data.fusion_cores)
+		PersistenceManager.save_data_reset.connect(_update_resources)
+		_update_resources()
 	else:
 		printerr("GameManager: CRITICAL - Could not get save_game_data from PersistenceManager on ready!")
 
@@ -69,6 +68,11 @@ func _ready() -> void:
 		UpgradeManager.upgrades_applied.connect(_on_upgrades_applied)
 	else:
 		printerr("GameManager: CRITICAL - Could not connect signals from UpgradeManager!")
+
+func _update_resources() -> void:
+	money_updated.emit(live_save_data.money)
+	fusion_cores_updated.emit(live_save_data.fusion_cores)
+
 
 ## Called by RunScene/MainGame at the start of a new run
 func reset_for_new_run() -> void:
