@@ -6,12 +6,13 @@
 script = ExtResource("1_h2wsg")
 id = "unlock_fusion_d_d_he"
 display_name = "Unlock Deuterium Helium Fusion (D + D)"
-description = "Unlocks Deuterium (H2) + Deuterium (H2) --> Helium (He4) Fusion Recipe."
+description = "Unlocks new Fusion Recipe!
+[center][wave][color=lightblue]Deuterium (H2)[/color] + [color=lightblue]Deuterium (H2)[/color] --> [color=purple]Helium (He4)[/color][/wave][/center]"
 max_purchase_level = 1
 prerequisites = Array[String](["unlock_fusion_h_d_he3"])
 effect_string = "10%"
-money_cost_per_level = Array[float]([100.0])
-fusion_core_cost_per_level = Array[float]([0.0])
+money_cost_per_level = Array[float]([0.0])
+fusion_core_cost_per_level = Array[float]([15.0])
 base_wall_collision_energy_add = 0.0
 base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
@@ -23,7 +24,9 @@ max_elements_add = 0
 initial_speed_add = 0.0
 base_accel_magnitude_add = 0.0
 force_to_energy_conversion_factor_mult = 1.0
-fusion_recipe_to_unlock = "h_h_to_he"
+spawn_chance_deuterium_add = 0.0
+spawn_chance_helium3_add = 0.0
+fusion_recipe_to_unlock = "d_d_to_he"
 collection_radius_mult = 1.0
 collectible_lifespan_mult = 1.0
 max_stability_add = 0.0

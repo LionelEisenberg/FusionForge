@@ -1,8 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://jhyky7k74oum"]
+[gd_scene load_steps=4 format=3 uid="uid://jhyky7k74oum"]
 
 [ext_resource type="Script" uid="uid://blaword5pq3k5" path="res://scripts/utils/text_effect_importer.gd" id="1_fhv5m"]
 [ext_resource type="Script" uid="uid://cfbd3wb5uyyvy" path="res://scripts/effects/text_effects/wave_text_effect.gd" id="2_p8cvf"]
+[ext_resource type="Script" uid="uid://cr2gofntlmyv2" path="res://scripts/effects/text_effects/jitter_text_effect.gd" id="3_88cyn"]
 
 [node name="TextEffectImporter" type="Node"]
 script = ExtResource("1_fhv5m")
-_text_effect_scripts = Array[Script]([ExtResource("2_p8cvf")])
+_text_effect_scripts = Array[Script]([ExtResource("2_p8cvf"), ExtResource("3_88cyn")])

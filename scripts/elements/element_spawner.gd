@@ -11,7 +11,7 @@ const BASE_INITIAL_SPEED: float = 75.0
 const BASE_SPAWN_WAIT_TIME: float = 5.0
 const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity
 
-const BASEspawn_distribution: Dictionary = {
+const BASE_SPAWN_DISTRIBUTION: Dictionary = {
 	"Hydrogen": 0.95,
 	"Deuterium": 0.05
 }
@@ -24,7 +24,7 @@ const BASEspawn_distribution: Dictionary = {
 var initial_speed: float = BASE_INITIAL_SPEED
 var spawn_wait_time: float = BASE_SPAWN_WAIT_TIME
 var max_element_capacity: int = BASE_MAX_ELEMENT_CAPACITY
-var spawn_distribution: Dictionary = BASEspawn_distribution
+var spawn_distribution: Dictionary = BASE_SPAWN_DISTRIBUTION
 
 #-----------------------------------------------------------------------------
 # Exports
@@ -117,19 +117,19 @@ func apply_upgrade_effects(effects_data: UpgradeEffects) -> void: # Or 'effects_
 	if _spawn_timer:
 		_spawn_timer.wait_time = spawn_wait_time
 	
-	_updatespawn_distribution(effects_data)
+	_update_spawn_distribution(effects_data)
 
 # --- Update Spawn Distribution ---
-func _updatespawn_distribution(effects_data: UpgradeEffects) -> void:
+func _update_spawn_distribution(effects_data: UpgradeEffects) -> void:
 	var new_dist: Dictionary = {}
 	var deuterium_bonus: float = effects_data.spawn_chance_deuterium
 	var helium3_bonus: float = effects_data.spawn_chance_helium3
 
 	# Calculate new chances for Deuterium and Helium3
-	var current_deuterium_chance = BASEspawn_distribution.get("Deuterium", 0.0) + deuterium_bonus
+	var current_deuterium_chance = BASE_SPAWN_DISTRIBUTION.get("Deuterium", 0.0) + deuterium_bonus
 	new_dist["Deuterium"] = clampf(current_deuterium_chance, 0.0, 1.0)
 
-	var current_helium3_chance = BASEspawn_distribution.get("Helium3", 0.0) + helium3_bonus
+	var current_helium3_chance = BASE_SPAWN_DISTRIBUTION.get("Helium3", 0.0) + helium3_bonus
 	new_dist["Helium3"] = clampf(current_helium3_chance, 0.0, 1.0)
 	
 	var sum_of_other_elements_chance: float = 0.0

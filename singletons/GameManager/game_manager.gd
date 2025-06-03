@@ -123,6 +123,7 @@ func award_fusion_core(amount: int = 1) -> void:
 	fusion_cores_updated.emit(live_save_data.fusion_cores)
 
 func can_spend_fusion_cores(amount: int) -> bool:
+	if infinite_resources: return true
 	return live_save_data.fusion_cores >= amount
 
 func spend_fusion_cores(amount: int) -> bool:

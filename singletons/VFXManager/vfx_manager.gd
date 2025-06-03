@@ -1,7 +1,7 @@
 extends Node
 
-var _fusion_shockwave_shader_scene: PackedScene = preload("res://scenes/vfx/fusion_shockwave_vfx.tscn")
-var _element_collision_spark_scene: PackedScene = preload("res://scenes/vfx/element_collision_spark_vfx.tscn")
+var _fusion_shockwave_shader_scene: PackedScene = preload("res://scenes/effects/vfx/fusion_shockwave_vfx.tscn")
+var _element_collision_spark_scene: PackedScene = preload("res://scenes/effects/vfx/element_collision_spark_vfx.tscn")
 
 func _ready() -> void:
 	if CollisionManager:

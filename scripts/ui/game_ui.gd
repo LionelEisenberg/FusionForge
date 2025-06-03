@@ -1,6 +1,10 @@
 class_name GameUI
 extends PanelContainer # Or MarginContainer if that was the final root
 
+const DANGER_THRESHOLD = 0.25
+
+@export var flashing_danger_material_resource: ShaderMaterial
+
 #-----------------------------------------------------------------------------
 # Node References (Using Scene Unique Names)
 #-----------------------------------------------------------------------------
@@ -63,6 +67,13 @@ func _on_energy_updated(current: float, max_val: float) -> void:
 		energy_meter.value = current
 		energy_meter.tooltip_text = "Energy: %d / %d eV" % [int(current), int(max_val)]
 		(energy_meter.get_child(0) as Label).text = "Energy: %d / %d eV" % [int(current), int(max_val)]
+		
+		var ratio = current / max_val
+		if ratio <= DANGER_THRESHOLD and ratio > 0:
+			energy_meter.material = flashing_danger_material_resource
+		else:
+			energy_meter.material = null
+
 
 func _on_stability_updated(current: float, max_val: float) -> void:
 	if RunManager._is_run_active and durability_meter:
@@ -70,7 +81,12 @@ func _on_stability_updated(current: float, max_val: float) -> void:
 		durability_meter.value = current
 		durability_meter.tooltip_text = "Durability: %d / %d" % [int(current), int(max_val)]
 		(durability_meter.get_child(0) as Label).text = "Durability: %d / %d" % [int(current), int(max_val)]
-
+		
+		var ratio = current / max_val
+		if ratio <= DANGER_THRESHOLD and ratio > 0:
+			durability_meter.material = flashing_danger_material_resource
+		else:
+			durability_meter.material = null
 
 func _on_run_stats_updated(run_stats: RunStats) -> void:
 	if total_collisions_value:

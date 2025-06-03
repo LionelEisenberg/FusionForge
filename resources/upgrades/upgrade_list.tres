@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradeList" load_steps=21 format=3 uid="uid://dbkbjks3y1soc"]
+[gd_resource type="Resource" script_class="UpgradeList" load_steps=25 format=3 uid="uid://dbkbjks3y1soc"]
 
 [ext_resource type="Script" uid="uid://bpu2dheskc4qr" path="res://scripts/core/upgrade_data.gd" id="1_tajkg"]
 [ext_resource type="Script" uid="uid://uwahwcr8u814" path="res://scripts/core/upgrade_list.gd" id="1_ym75p"]
@@ -20,8 +20,12 @@
 [ext_resource type="Resource" uid="uid://b3tja18bu626b" path="res://resources/upgrades/increase_momentum_collision_energy_1.tres" id="18_3hcbv"]
 [ext_resource type="Resource" uid="uid://gv8gwcfppwc8" path="res://resources/upgrades/increase_spawn_rate_1.tres" id="19_u2cef"]
 [ext_resource type="Resource" uid="uid://dyw5l5ifkexqy" path="res://resources/upgrades/unlock_fusion_d_d_he.tres" id="20_rdr6w"]
+[ext_resource type="Resource" uid="uid://c0rb4smek2aps" path="res://resources/upgrades/unlock_fusion_h_d_he3.tres" id="21_td7um"]
+[ext_resource type="Resource" uid="uid://dbxth4d1rpac0" path="res://resources/upgrades/unlock_fusion_h_he3_he.tres" id="22_xgxjq"]
+[ext_resource type="Resource" uid="uid://bbfiukjqulds0" path="res://resources/upgrades/increase_spawn_chance_deuterium.tres" id="23_kipb2"]
+[ext_resource type="Resource" uid="uid://bp6nna7omyudm" path="res://resources/upgrades/increase_spawn_chance_helium3.tres" id="24_7qfpq"]
 
 [resource]
 script = ExtResource("1_ym75p")
-upgrades = Array[ExtResource("1_tajkg")]([ExtResource("3_xkim2"), ExtResource("4_5vqtt"), ExtResource("5_hlyk6"), ExtResource("6_br4wv"), ExtResource("7_td7um"), ExtResource("8_xgxjq"), ExtResource("9_kipb2"), ExtResource("10_7qfpq"), ExtResource("11_l01kg"), ExtResource("12_vpy6s"), ExtResource("13_rnej7"), ExtResource("14_t85cv"), ExtResource("15_q3lad"), ExtResource("16_6h8od"), ExtResource("17_8krqh"), ExtResource("18_3hcbv"), ExtResource("19_u2cef"), ExtResource("20_rdr6w")])
+upgrades = Array[ExtResource("1_tajkg")]([ExtResource("3_xkim2"), ExtResource("4_5vqtt"), ExtResource("5_hlyk6"), ExtResource("6_br4wv"), ExtResource("7_td7um"), ExtResource("8_xgxjq"), ExtResource("9_kipb2"), ExtResource("10_7qfpq"), ExtResource("11_l01kg"), ExtResource("12_vpy6s"), ExtResource("13_rnej7"), ExtResource("14_t85cv"), ExtResource("15_q3lad"), ExtResource("16_6h8od"), ExtResource("17_8krqh"), ExtResource("18_3hcbv"), ExtResource("19_u2cef"), ExtResource("20_rdr6w"), ExtResource("21_td7um"), ExtResource("22_xgxjq"), ExtResource("23_kipb2"), ExtResource("24_7qfpq")])
 metadata/_custom_type_script = "uid://uwahwcr8u814"

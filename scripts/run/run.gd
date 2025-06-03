@@ -76,7 +76,7 @@ func conclude_run() -> void:
 				child.angular_velocity = 0.0
 				child.call_deferred("set_freeze_enabled", true)
 				var collision_shape = child.get_node_or_null("CollisionShape2D") # Assumes this name
-				if collision_shape is CollisionShape2D:
+				if collision_shape is CollisionShape2D or collision_shape is CollisionPolygon2D:
 					collision_shape.call_deferred("set_disabled", true)
 				else:
 					printerr("RunScene: Could not find CollisionShape2D child in Element ", child.name, " to disable.")

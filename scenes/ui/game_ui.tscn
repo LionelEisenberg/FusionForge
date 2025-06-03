@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bntbyn7ulcarj"]
+[gd_scene load_steps=13 format=3 uid="uid://bntbyn7ulcarj"]
 
 [ext_resource type="StyleBox" uid="uid://cy2mbg6natjml" path="res://assets/styleboxes/GameUI.tres" id="1_bma8u"]
 [ext_resource type="LabelSettings" uid="uid://b285iamcnlkh" path="res://assets/labelsettings/run_results_popup_stat_titles.tres" id="2_fct72"]
@@ -6,7 +6,18 @@
 [ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="3_ru5ln"]
 [ext_resource type="LabelSettings" uid="uid://d3lybavjsdlbe" path="res://assets/labelsettings/game_ui_subtitles.tres" id="3_v1bdg"]
 [ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="6_qrkc0"]
+[ext_resource type="Shader" uid="uid://ca7uai17p03nq" path="res://assets/shaders/flashing.gdshader" id="6_yvtb5"]
 [ext_resource type="Texture2D" uid="uid://ccvd8iqtcp22b" path="res://assets/icons/resources/fusion_core_resource.png" id="7_yvtb5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yvtb5"]
+shader = ExtResource("6_yvtb5")
+shader_parameter/color_a = Color(0.7, 0.7, 0.7, 0)
+shader_parameter/color_b = Color(1, 0, 0, 0.8)
+shader_parameter/colors_affect_alpha = true
+shader_parameter/flash_amount = 1.0
+shader_parameter/flash_speed = 7.0
+shader_parameter/transparency = 1.0
+shader_parameter/intensity = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fct72"]
 bg_color = Color(1, 0.901961, 0.176471, 1)
@@ -14,6 +25,8 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qrkc0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru5ln"]
 bg_color = Color(0.560784, 0.807843, 0, 1)
@@ -33,6 +46,7 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("1_bma8u")
 script = ExtResource("2_ru5ln")
+flashing_danger_material_resource = SubResource("ShaderMaterial_yvtb5")
 
 [node name="MainVBox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -180,6 +194,7 @@ vertical_alignment = 1
 
 [node name="DurabilityProgressBar" type="ProgressBar" parent="MainVBox/RunResourcesContainer"]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_qrkc0")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

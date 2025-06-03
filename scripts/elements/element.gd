@@ -98,6 +98,7 @@ func _initialize_collision_area() -> void:
 		# Fallback to a default or no collision shape
 
 	if is_instance_valid(_active_collision_node):
+		_active_collision_node.name = "CollisionShape2D"
 		add_child(_active_collision_node)
 
 #-----------------------------------------------------------------------------

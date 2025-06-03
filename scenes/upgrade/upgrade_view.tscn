@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dcf2x1pbw7dob" path="res://assets/themes/main_theme.tres" id="1_817m1"]
 [ext_resource type="PackedScene" uid="uid://b8ljise60gc1x" path="res://scenes/upgrade/upgrade_node.tscn" id="2_3t83i"]
 [ext_resource type="Texture2D" uid="uid://brn2mr8u8olk8" path="res://assets/ui_images/upgrade_view_background.png" id="3_mkm6h"]
-[ext_resource type="Resource" uid="uid://bwsojt67q8fw6" path="res://resources/upgrade_layout/upgrade_tree_layour.tres" id="3_vyv2k"]
+[ext_resource type="Resource" uid="uid://bwsojt67q8fw6" path="res://resources/upgrade_layout/upgrade_tree_layout.tres" id="3_vyv2k"]
 [ext_resource type="Script" uid="uid://clorvkxq36pok" path="res://scripts/upgrade/upgrade_node_container.gd" id="4_3t83i"]
 [ext_resource type="StyleBox" uid="uid://ds8pybhlk30f" path="res://assets/styleboxes/UpgradeResourcePanel.tres" id="6_817m1"]
 [ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="7_anh61"]

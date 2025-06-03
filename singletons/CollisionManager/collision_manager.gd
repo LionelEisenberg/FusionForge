@@ -37,7 +37,7 @@ const BASE_STABILITY_DAMAGE: float = 1.0
 const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
-const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"] #, "h_d_to_he3", "d_d_to_he"]
+const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"]
 const BASE_FUSION_CORE_DROP_CHANCE: float = 0.0
 const BASE_FUSION_CORE_YIELD_MULTIPLIER: float = 1.0
 
@@ -59,9 +59,6 @@ var fusion_core_yield_multiplier: float = BASE_FUSION_CORE_YIELD_MULTIPLIER
 #-----------------------------------------------------------------------------
 # Other Variables
 #-----------------------------------------------------------------------------
-# Path to the folder containing FusionRecipe .tres files (Not typically upgraded)
-@export var recipe_folder_path: String = "res://resources/recipes/"
-
 var fusion_recipes: Array[FusionRecipe] = [] # Currently available recipes based on unlocks
 var unlocked_fusion_recipes: Array[String] = [] # List of unlocked recipe FILENAMES from UpgradeManager
 var _live_save_data: SaveGameData = null
