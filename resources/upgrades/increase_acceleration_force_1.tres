@@ -10,8 +10,8 @@ description = "Increases [wave][color=darkorchid]force[/color][/wave] at which e
 max_purchase_level = 5
 prerequisites = Array[String](["increase_spawn_rate_1"])
 effect_string = "+ 15 m / s²"
-money_cost_per_level = Array[float]([100.0, 200.0, 400.0, 800.0, 1600.0])
-fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
+money_cost_per_level = [100.0, 200.0, 400.0, 800.0, 1600.0]
+fusion_core_cost_per_level = [0.0, 0.0, 0.0, 0.0, 0.0]
 base_wall_collision_energy_add = 0.0
 base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
