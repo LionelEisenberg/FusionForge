@@ -23,6 +23,7 @@ const BASE_MAX_ENERGY: float = 1000.0
 const BASE_MAX_STABILITY: float = 100.0
 const BASE_MONEY_PER_COLLISION: float = 1.0
 const BASE_ELEMENT_COLLISION_FACTOR: float = 2.0
+const BASE_FUSION_COLLISION_FACTOR: float = 4.0
 
 #-----------------------------------------------------------------------------
 # State Variables
@@ -41,6 +42,7 @@ var max_energy: float = BASE_MAX_ENERGY
 var max_stability: float = BASE_MAX_STABILITY
 var money_per_collision: float = BASE_MONEY_PER_COLLISION
 var money_per_element_collision_factor: float = BASE_ELEMENT_COLLISION_FACTOR
+var money_per_fusion_collision_factor: float = BASE_FUSION_COLLISION_FACTOR
 
 # --- Parameters linked with Override / Testing ---
 var invincible_mode = false
@@ -192,8 +194,11 @@ func calculate_and_award_money(run_stats: RunStats) -> int:
 	var collisions = run_stats.collision_counts
 	var max_fusion_combo = run_stats.max_fusion_combo
 
-	# Example calculation (Replace with actual formula from GDD)
-	var money_earned: int = int((collisions.x + collisions.y * money_per_element_collision_factor) * money_per_collision * max_fusion_combo)
+	# calculation
+	var wall_collision_money = collisions.x
+	var element_collision_money = collisions.y * money_per_element_collision_factor
+	var fusion_collision_money = collisions.z * money_per_fusion_collision_factor
+	var money_earned: int = int((wall_collision_money + element_collision_money + fusion_collision_money) * money_per_collision * max_fusion_combo)
 
 	print("GameManager: Run ended. Stats: ", run_stats, "\n Money Earned: ", money_earned) # Removed status print
 

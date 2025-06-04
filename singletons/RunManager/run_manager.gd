@@ -159,7 +159,9 @@ func register_energy_collected_from_pickup(amount: float) -> void:
 		current_stats.total_energy_collected_from_pickups += amount
 
 func _on_fusion_processed(_e1 : Element, _e2 : Element, fusion_recipe : FusionRecipe) -> void:
+	current_stats.collision_counts.z += 1
 	_register_fusion_for_combo(fusion_recipe)
+	run_stats_updated.emit(current_stats) # Direct emit
 	
 func _on_element_collision_data_calculated(_e_a: Element, _e_b: Element, combined_momentum: float) -> void:
 	if current_stats and combined_momentum > current_stats.highest_combined_collision_momentum:

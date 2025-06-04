@@ -26,5 +26,7 @@ node_positions = Dictionary[String, Vector2]({
 "increase_spawn_rate_1": Vector2(640, 560),
 "unlock_fusion_d_d_he": Vector2(640, -20),
 "unlock_fusion_h_d_he3": Vector2(640, 160),
-"unlock_fusion_h_he3_he": Vector2(440, -20)
+"unlock_fusion_h_he3_he": Vector2(440, -20),
+"unlock_fusion_he3_he_be7": Vector2(640, -160),
+"unlock_fusion_he_he_be8": Vector2(440, -160)
 })

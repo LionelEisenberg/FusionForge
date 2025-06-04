@@ -5,6 +5,7 @@ signal dismissed()
 @onready var run_time_value: Label = %RunTimeValue
 @onready var wall_collisions_value: Label = %WallCollisionsValue
 @onready var elements_collisions_value: Label = %ElementCollisionsValue
+@onready var fusion_collisions_value: Label = %FusionCollisionsValue
 @onready var max_fusion_combo_value: Label = %MaxFusionComboValue
 @onready var money_earned_value: Label = %MoneyEarnedValue
 @onready var continue_button: Button = %ContinueButton
@@ -21,6 +22,7 @@ func show_results(run_stats: RunStats, money_earned: int) -> void:
 	run_time_value.text = _format_time(run_stats.run_time)
 	wall_collisions_value.text = str(run_stats.collision_counts.x)
 	elements_collisions_value.text = str(run_stats.collision_counts.y)
+	fusion_collisions_value.text = str(run_stats.collision_counts.z)
 	max_fusion_combo_value.text = "x %.1f" % ((run_stats.max_fusion_combo) as float)
 
 	money_earned_value.text = " %d" % money_earned

@@ -18,7 +18,6 @@ extends Node2D
 # Override exports
 #-----------------------------------------------------------------------------
 
-@export var override_save_file: bool = false
 @export var invincible_mode: bool = false
 @export var infinite_resources: bool = false
 
@@ -52,13 +51,6 @@ func _ready() -> void:
 	if GameManager:
 		GameManager.invincible_mode = invincible_mode
 		GameManager.infinite_resources = infinite_resources
-	
-	# Load persistent data first (ensure PersistenceManager loads before MainGame in Autoload)
-	if PersistenceManager:
-		if override_save_file:
-			PersistenceManager.load_new_save_data()
-	else:
-		printerr("MainGame: PersistenceManager not found!")
 
 	# Connect MainMenu signals
 	if main_menu:

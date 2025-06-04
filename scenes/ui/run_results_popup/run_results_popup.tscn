@@ -16,6 +16,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -250.0
+offset_right = 200.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -95,6 +99,21 @@ text = "Element Collisions:"
 label_settings = ExtResource("3_mk26y")
 
 [node name="ElementCollisionsValue" type="Label" parent="MarginContainer/MainVBoxContainer/VBoxContainer/StatsMarginContainer/StatsGrid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 8
+text = "0"
+label_settings = ExtResource("4_a6yqw")
+horizontal_alignment = 2
+
+[node name="FusionCollisionsLabel" type="Label" parent="MarginContainer/MainVBoxContainer/VBoxContainer/StatsMarginContainer/StatsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fusion Collisions:"
+label_settings = ExtResource("3_mk26y")
+
+[node name="FusionCollisionsValue" type="Label" parent="MarginContainer/MainVBoxContainer/VBoxContainer/StatsMarginContainer/StatsGrid"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

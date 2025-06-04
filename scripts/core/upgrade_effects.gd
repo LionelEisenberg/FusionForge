@@ -35,7 +35,7 @@ extends Resource
 # CollisionManager will need to load recipes based on this list.
 @export var unlocked_fusion_recipes: Array[String] = []
 
-# Optional: Override _to_string for debugging
+# Override _to_string for debugging
 func _to_string() -> String:
 	# Basic implementation, could be more detailed
 	return "UpgradeEffects(MaxEnergyAdd: %.1f, MaxStabAdd: %.1f, Unlocks: %s, ...)" % \

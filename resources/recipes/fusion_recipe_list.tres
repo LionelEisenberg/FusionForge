@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FusionRecipeList" load_steps=8 format=3 uid="uid://53jepvcaggko"]
+[gd_resource type="Resource" script_class="FusionRecipeList" load_steps=9 format=3 uid="uid://53jepvcaggko"]
 
 [ext_resource type="Script" uid="uid://7jsoumhbv8gm" path="res://scripts/core/fusion_recipe.gd" id="1_pq284"]
 [ext_resource type="Script" uid="uid://cqxqmc88pe0wl" path="res://scripts/core/fusion_recipe_list.gd" id="2_78nrr"]
@@ -7,8 +7,9 @@
 [ext_resource type="Resource" uid="uid://c1qrkoftu4csk" path="res://resources/recipes/d_d_to_he.tres" id="5_5f472"]
 [ext_resource type="Resource" uid="uid://b58tnmlitmrpq" path="res://resources/recipes/h_he3_to_he.tres" id="6_5f472"]
 [ext_resource type="Resource" uid="uid://ct7r4pnye8c" path="res://resources/recipes/he3_he_to_be7.tres" id="6_snrfx"]
+[ext_resource type="Resource" uid="uid://dbi0ue0svx7f6" path="res://resources/recipes/he_he_to_be8.tres" id="7_snrfx"]
 
 [resource]
 script = ExtResource("2_78nrr")
-fusion_recipes = Array[ExtResource("1_pq284")]([ExtResource("3_h7eam"), ExtResource("4_wylrn"), ExtResource("5_5f472"), ExtResource("6_5f472"), ExtResource("6_snrfx")])
+fusion_recipes = Array[ExtResource("1_pq284")]([ExtResource("3_h7eam"), ExtResource("4_wylrn"), ExtResource("5_5f472"), ExtResource("6_5f472"), ExtResource("6_snrfx"), ExtResource("7_snrfx")])
 metadata/_custom_type_script = "uid://cqxqmc88pe0wl"

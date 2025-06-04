@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="FusionRecipe" load_steps=2 format=3 uid="uid://dbi0ue0svx7f6"]
+
+[ext_resource type="Script" uid="uid://7jsoumhbv8gm" path="res://scripts/core/fusion_recipe.gd" id="1_oaegt"]
+
+[resource]
+script = ExtResource("1_oaegt")
+reactant_1_type = "Helium"
+reactant_2_type = "Helium"
+result_type = "Beryllium-8"
+result_mass = 8.0
+energy_yield = 125.0
+min_momentum = 850.0
+fusion_core_spawn_chance = 1.0
+fusion_core_yield = 5
+combo_increase_value = 3
+metadata/_custom_type_script = "uid://7jsoumhbv8gm"

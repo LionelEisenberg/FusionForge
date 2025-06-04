@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="UpgradeList" load_steps=25 format=3 uid="uid://dbkbjks3y1soc"]
+[gd_resource type="Resource" script_class="UpgradeList" load_steps=27 format=3 uid="uid://dbkbjks3y1soc"]
 
 [ext_resource type="Script" uid="uid://bpu2dheskc4qr" path="res://scripts/core/upgrade_data.gd" id="1_tajkg"]
 [ext_resource type="Script" uid="uid://uwahwcr8u814" path="res://scripts/core/upgrade_list.gd" id="1_ym75p"]
@@ -24,8 +24,10 @@
 [ext_resource type="Resource" uid="uid://dbxth4d1rpac0" path="res://resources/upgrades/unlock_fusion_h_he3_he.tres" id="22_xgxjq"]
 [ext_resource type="Resource" uid="uid://bbfiukjqulds0" path="res://resources/upgrades/increase_spawn_chance_deuterium.tres" id="23_kipb2"]
 [ext_resource type="Resource" uid="uid://bp6nna7omyudm" path="res://resources/upgrades/increase_spawn_chance_helium3.tres" id="24_7qfpq"]
+[ext_resource type="Resource" uid="uid://cty1j8ftmgutk" path="res://resources/upgrades/unlock_fusion_he3_he_be7.tres" id="25_kipb2"]
+[ext_resource type="Resource" uid="uid://he7vwfjwkaov" path="res://resources/upgrades/unlock_fusion_he_he_be8.tres" id="26_7qfpq"]
 
 [resource]
 script = ExtResource("1_ym75p")
-upgrades = Array[ExtResource("1_tajkg")]([ExtResource("3_xkim2"), ExtResource("4_5vqtt"), ExtResource("5_hlyk6"), ExtResource("6_br4wv"), ExtResource("7_td7um"), ExtResource("8_xgxjq"), ExtResource("9_kipb2"), ExtResource("10_7qfpq"), ExtResource("11_l01kg"), ExtResource("12_vpy6s"), ExtResource("13_rnej7"), ExtResource("14_t85cv"), ExtResource("15_q3lad"), ExtResource("16_6h8od"), ExtResource("17_8krqh"), ExtResource("18_3hcbv"), ExtResource("19_u2cef"), ExtResource("20_rdr6w"), ExtResource("21_td7um"), ExtResource("22_xgxjq"), ExtResource("23_kipb2"), ExtResource("24_7qfpq")])
+upgrades = Array[ExtResource("1_tajkg")]([ExtResource("3_xkim2"), ExtResource("4_5vqtt"), ExtResource("5_hlyk6"), ExtResource("6_br4wv"), ExtResource("7_td7um"), ExtResource("8_xgxjq"), ExtResource("9_kipb2"), ExtResource("10_7qfpq"), ExtResource("11_l01kg"), ExtResource("12_vpy6s"), ExtResource("13_rnej7"), ExtResource("14_t85cv"), ExtResource("15_q3lad"), ExtResource("16_6h8od"), ExtResource("17_8krqh"), ExtResource("18_3hcbv"), ExtResource("19_u2cef"), ExtResource("20_rdr6w"), ExtResource("21_td7um"), ExtResource("22_xgxjq"), ExtResource("23_kipb2"), ExtResource("24_7qfpq"), ExtResource("25_kipb2"), ExtResource("26_7qfpq")])
 metadata/_custom_type_script = "uid://uwahwcr8u814"
