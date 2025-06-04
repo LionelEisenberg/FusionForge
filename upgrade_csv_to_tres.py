@@ -107,7 +107,7 @@ def update_tres_file(tres_file_path, updates):
         if prop_name == "money_cost_per_level" or prop_name == "fusion_core_cost_per_level":
              if isinstance(new_value, list):
                 formatted_numbers = [format_float_for_godot(float(v)) for v in new_value]
-                formatted_new_value_str = f"[{', '.join(formatted_numbers)}]"
+                formatted_new_value_str = f"Array[float]([{', '.join(formatted_numbers)}])"
              else:
                 formatted_new_value_str = "[]"
         elif isinstance(new_value, str):

@@ -12,4 +12,5 @@ energy_yield = 1000.0
 min_momentum = 10.0
 fusion_core_spawn_chance = 1.0
 fusion_core_yield = 1
+combo_increase_value = 3
 metadata/_custom_type_script = "uid://7jsoumhbv8gm"

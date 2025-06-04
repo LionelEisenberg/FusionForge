@@ -158,17 +158,17 @@ func register_energy_collected_from_pickup(amount: float) -> void:
 	if current_stats and _is_run_active: # Only track if a run is active and stats object exists
 		current_stats.total_energy_collected_from_pickups += amount
 
-func _on_fusion_processed(_e1 : Element, _e2 : Element, _result_element_data : Dictionary) -> void:
-	_register_fusion_for_combo()
+func _on_fusion_processed(_e1 : Element, _e2 : Element, fusion_recipe : FusionRecipe) -> void:
+	_register_fusion_for_combo(fusion_recipe)
 	
 func _on_element_collision_data_calculated(_e_a: Element, _e_b: Element, combined_momentum: float) -> void:
 	if current_stats and combined_momentum > current_stats.highest_combined_collision_momentum:
 		current_stats.highest_combined_collision_momentum = combined_momentum
 
 ## Registers a fusion event, updating combo logic. Called by CollisionManager.
-# TODO: Potentially accept fused element data here to determine increment amount later.
-func _register_fusion_for_combo() -> void:
-	_current_fusion_combo_multiplier = min(_current_fusion_combo_multiplier + 1.0, max_combo_cap)
+func _register_fusion_for_combo(fusion_recipe: FusionRecipe) -> void:
+	var combo_increase_value = fusion_recipe.combo_increase_value
+	_current_fusion_combo_multiplier = min(_current_fusion_combo_multiplier + combo_increase_value, max_combo_cap)
 	current_stats.max_fusion_combo = max(current_stats.max_fusion_combo, _current_fusion_combo_multiplier)
 
 	# Restart the decay timer

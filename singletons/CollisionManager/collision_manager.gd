@@ -8,7 +8,7 @@ signal fusion_core_awarded() # To GameManager
 
 signal wall_collision_processed() # To RunManager
 signal element_collision_processed() # To RunManager
-signal fusion_processed(element_a: Element, element_b: Element, result_element_data: Dictionary) # To RunManager
+signal fusion_processed(element_a: Element, element_b: Element, fusion_recipe: FusionRecipe) # To RunManager
 signal element_collision_data_calculated(element_a: Element, element_b: Element, combined_momentum: float) # To RunManager
 
 signal request_element_spawn(element_type: String, position: Vector2, velocity: Vector2) # To ElementSpawner/Reactor
@@ -33,7 +33,7 @@ signal element_element_vfx_requested(epicenter_position: Vector2, intensity_fact
 # Base values before upgrades are applied.
 const BASE_COLLISION_ENERGY: float = 10.0
 const BASE_WALL_COLLISION_ENERGY: float = 5.0
-const BASE_STABILITY_DAMAGE: float = 1.25
+const BASE_STABILITY_DAMAGE: float = 1.5
 const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
 const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5
@@ -203,8 +203,7 @@ func _handle_fusion(e1: Element, e2: Element, recipe: FusionRecipe) -> void:
 			fusion_core_awarded.emit()
 
 	# Notify RunManager about the fusion event
-	var result_data = { "type": recipe.result_type, "mass": recipe.result_mass }
-	fusion_processed.emit(e1, e2, result_data)
+	fusion_processed.emit(e1, e2, recipe)
 	fusion_event_sfx_requested.emit(pos, 0.0)
 	fusion_event_vfx_requested.emit(pos)
 

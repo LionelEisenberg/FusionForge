@@ -19,6 +19,8 @@ extends Resource
 @export var fusion_core_spawn_chance: float = 0.0 
 ## Number of Fusion Cores to spawn if the chance is successful.
 @export var fusion_core_yield: int = 1
+## How much this fusion recipe contributes to increasing the fusion combo meter.
+@export var combo_increase_value: int = 1
 
 ## Helper function to check if two element types match this recipe's reactants,
 ## regardless of order. Returns true if they match, false otherwise.
