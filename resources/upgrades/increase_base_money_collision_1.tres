@@ -30,6 +30,6 @@ collection_radius_mult = 1.0
 collectible_lifespan_mult = 1.0
 max_stability_add = 0.0
 max_energy_add = 0.0
-base_money_per_collision_add = 0.0
+base_money_per_collision_add = 1
 combo_decay_time_add = 0.0
 max_combo_cap_add = 0.0
