@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://6s3v0grhn6w7"]
+[gd_scene load_steps=6 format=3 uid="uid://6s3v0grhn6w7"]
 
 [ext_resource type="Texture2D" uid="uid://dx0emvhoe2haw" path="res://assets/ui_images/main_menu_background.png" id="1_5ssjm"]
 [ext_resource type="Script" uid="uid://dkryo0jh4iyk3" path="res://scripts/ui/menus/main_menu.gd" id="1_boguu"]
-[ext_resource type="Texture2D" uid="uid://bcn2t4yqkyhqk" path="res://assets/ui_images/FUSION-FORGE-5-31-2025(1).png" id="2_eip10"]
 [ext_resource type="PackedScene" uid="uid://b0wcqvhm4bwtl" path="res://scenes/ui/generic_button.tscn" id="3_araup"]
-[ext_resource type="Texture2D" uid="uid://dhj5nuvr4yu28" path="res://assets/ui_images/Gemini_Generated_Image_iu3sheiu3sheiu3s.png" id="3_eip10"]
+[ext_resource type="Texture2D" uid="uid://x4ppkh58o01a" path="res://assets/ui_images/main_title.png" id="3_p0q51"]
 [ext_resource type="Script" uid="uid://cr2gofntlmyv2" path="res://scripts/effects/text_effects/jitter_text_effect.gd" id="5_8dn53"]
 
 [node name="MainMenu" type="Control"]
@@ -37,7 +36,7 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 6
 size_flags_stretch_ratio = 1.5
-texture = ExtResource("2_eip10")
+texture = ExtResource("3_p0q51")
 expand_mode = 1
 stretch_mode = 3
 
@@ -105,27 +104,3 @@ unique_name_in_owner = true
 layout_mode = 2
 button_text = "QUIT"
 hover_effect_script = ExtResource("5_8dn53")
-
-[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -60.0
-offset_top = -60.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="TextureButton" type="TextureButton" parent="TextureRect/MarginContainer"]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-texture_normal = ExtResource("3_eip10")
-ignore_texture_size = true
-stretch_mode = 0
