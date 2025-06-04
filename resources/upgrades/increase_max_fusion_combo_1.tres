@@ -8,7 +8,7 @@ id = "increase_max_fusion_combo_1"
 display_name = "Increase Max Fusion Combo (I)"
 description = "Increases the [wave][color=darkorchid]maximum the fusion combo[/color][/wave] can reach."
 max_purchase_level = 3
-prerequisites = Array[String](["increase_fusion_combo_duration_1"])
+prerequisites = Array[String](["unlock_fusion_h_d_he3"])
 effect_string = "+ 2"
 money_cost_per_level = Array[float]([500.0, 1000.0, 2000.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0])

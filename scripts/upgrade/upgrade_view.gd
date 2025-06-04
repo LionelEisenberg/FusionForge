@@ -29,6 +29,6 @@ func _on_money_updated(new_money: int) -> void:
 		money_value_label.text = "%d" % new_money # Simple integer format
 
 ## Updates the fusion core display label.
-func _on_fusion_cores_updated(new_cores: int) -> void:
+func _on_fusion_cores_updated(new_cores: int, _diff = 0) -> void:
 	if fusion_core_value_label:
 		fusion_core_value_label.text = "%d" % new_cores

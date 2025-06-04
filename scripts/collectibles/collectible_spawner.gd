@@ -49,7 +49,7 @@ func _on_spawn_energy_value(spawn_pos: Vector2, total_value: float) -> void:
 	if energy_collectible_scene == null or collectible_container == null: return
 	if total_value <= 0: return # Don't spawn if no energy yielded
 
-	var remaining_value = total_value
+	var remaining_value = roundf(total_value)
 	
 	# Greedy algorithm: Spawn highest tier possible first
 	for tier_value in ENERGY_VALUE_TIERS:
