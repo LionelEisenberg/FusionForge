@@ -10,8 +10,8 @@ description = "Increases the [wave][color=darkorchid]speed[/color][/wave] at whi
 max_purchase_level = 10
 prerequisites = Array[String]([])
 effect_string = "+ 25 m/s"
-money_cost_per_level = [25.0, 35.0, 50.0, 70.0, 95.0, 120.0, 150.0, 185.0, 225.0, 275.0]
-fusion_core_cost_per_level = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+money_cost_per_level = Array[float]([25.0, 35.0, 50.0, 70.0, 95.0, 120.0, 150.0, 185.0, 225.0, 275.0])
+fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0
 base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0

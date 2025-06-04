@@ -10,7 +10,7 @@ description = "Decreases the [wave][color=darkorchid]element slowdown[/color][/w
 max_purchase_level = 5
 prerequisites = Array[String](["increase_max_energy_1"])
 effect_string = "- 10%"
-money_cost_per_level = Array[float]([250.0, 375.0, 550.0, 850.0, 1250.0])
+money_cost_per_level = Array[float]([200.0, 375.0, 550.0, 850.0, 1250.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0
 base_element_collision_energy_add = 0.0
