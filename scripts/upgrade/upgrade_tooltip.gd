@@ -78,7 +78,7 @@ func update_content(data: Dictionary) -> void:
 func _on_money_changed(_current_money: int) -> void:
 	update_content(_latest_data)
 	
-func _on_fusion_cores_updated(_current_fusion_core: int) -> void:
+func _on_fusion_cores_updated(_current_fusion_core: int, _diff = 0) -> void:
 	update_content(_latest_data)
 
 func _update_money_cost_container(money_cost_val: int) -> void:

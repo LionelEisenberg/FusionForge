@@ -126,10 +126,9 @@ func trigger_shake(intensity: float) -> void:
 #-----------------------------------------------------------------------------
 
 func apply_upgrade_effects(effects_data: UpgradeEffects) -> void:
-	# Apply additive effects
-	acceleration_magnitude = BASE_ACCELERATION_MAGNITUDE + effects_data.base_accel_magnitude_add
-
+	print(effects_data.base_accel_magnitude_mult)
 	# Apply multiplicative effects
+	acceleration_magnitude = BASE_ACCELERATION_MAGNITUDE * effects_data.base_accel_magnitude_mult
 	force_to_energy_conversion_factor = BASE_FORCE_TO_ENERGY_CONVERSION_FACTOR * effects_data.force_to_energy_conversion_factor_mult
 
 	# Clamp or validate values if needed

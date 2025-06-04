@@ -22,6 +22,7 @@ upgrade_menu_scene = ExtResource("3_36pl1")
 subviewport_path = NodePath("TopLevelRunSceneContainer/RunSceneViewportContainer/SubViewport")
 top_level_run_scene_container_path = NodePath("TopLevelRunSceneContainer")
 upgrade_canvas_layer_path = NodePath("UpgradeCanvasLayer")
+infinite_resources = true
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_36pl1")]
 unique_name_in_owner = true

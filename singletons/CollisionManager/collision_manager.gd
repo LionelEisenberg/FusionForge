@@ -149,7 +149,6 @@ func _on_upgrades_applied(effects_data: UpgradeEffects) -> void:
 	momentum_energy_factor = max(0.0, momentum_energy_factor)
 	base_stability_damage = max(0.0, base_stability_damage)
 	momentum_stability_factor = max(0.0, momentum_stability_factor)
-	print(wall_collision_slowing_factor)
 	wall_collision_slowing_factor = max(1.0, wall_collision_slowing_factor) # Ensure slowing factor is at least 1 (no speed up)
 
 	unlocked_fusion_recipes = BASE_UNLOCKED_RECIPE_LIST + effects_data.unlocked_fusion_recipes
