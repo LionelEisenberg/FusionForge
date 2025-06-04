@@ -175,20 +175,21 @@ value = 500.0
 rounded = true
 show_percentage = false
 
-[node name="Label" type="Label" parent="MainVBox/RunResourcesContainer/EnergyProgressBar"]
+[node name="Label" type="RichTextLabel" parent="MainVBox/RunResourcesContainer/EnergyProgressBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
 theme_override_constants/shadow_outline_size = 5
-theme_override_font_sizes/font_size = 22
-text = "Energy: 1000 / 1000 eV"
+bbcode_enabled = true
+text = "Energy: %d / %d eV
+[color=red](-%s / s)[/color]"
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 

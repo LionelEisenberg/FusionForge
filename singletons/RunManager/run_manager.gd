@@ -10,6 +10,9 @@ signal fusion_combo_updated(multiplier: float)
 
 signal element_count_updated(current_count: int, max_count: int)
 signal next_spawn_time_updated(time_left: float)
+
+signal energy_cost_per_second_calculated(cost_per_second: float)
+
 #-----------------------------------------------------------------------------
 # Constant Variables
 #-----------------------------------------------------------------------------
@@ -34,7 +37,6 @@ var _current_fusion_combo_multiplier: float = 1.0
 var _is_run_active: bool = false
 # Internal timer for combo decay
 var _combo_timer: Timer
-
 #-----------------------------------------------------------------------------
 # Godot Lifecycle Functions
 #-----------------------------------------------------------------------------
@@ -54,13 +56,18 @@ func _ready() -> void:
 		CollisionManager.fusion_processed.connect(_on_fusion_processed)
 		CollisionManager.element_collision_data_calculated.connect(_on_element_collision_data_calculated)
 	else:
-		printerr("RunManager: CRITICAL - Could not connect signals from CollisionManager!")
+		push_warning("RunManager: Could not connect signals from CollisionManager!")
 
 	# Connect to UpgradeManager to receive effect updates
 	if UpgradeManager:
 		UpgradeManager.upgrades_applied.connect(_on_upgrades_applied)
 	else:
-		printerr("RunManager: WARNING - Could not connect to UpgradeManager! Applying default effects.")
+		push_warning("RunManager: Could not connect to UpgradeManager! Applying default effects.")
+	
+	if GameManager:
+		GameManager.fusion_cores_updated.connect(_on_fusion_cores_updated)
+	
+	energy_cost_per_second_calculated.connect(_on_energy_cost_per_second_calculated)
 	
 	reset_stats()
 
@@ -180,3 +187,12 @@ func _on_increment_wall_collision() -> void:
 func _on_increment_element_collision() -> void:
 	current_stats.collision_counts.y += 1
 	run_stats_updated.emit(current_stats) # Direct emit
+
+func _on_energy_cost_per_second_calculated(cost_per_second: float) -> void:
+	current_stats.latest_energy_cost_per_second = cost_per_second
+	run_stats_updated.emit(current_stats)
+
+func _on_fusion_cores_updated(_current_cores, amount : int) -> void:
+	current_stats.fusion_cores_earned += amount
+	run_stats_updated.emit(current_stats)
+	

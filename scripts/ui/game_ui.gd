@@ -27,6 +27,8 @@ const DANGER_THRESHOLD = 0.25
 # Godot Lifecycle Functions
 #-----------------------------------------------------------------------------
 
+var _latest_energy_cost_per_second : float = 0.0
+
 func _ready() -> void:
 	if GameManager:
 		GameManager.money_updated.connect(_on_money_updated)
@@ -57,7 +59,7 @@ func _on_money_updated(new_money: int) -> void:
 	if money_value:
 		money_value.text = "%d" % new_money # Format as integer
 
-func _on_fusion_cores_updated(new_cores: int) -> void:
+func _on_fusion_cores_updated(new_cores: int, _amount) -> void:
 	if fusion_core_value:
 		fusion_core_value.text = str(new_cores)
 
@@ -66,7 +68,7 @@ func _on_energy_updated(current: float, max_val: float) -> void:
 		energy_meter.max_value = max_val
 		energy_meter.value = current
 		energy_meter.tooltip_text = "Energy: %d / %d eV" % [int(current), int(max_val)]
-		(energy_meter.get_child(0) as Label).text = "Energy: %d / %d eV" % [int(current), int(max_val)]
+		(energy_meter.get_child(0) as RichTextLabel).text = "Energy: %d / %d eV\n[color=red](-%s / s)[/color]" % [int(current), int(max_val), _latest_energy_cost_per_second]
 		
 		var ratio = current / max_val
 		if ratio <= DANGER_THRESHOLD and ratio > 0:
@@ -89,6 +91,7 @@ func _on_stability_updated(current: float, max_val: float) -> void:
 			durability_meter.material = null
 
 func _on_run_stats_updated(run_stats: RunStats) -> void:
+	_latest_energy_cost_per_second = run_stats.latest_energy_cost_per_second
 	if total_collisions_value:
 		total_collisions_value.text = str(run_stats.get_total_collisions())
 
@@ -119,7 +122,7 @@ func _on_next_spawn_time_updated(time_left: float) -> void:
 func _update_all_ui() -> void:
 	if GameManager:
 		_on_money_updated(GameManager.get_money())
-		_on_fusion_cores_updated(GameManager.get_fusion_cores())
+		_on_fusion_cores_updated(GameManager.get_fusion_cores(), 0)
 		_on_energy_updated(GameManager.get_current_energy(), GameManager.get_max_energy())
 		_on_stability_updated(GameManager.get_current_stability(), GameManager.get_max_stability())
 	if RunManager:

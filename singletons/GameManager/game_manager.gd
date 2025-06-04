@@ -6,7 +6,7 @@ extends Node
 signal energy_updated(current_energy: float, max_energy: float)
 signal stability_updated(current_stability: float, max_stability: float)
 signal money_updated(current_money: int)
-signal fusion_cores_updated(current_cores: int)
+signal fusion_cores_updated(current_cores: int, diff: int)
 signal energy_depleted # Emitted when energy <= 0
 signal stability_depleted # Emitted when stability <= 0
 signal run_results_calculated(money_earned: int) # Emitted after calculating end-of-run money
@@ -71,7 +71,7 @@ func _ready() -> void:
 
 func _update_resources() -> void:
 	money_updated.emit(live_save_data.money)
-	fusion_cores_updated.emit(live_save_data.fusion_cores)
+	fusion_cores_updated.emit(live_save_data.fusion_cores, 0)
 
 
 ## Called by RunScene/MainGame at the start of a new run
@@ -120,7 +120,7 @@ func get_fusion_cores() -> int:
 func award_fusion_core(amount: int = 1) -> void:
 	if amount <= 0: return
 	live_save_data.fusion_cores += amount
-	fusion_cores_updated.emit(live_save_data.fusion_cores)
+	fusion_cores_updated.emit(live_save_data.fusion_cores, amount)
 
 func can_spend_fusion_cores(amount: int) -> bool:
 	if infinite_resources: return true
@@ -130,7 +130,7 @@ func spend_fusion_cores(amount: int) -> bool:
 	if amount < 0: return false
 	if can_spend_fusion_cores(amount):
 		live_save_data.fusion_cores -= amount
-		fusion_cores_updated.emit(live_save_data.fusion_cores)
+		fusion_cores_updated.emit(live_save_data.fusion_cores, amount)
 		return true
 	return false
 

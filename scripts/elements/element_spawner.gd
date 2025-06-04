@@ -129,21 +129,21 @@ func _update_spawn_distribution(effects_data: UpgradeEffects) -> void:
 	var current_deuterium_chance = BASE_SPAWN_DISTRIBUTION.get("Deuterium", 0.0) + deuterium_bonus
 	new_dist["Deuterium"] = clampf(current_deuterium_chance, 0.0, 1.0)
 
-	var current_helium3_chance = BASE_SPAWN_DISTRIBUTION.get("Helium3", 0.0) + helium3_bonus
-	new_dist["Helium3"] = clampf(current_helium3_chance, 0.0, 1.0)
+	var current_helium3_chance = BASE_SPAWN_DISTRIBUTION.get("Helium-3", 0.0) + helium3_bonus
+	new_dist["Helium-3"] = clampf(current_helium3_chance, 0.0, 1.0)
 	
 	var sum_of_other_elements_chance: float = 0.0
 	if new_dist["Deuterium"] > 0.0:
 		sum_of_other_elements_chance += new_dist["Deuterium"]
-	if new_dist["Helium3"] > 0.0:
-		sum_of_other_elements_chance += new_dist["Helium3"]
+	if new_dist["Helium-3"] > 0.0:
+		sum_of_other_elements_chance += new_dist["Helium-3"]
 
 	if sum_of_other_elements_chance >= 1.0:
 		new_dist["Hydrogen"] = 0.0
 		if sum_of_other_elements_chance > 0:
 			var scale_factor = 1.0 / sum_of_other_elements_chance
 			new_dist["Deuterium"] *= scale_factor
-			new_dist["Helium3"] *= scale_factor
+			new_dist["Helium-3"] *= scale_factor
 			# Scale other elements here if they were part of sum_of_other_elements_chance
 	else:
 		new_dist["Hydrogen"] = 1.0 - sum_of_other_elements_chance
@@ -151,7 +151,7 @@ func _update_spawn_distribution(effects_data: UpgradeEffects) -> void:
 	new_dist["Hydrogen"] = clampf(new_dist["Hydrogen"], 0.0, 1.0) # Final clamp for Hydrogen
 
 	if not new_dist.has("Deuterium"): new_dist["Deuterium"] = 0.0
-	if not new_dist.has("Helium3"): new_dist["Helium3"] = 0.0
+	if not new_dist.has("Helium-3"): new_dist["Helium-3"] = 0.0
 	if not new_dist.has("Hydrogen"): new_dist["Hydrogen"] = 0.0
 	spawn_distribution = new_dist 
 

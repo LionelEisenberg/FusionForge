@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5fgb2mab30al"]
+[gd_scene load_steps=9 format=3 uid="uid://5fgb2mab30al"]
 
 [ext_resource type="StyleBox" uid="uid://dx5tl3k1kjuye" path="res://assets/styleboxes/RunResultsPopup.tres" id="1_3yhqu"]
 [ext_resource type="Script" uid="uid://ckd3rwptvl3g7" path="res://scripts/ui/run_results_popup/run_results_popup.gd" id="2_4iyg6"]
@@ -6,6 +6,7 @@
 [ext_resource type="LabelSettings" uid="uid://dl0cbwvajdig2" path="res://assets/labelsettings/run_results_popup_stat_values.tres" id="4_a6yqw"]
 [ext_resource type="StyleBox" uid="uid://bpee63ok1m5r3" path="res://assets/styleboxes/RunResultsPopupMoneyContainer.tres" id="5_e851r"]
 [ext_resource type="Texture2D" uid="uid://bgbwg76klxmx5" path="res://assets/icons/resources/money_resource.png" id="6_kif1j"]
+[ext_resource type="Texture2D" uid="uid://ccvd8iqtcp22b" path="res://assets/icons/resources/fusion_core_resource.png" id="7_m6ele"]
 [ext_resource type="PackedScene" uid="uid://b0wcqvhm4bwtl" path="res://scenes/ui/generic_button.tscn" id="7_mkobw"]
 
 [node name="RunResultsPopup" type="Panel"]
@@ -136,7 +137,7 @@ layout_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.682353, 0.682353, 0.682353, 1)
 theme_override_font_sizes/font_size = 14
-text = "Money Earned This Run"
+text = "Resources Earned This Run"
 horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainVBoxContainer/VBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer"]
@@ -164,10 +165,35 @@ theme_override_font_sizes/font_size = 40
 text = "1000"
 horizontal_alignment = 2
 
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/MainVBoxContainer/VBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MainVBoxContainer/VBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MainVBoxContainer/VBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("7_m6ele")
+expand_mode = 2
+
+[node name="FusionCoreEarnedValue" type="Label" parent="MarginContainer/MainVBoxContainer/VBoxContainer/MoneyMarginContainer/MoneyContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 40
+text = "1000"
+horizontal_alignment = 2
+
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MainVBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 50
+theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 
 [node name="ContinueButton" parent="MarginContainer/MainVBoxContainer/VBoxContainer/MarginContainer" instance=ExtResource("7_mkobw")]

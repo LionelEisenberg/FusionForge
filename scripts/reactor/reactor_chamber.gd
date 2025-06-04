@@ -27,6 +27,9 @@ var force_to_energy_conversion_factor: float = BASE_FORCE_TO_ENERGY_CONVERSION_F
 var _original_position: Vector2
 var _current_shake_tween: Tween
 
+# Last calculated energy cost
+var _latest_energy_cost_per_second: float = 0.0
+
 #-----------------------------------------------------------------------------
 # Godot Lifecycle Functions
 #-----------------------------------------------------------------------------
@@ -65,7 +68,13 @@ func _physics_process(delta: float) -> void:
 		total_force_applied_magnitude += force_to_apply.length()
 
 	if GameManager and total_force_applied_magnitude > 0:
-		var energy_cost = total_force_applied_magnitude * force_to_energy_conversion_factor * delta # Scale cost by delta
+		var energy_cost = total_force_applied_magnitude * force_to_energy_conversion_factor * delta
+		var energy_cost_per_second = snappedf(energy_cost * (1 / delta), 0.01)
+		if _latest_energy_cost_per_second != energy_cost_per_second:
+			_latest_energy_cost_per_second = energy_cost_per_second
+			if RunManager:
+				RunManager.energy_cost_per_second_calculated.emit(_latest_energy_cost_per_second)
+			print(_latest_energy_cost_per_second)
 		GameManager.spend_energy(energy_cost)
 
 func _exit_tree() -> void:
@@ -141,4 +150,4 @@ func calculate_acceleration_force(e: Element) -> Vector2:
 	if e.linear_velocity.length_squared() > Element.ZERO_VELOCITY_THRESHOLD_SQ: # Access constant via class
 		current_direction = e.linear_velocity.normalized()
 
-	return current_direction * current_accel_magnitude
+	return current_direction * current_accel_magnitude * e.mass

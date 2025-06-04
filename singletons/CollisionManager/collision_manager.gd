@@ -31,12 +31,12 @@ signal element_element_vfx_requested(epicenter_position: Vector2, intensity_fact
 # Constant Variables
 #-----------------------------------------------------------------------------
 # Base values before upgrades are applied.
-const BASE_COLLISION_ENERGY: float = 5.0
-const BASE_WALL_COLLISION_ENERGY: float = 2.0
+const BASE_COLLISION_ENERGY: float = 10.0
+const BASE_WALL_COLLISION_ENERGY: float = 5.0
 const BASE_STABILITY_DAMAGE: float = 1.0
 const BASE_MOMENTUM_ENERGY_FACTOR: float = 0.025
 const BASE_MOMENTUM_STABILITY_FACTOR: float = 0.005
-const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5 # Note: Value > 1 slows more
+const BASE_WALL_COLLISION_SLOWING_FACTOR: float = 1.5
 const BASE_UNLOCKED_RECIPE_LIST: Array[String] = ["h_h_to_d"]
 const BASE_FUSION_CORE_DROP_CHANCE: float = 0.0
 const BASE_FUSION_CORE_YIELD_MULTIPLIER: float = 1.0

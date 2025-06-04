@@ -11,7 +11,10 @@ extends Resource
 @export var highest_combined_collision_momentum: float = 0.0
 ## Total energy collected by the player from energy collectibles during the run.
 @export var total_energy_collected_from_pickups: float = 0.0
-
+## Latest energy cost per second
+@export var latest_energy_cost_per_second: float = 0.0
+## fusion cores earned this run
+@export var fusion_cores_earned: float = 0.0
 
 #-----------------------------------------------------------------------------
 # Helper methods for calculations (used by GameManager or potentially UI)

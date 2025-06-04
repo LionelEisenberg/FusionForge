@@ -8,6 +8,7 @@ signal dismissed()
 @onready var max_fusion_combo_value: Label = %MaxFusionComboValue
 @onready var money_earned_value: Label = %MoneyEarnedValue
 @onready var continue_button: Button = %ContinueButton
+@onready var fusion_core_earned_value: Label = %FusionCoreEarnedValue
 
 func _ready() -> void:
 	if continue_button:
@@ -23,6 +24,8 @@ func show_results(run_stats: RunStats, money_earned: int) -> void:
 	max_fusion_combo_value.text = "x %.1f" % ((run_stats.max_fusion_combo) as float)
 
 	money_earned_value.text = " %d" % money_earned
+	
+	fusion_core_earned_value.text = " %d" % run_stats.fusion_cores_earned
 	
 	call_deferred("_center_popup")
 
