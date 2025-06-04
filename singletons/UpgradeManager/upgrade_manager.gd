@@ -174,13 +174,13 @@ func calculate_and_emit_effects() -> void:
 		effects_data.spawn_timer_wait_time_remove += data.spawn_timer_wait_time_remove * level
 		effects_data.spawn_chance_deuterium += data.spawn_chance_deuterium_add * level
 		effects_data.spawn_chance_helium3 += data.spawn_chance_helium3_add * level
+		effects_data.wall_collision_slowing_factor_remove += data.wall_collision_slowing_factor_remove * level
 
 		# --- Accumulate Multiplicative Effects ---
 		# Apply multiplier for each level purchased (base * mult^level)
 		effects_data.momentum_energy_factor_mult *= pow(data.momentum_energy_factor_mult, level)
 		effects_data.base_stability_damage_mult *= pow(data.base_stability_damage_mult, level)
 		effects_data.momentum_stability_factor_mult *= pow(data.momentum_stability_factor_mult, level)
-		effects_data.wall_collision_slowing_factor_mult *= pow(data.wall_collision_slowing_factor_mult, level)
 		effects_data.force_to_energy_conversion_factor_mult *= pow(data.force_to_energy_conversion_factor_mult, level)
 		effects_data.collectible_lifespan_mult *= pow(data.collectible_lifespan_mult, level)
 		effects_data.collection_radius_mult *= pow(data.collection_radius_mult, level)

@@ -6,10 +6,10 @@
 script = ExtResource("1_1gsb0")
 id = "decrease_wall_stability_damage_base_1"
 display_name = "Decrease base Stability Damage (I)"
-description = "Decreases the flat damage that Element to Wall collisions do to the Reactor."
+description = "Decreases the [wave][color=darkorchid]flat damage[/color][/wave]  that Element to Wall collisions do to the Reactor. "
 max_purchase_level = 5
 prerequisites = Array[String](["increase_max_stability_1"])
-effect_string = "10%"
+effect_string = "× 0.875"
 money_cost_per_level = Array[float]([125.0, 250.0, 500.0, 1000.0, 2000.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0
@@ -17,7 +17,7 @@ base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
 base_stability_damage_mult = 0.875
 momentum_stability_factor_mult = 1.0
-wall_collision_slowing_factor_mult = 1.0
+wall_collision_slowing_factor_remove = 0.0
 spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0

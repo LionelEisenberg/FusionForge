@@ -5,6 +5,7 @@ extends Control
 # Textual Information
 @onready var title_label: RichTextLabel = %TitleLabel
 @onready var description_label: RichTextLabel = %DescriptionLabel
+@onready var effect_container: PanelContainer = %EffectContainer
 @onready var effect_label: RichTextLabel = %EffectLabel
 
 # Cost Boxes & Components
@@ -60,7 +61,13 @@ func update_content(data: Dictionary) -> void:
 			title_label.text = "%s %s" % [upgrade_name, lvl_text] # Combined name and level
 	
 	if is_instance_valid(description_label): description_label.text = data.get("description", "")
-	if is_instance_valid(effect_label): effect_label.text = data.get("effect_string", "")
+	if is_instance_valid(effect_label):
+		var effect_text = data.get("effect_string", "")
+		print(effect_text)
+		if effect_text != "":
+			effect_container.visible = true
+			effect_label.text = "[color=green]%s[/color]" % [effect_text]
+		else: effect_container.visible = false
 	
 	var money_cost_val = data.get("money_cost", 0)
 	var fc_cost_val = data.get("fc_cost", 0)

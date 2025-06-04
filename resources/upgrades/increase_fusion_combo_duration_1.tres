@@ -6,10 +6,10 @@
 script = ExtResource("1_pjrdt")
 id = "increase_fusion_combo_duration_1"
 display_name = "Increase Fusion Combo Duration (I)"
-description = "Increases the fusion combo max duration before resetting to 0."
+description = "Increases the [wave][color=darkorchid]fusion combo max duration[/color][/wave] before resetting to 0."
 max_purchase_level = 5
 prerequisites = Array[String](["unlock_fusion_h_d_he3"])
-effect_string = "10%"
+effect_string = "+ 0.6 seconds"
 money_cost_per_level = Array[float]([300.0, 600.0, 1200.0, 2400.0, 4800.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0
@@ -17,7 +17,7 @@ base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
 base_stability_damage_mult = 1.0
 momentum_stability_factor_mult = 1.0
-wall_collision_slowing_factor_mult = 1.0
+wall_collision_slowing_factor_remove = 0.0
 spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0

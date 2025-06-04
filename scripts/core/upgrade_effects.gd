@@ -17,6 +17,7 @@ extends Resource
 @export var combo_decay_time_add: float = 0.0
 @export var max_combo_cap_add: float = 0.0 # Changed to float
 @export var spawn_timer_wait_time_remove: float = 0.0 # Negative value speeds up spawn
+@export var wall_collision_slowing_factor_remove: float = 0.0 # Value < 1.0 reduces slowdown
 @export var spawn_chance_deuterium: float = 0.0
 @export var spawn_chance_helium3: float = 0.0
 
@@ -25,7 +26,6 @@ extends Resource
 @export var momentum_energy_factor_mult: float = 1.0
 @export var base_stability_damage_mult: float = 1.0 # Value < 1.0 reduces damage
 @export var momentum_stability_factor_mult: float = 1.0 # Value < 1.0 reduces scaling
-@export var wall_collision_slowing_factor_mult: float = 1.0 # Value < 1.0 reduces slowdown
 @export var force_to_energy_conversion_factor_mult: float = 1.0 # Value < 1.0 improves efficiency
 @export var collectible_lifespan_mult: float = 1.0 
 @export var collection_radius_mult: float = 1.0

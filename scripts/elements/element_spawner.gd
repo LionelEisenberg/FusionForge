@@ -6,7 +6,7 @@ extends Node2D
 # Constant Variables
 #-----------------------------------------------------------------------------
 # Base values before upgrades are applied.
-const BASE_INITIAL_SPEED: float = 75.0
+const BASE_INITIAL_SPEED: float = 100.0
 # Default timer wait time (5.0s in the scene file) corresponds to 0.2 spawns/sec
 const BASE_SPAWN_WAIT_TIME: float = 5.0
 const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity

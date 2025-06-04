@@ -10,7 +10,7 @@ description = "Unlocks new Fusion Recipe!
 [center][wave][color=lightblue]Deuterium (H2)[/color] + [color=lightblue]Deuterium (H2)[/color] --> [color=purple]Helium (He4)[/color][/wave][/center]"
 max_purchase_level = 1
 prerequisites = Array[String](["unlock_fusion_h_d_he3"])
-effect_string = "10%"
+effect_string = ""
 money_cost_per_level = Array[float]([0.0])
 fusion_core_cost_per_level = Array[float]([15.0])
 base_wall_collision_energy_add = 0.0
@@ -18,7 +18,7 @@ base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
 base_stability_damage_mult = 1.0
 momentum_stability_factor_mult = 1.0
-wall_collision_slowing_factor_mult = 1.0
+wall_collision_slowing_factor_remove = 0.0
 spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0

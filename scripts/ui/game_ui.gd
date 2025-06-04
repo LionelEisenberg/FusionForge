@@ -81,8 +81,8 @@ func _on_stability_updated(current: float, max_val: float) -> void:
 	if RunManager._is_run_active and durability_meter:
 		durability_meter.max_value = max_val
 		durability_meter.value = current
-		durability_meter.tooltip_text = "Durability: %d / %d" % [int(current), int(max_val)]
-		(durability_meter.get_child(0) as Label).text = "Durability: %d / %d" % [int(current), int(max_val)]
+		durability_meter.tooltip_text = "Stability: %d / %d" % [int(current), int(max_val)]
+		(durability_meter.get_child(0) as Label).text = "Stability: %d / %d" % [int(current), int(max_val)]
 		
 		var ratio = current / max_val
 		if ratio <= DANGER_THRESHOLD and ratio > 0:

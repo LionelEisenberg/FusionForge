@@ -34,7 +34,7 @@ extends Resource
 @export var momentum_energy_factor_mult: float = 1.0 # Affects CollisionManager.momentum_energy_factor (Multiplicative)
 @export var base_stability_damage_mult: float = 1.0 # Affects CollisionManager.base_stability_damage (Multiplicative)
 @export var momentum_stability_factor_mult: float = 1.0 # Affects CollisionManager.momentum_stability_factor (Multiplicative)
-@export var wall_collision_slowing_factor_mult: float = 1.0 # TODO: Affects CollisionManager logic (Multiplicative)
+@export var wall_collision_slowing_factor_remove: float = 0.0
 
 ## --- Reactor Effects ---
 @export_group("Reactor Effects")

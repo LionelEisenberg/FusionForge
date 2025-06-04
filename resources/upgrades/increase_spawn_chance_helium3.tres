@@ -6,10 +6,10 @@
 script = ExtResource("1_6fryi")
 id = "increase_spawn_chance_helium3"
 display_name = "Increase Helion (He3) Spawn Chance"
-description = "Increase the chance for Helion (He3) to be spawned in the reactor."
+description = "Increase the chance for [wave][color=purple]Helion (He3)[/color][/wave] to be spawned in the reactor."
 max_purchase_level = 3
 prerequisites = Array[String](["unlock_fusion_d_d_he"])
-effect_string = "10%"
+effect_string = "+ 5 % chance"
 money_cost_per_level = Array[float]([100.0, 100.0, 100.0])
 fusion_core_cost_per_level = Array[float]([1.0, 2.0, 3.0])
 base_wall_collision_energy_add = 0.0
@@ -17,7 +17,7 @@ base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
 base_stability_damage_mult = 1.0
 momentum_stability_factor_mult = 1.0
-wall_collision_slowing_factor_mult = 1.0
+wall_collision_slowing_factor_remove = 0.0
 spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0

@@ -10,5 +10,6 @@ result_type = "Helium"
 result_mass = 4.0
 energy_yield = 100.0
 min_momentum = 600.0
-required_temp = 0.0
+fusion_core_spawn_chance = 1.0
+fusion_core_yield = 3
 metadata/_custom_type_script = "uid://7jsoumhbv8gm"

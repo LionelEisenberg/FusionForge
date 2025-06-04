@@ -6,10 +6,10 @@
 script = ExtResource("1_e67ct")
 id = "increase_base_money_collision_1"
 display_name = "Increase Base Money Collision (I)"
-description = "Increases the base money rewarded for each collision in a run."
+description = "Increases the [wave][color=darkorchid]base money rewarded[/color][/wave] for each collision in a run."
 max_purchase_level = 2
 prerequisites = Array[String](["unlock_fusion_h_d_he3"])
-effect_string = "10%"
+effect_string = "+ 1 / collision"
 money_cost_per_level = Array[float]([500.0, 1500.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0])
 base_wall_collision_energy_add = 0.0
@@ -17,7 +17,7 @@ base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0
 base_stability_damage_mult = 1.0
 momentum_stability_factor_mult = 1.0
-wall_collision_slowing_factor_mult = 1.0
+wall_collision_slowing_factor_remove = 0.0
 spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0

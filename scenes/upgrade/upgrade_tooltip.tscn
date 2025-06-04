@@ -71,8 +71,10 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_n8f4n")
 [node name="TitleLabel" type="RichTextLabel" parent="VBoxContainer/InformationPanel/VBoxContainer/TitleContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "Max Speed Increase! (0 / 10)"
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -91,6 +93,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EffectContainer" type="PanelContainer" parent="VBoxContainer/InformationPanel/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_7pg4n")
@@ -122,7 +125,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_n8f4n")
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CostHBox/MoneyCost/MarginContainer"]
@@ -158,7 +160,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_n8f4n")
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/CostHBox/FusionCoreCost/MarginContainer2"]
