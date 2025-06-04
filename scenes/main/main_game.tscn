@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://loaefnvwwg85"]
+[gd_scene load_steps=9 format=3 uid="uid://loaefnvwwg85"]
 
 [ext_resource type="Script" uid="uid://bshcexhy16i3j" path="res://scripts/main/main_game.gd" id="1_exxld"]
 [ext_resource type="PackedScene" uid="uid://mdcotdqhkfpm" path="res://scenes/run/run.tscn" id="2_2jj13"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bntbyn7ulcarj" path="res://scenes/ui/game_ui.tscn" id="3_5fn2n"]
 [ext_resource type="PackedScene" uid="uid://dm8ujlmypb1tb" path="res://scenes/upgrade/upgrade_view.tscn" id="3_36pl1"]
 [ext_resource type="PackedScene" uid="uid://6s3v0grhn6w7" path="res://scenes/ui/menus/main_menu.tscn" id="4_bebfr"]
+[ext_resource type="PackedScene" uid="uid://o7crrd0i3hjy" path="res://scenes/effects/vfx/transition.tscn" id="4_v4wsd"]
 
 [sub_resource type="GDScript" id="GDScript_2jj13"]
 script/source = "extends Timer
@@ -23,6 +24,10 @@ subviewport_path = NodePath("TopLevelRunSceneContainer/RunSceneViewportContainer
 top_level_run_scene_container_path = NodePath("TopLevelRunSceneContainer")
 upgrade_canvas_layer_path = NodePath("UpgradeCanvasLayer")
 infinite_resources = true
+
+[node name="StateTransition" parent="." instance=ExtResource("4_v4wsd")]
+unique_name_in_owner = true
+layer = 2
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_36pl1")]
 unique_name_in_owner = true

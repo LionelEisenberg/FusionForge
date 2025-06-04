@@ -12,6 +12,7 @@ extends Node2D
 
 @onready var main_menu: Control = %MainMenu
 @onready var options_menu: Control = %OptionsMenu
+@onready var state_transition: CanvasLayer = %StateTransition
 
 #-----------------------------------------------------------------------------
 # Override exports
@@ -46,7 +47,7 @@ var current_state: GameState = GameState.INITIALIZING
 #-----------------------------------------------------------------------------
 # Godot Lifecycle Functions
 #-----------------------------------------------------------------------------
-func _ready() -> void:
+func _ready() -> void:	
 	# Override Logic for Invincible Mode:
 	if GameManager:
 		GameManager.invincible_mode = invincible_mode
@@ -111,6 +112,10 @@ func _set_game_state(new_state: GameState) -> void:
 	if new_state == current_state:
 		return
 
+	if current_state != GameState.INITIALIZING:
+		state_transition.play_animation()
+		await get_tree().create_timer(0.575).timeout
+	
 	current_state = new_state
 	_reset_subcomponents()
 	

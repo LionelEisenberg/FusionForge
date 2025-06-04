@@ -14,7 +14,7 @@ var music_array: Array = [preload("res://assets/audio/music/background_music_1.w
 const BASE_SFX_VOLUME_LINEAR: float = 0.1
 const BASE_SFX_PITCH: float = 1.0
 
-const BASE_MUSIC_VOLUME_LINEAR: float = 0.1
+const BASE_MUSIC_VOLUME_LINEAR: float = 0.3
 const base_MUSIC_PITCH: float = 1.0
 
 # --- Node Pools ---

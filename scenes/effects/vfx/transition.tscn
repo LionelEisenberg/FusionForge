@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://o7crrd0i3hjy"]
+
+[ext_resource type="Script" uid="uid://dsjsi4xrsd7k" path="res://scripts/effects/vfx/transition.gd" id="1_1o5gs"]
+[ext_resource type="Shader" uid="uid://ykabylegnpmn" path="res://assets/shaders/transition.gdshader" id="1_us0h6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1o5gs"]
+shader = ExtResource("1_us0h6")
+shader_parameter/y_threshold = 0.0
+shader_parameter/diamondPixelSize = 48.0
+
+[sub_resource type="Animation" id="Animation_o4mcs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/y_threshold")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1dbn2"]
+resource_name = "transition"
+length = 1.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/y_threshold")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.65, 1.13333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4fm2v"]
+_data = {
+&"RESET": SubResource("Animation_o4mcs"),
+&"transition": SubResource("Animation_1dbn2")
+}
+
+[node name="StateTransition" type="CanvasLayer"]
+script = ExtResource("1_1o5gs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_1o5gs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ColorRect"]
+libraries = {
+&"": SubResource("AnimationLibrary_4fm2v")
+}
