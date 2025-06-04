@@ -10,8 +10,8 @@ description = "Increase the chance for [wave][color=purple]Helion (He3)[/color][
 max_purchase_level = 5
 prerequisites = Array[String](["unlock_fusion_d_d_he"])
 effect_string = "+ 5 % chance"
-money_cost_per_level = [300.0, 600.0, 1000.0, 1500.0, 1500.0]
-fusion_core_cost_per_level = [5.0, 20.0, 50.0, 50.0, 50.0]
+money_cost_per_level = Array[float]([300.0, 600.0, 1000.0, 1500.0, 1500.0])
+fusion_core_cost_per_level = Array[float]([5.0, 20.0, 50.0, 50.0, 50.0])
 base_wall_collision_energy_add = 0.0
 base_element_collision_energy_add = 0.0
 momentum_energy_factor_mult = 1.0

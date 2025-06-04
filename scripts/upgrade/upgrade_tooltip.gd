@@ -63,7 +63,6 @@ func update_content(data: Dictionary) -> void:
 	if is_instance_valid(description_label): description_label.text = data.get("description", "")
 	if is_instance_valid(effect_label):
 		var effect_text = data.get("effect_string", "")
-		print(effect_text)
 		if effect_text != "":
 			effect_container.visible = true
 			effect_label.text = "[color=green]%s[/color]" % [effect_text]

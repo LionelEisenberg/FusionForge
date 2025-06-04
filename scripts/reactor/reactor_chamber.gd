@@ -74,7 +74,6 @@ func _physics_process(delta: float) -> void:
 			_latest_energy_cost_per_second = energy_cost_per_second
 			if RunManager:
 				RunManager.energy_cost_per_second_calculated.emit(_latest_energy_cost_per_second)
-			print(_latest_energy_cost_per_second)
 		GameManager.spend_energy(energy_cost)
 
 func _exit_tree() -> void:
