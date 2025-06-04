@@ -52,11 +52,12 @@ func update_content(data: Dictionary) -> void:
 	var current_lvl = data.get("current_level", 0)
 	var max_lvl = data.get("max_level", 0)
 	var lvl_text = "(%s/%s)" % [current_lvl, max_lvl]
+	
 	if is_instance_valid(title_label):
 		if current_lvl == max_lvl:
-			title_label.text = "%s [jit](%s/%s)[/jit]" % [upgrade_name, current_lvl, max_lvl] # Combined name and level
+			title_label.text = "%s [jit][color=lightgreen]%s[/color][/jit]" % [upgrade_name, lvl_text] # Combined name and level
 		else:
-			title_label.text = "%s (%s/%s)" % [upgrade_name, current_lvl, max_lvl] # Combined name and level
+			title_label.text = "%s %s" % [upgrade_name, lvl_text] # Combined name and level
 	
 	if is_instance_valid(description_label): description_label.text = data.get("description", "")
 	if is_instance_valid(effect_label): effect_label.text = data.get("effect_string", "")
