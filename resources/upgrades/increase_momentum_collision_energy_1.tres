@@ -6,10 +6,10 @@
 script = ExtResource("1_6hlcu")
 id = "increase_momentum_collision_energy_1"
 display_name = "Increase Momentum Collision Energy (I)"
-description = "Increases the momentum-based energy yield of Wall to Element and Element to Element collisions."
+description = "Increases the [wave][color=darkorchid]momentum-based energy yield[/color][/wave] of Wall to Element and Element to Element collisions."
 max_purchase_level = 5
 prerequisites = Array[String](["increase_base_collision_energy_1"])
-effect_string = "10%"
+effect_string = "× 1.1"
 money_cost_per_level = Array[float]([100.0, 200.0, 400.0, 800.0, 1200.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0

@@ -6,10 +6,10 @@
 script = ExtResource("1_twmb6")
 id = "increase_collection_radius_1"
 display_name = "Increase Collection Radius (I)"
-description = "Increases Collection Radius of collectibles."
+description = "Increases [wave][color=darkorchid]Collection Radius[/color][/wave] of collectibles."
 max_purchase_level = 3
 prerequisites = Array[String](["increase_collectible_lifespan_1"])
-effect_string = "10%"
+effect_string = "× 1.6"
 money_cost_per_level = Array[float]([200.0, 400.0, 800.0])
 fusion_core_cost_per_level = Array[float]([0.0, 0.0, 0.0])
 base_wall_collision_energy_add = 0.0
@@ -21,10 +21,10 @@ wall_collision_slowing_factor_remove = 0.0
 spawn_timer_wait_time_remove = 0.0
 max_elements_add = 0
 initial_speed_add = 0.0
-base_accel_magnitude_mult = 1.0
-force_to_energy_conversion_factor_mult = 1.0
 spawn_chance_deuterium_add = 0.0
 spawn_chance_helium3_add = 0.0
+force_to_energy_conversion_factor_mult = 1.0
+base_accel_magnitude_mult = 1.0
 fusion_recipe_to_unlock = ""
 collection_radius_mult = 1.588
 collectible_lifespan_mult = 1.0
