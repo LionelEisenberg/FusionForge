@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bomhfpqbnoxjw"]
+
+[ext_resource type="PackedScene" uid="uid://ctlkhprkkrb7" path="res://scenes/elements/element.tscn" id="1_ja3r2"]
+[ext_resource type="Texture2D" uid="uid://n2wuut0ow6sn" path="res://assets/sprites/elements/beryllium8.svg" id="2_ja3r2"]
+
+[node name="Beryllium8" instance=ExtResource("1_ja3r2")]
+element_type = "Beryllium-8"
+element_symbol = "Be8"
+element_mass_amu = 8.0
+element_base_color = Color(0.984314, 0.619608, 0.227451, 1)
+scaling_factor = 1.25
+collision_type = 0
+collision_points = [Vector2(-22, -16), Vector2(-10, -16), Vector2(0, -16), Vector2(0, -26), Vector2(1, -28), Vector2(2, -29), Vector2(3, -30), Vector2(4, -31), Vector2(6, -32), Vector2(10, -32), Vector2(12, -31), Vector2(13, -30), Vector2(14, -29), Vector2(15, -28), Vector2(16, -26), Vector2(16, -21), Vector2(16, -10), Vector2(16, 0), Vector2(26, 0), Vector2(28, 1), Vector2(29, 2), Vector2(30, 3), Vector2(31, 4), Vector2(32, 6), Vector2(32, 10), Vector2(31, 12), Vector2(30, 13), Vector2(29, 14), Vector2(28, 15), Vector2(26, 16), Vector2(22, 16), Vector2(10, 16), Vector2(0, 16), Vector2(0, 26), Vector2(-1, 28), Vector2(-2, 29), Vector2(-3, 30), Vector2(-4, 31), Vector2(-6, 32), Vector2(-10, 32), Vector2(-12, 31), Vector2(-13, 30), Vector2(-14, 29), Vector2(-15, 28), Vector2(-16, 26), Vector2(-16, 22), Vector2(-16, 10), Vector2(-16, 0), Vector2(-22, 0), Vector2(-26, 0), Vector2(-28, -1), Vector2(-29, -2), Vector2(-30, -3), Vector2(-31, -4), Vector2(-32, -6), Vector2(-32, -10), Vector2(-31, -12), Vector2(-30, -13), Vector2(-29, -14), Vector2(-28, -15), Vector2(-26, -16)]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ja3r2")

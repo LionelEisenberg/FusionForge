@@ -12,8 +12,7 @@ const BASE_SPAWN_WAIT_TIME: float = 5.0
 const BASE_MAX_ELEMENT_CAPACITY: int = 10 # Base capacity
 
 const BASE_SPAWN_DISTRIBUTION: Dictionary = {
-	"Hydrogen": 0.95,
-	"Deuterium": 0.05
+	"Hydrogen": 1.0,
 }
 
 #-----------------------------------------------------------------------------
@@ -35,7 +34,9 @@ var spawn_distribution: Dictionary = BASE_SPAWN_DISTRIBUTION
 	"Hydrogen": preload("res://scenes/elements/hydrogen.tscn"),
 	"Deuterium": preload("res://scenes/elements/deuterium.tscn"),
 	"Helium-3": preload("res://scenes/elements/helium_3.tscn"),
-	"Helium": preload("res://scenes/elements/helium.tscn")
+	"Helium": preload("res://scenes/elements/helium.tscn"),
+	"Beryllium-7": preload("res://scenes/elements/beryllium_7.tscn"),
+	"Beryllium-8": preload("res://scenes/elements/beryllium_8.tscn"),
 }
 
 ## The node where spawned elements should be added as children.
