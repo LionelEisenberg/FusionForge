@@ -73,6 +73,5 @@ layout_mode = 2
 [node name="UpgradeCanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="SaveTimer" type="Timer" parent="."]
-wait_time = 4096.0
 autostart = true
 script = SubResource("GDScript_2jj13")
